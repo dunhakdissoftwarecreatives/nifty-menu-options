@@ -77,5 +77,28 @@ final class Admin
 
     public function enqueueScripts()
     {
+        wp_register_script(
+            $this->name,
+            plugin_dir_url( dirname( __FILE__ ) ) . 'public/js/admin-nifty-menu-options.js',
+            array('jquery'),
+            $this->version,
+            false
+        );
+        wp_enqueue_script($this->name);
+        add_thickbox();
+    }
+
+    /**
+    * Enqueues the wp_enqueue_media() to the Wordpress Dashboad.
+    *
+    * @since  1.0.0
+    * @access public
+    * @return void
+    */
+    public function enqueueWPMedia()
+    {
+        wp_enqueue_media();
+
+        return;
     }
 }

@@ -21,6 +21,8 @@
 
 namespace DSC\NiftyMenuOptions;
 
+include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/template/thickbox.php';
+
 if (! defined('ABSPATH')) {
     return;
 }
@@ -52,8 +54,27 @@ final class MenuIconPicker
      * @access public
      */
     public static function Init() {
+        add_filter( 'wp_edit_nav_menu_walker', array( __CLASS__, 'FilterWpEditNavMenuWalkerClass' ), 99 );
         add_filter( 'wp_nav_menu_item_custom_fields', array( __CLASS__, 'MenuIconPicker' ), 10, 4 );
     }
+
+
+	/**
+	 * Custom WP Walker
+	 *
+	 * @since   1.0.0
+	 * @access  protected
+	 * @wp_hook filter    wp_edit_nav_menu_walker
+	 */
+	public static function FilterWpEditNavMenuWalkerClass( $walker ) {
+		// Load menu item custom fields plugin
+		if ( ! class_exists( 'CustomMenuEditorWalkerFields' ) ) {
+			require_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/resources/includes/library/custom-fields/walker-nav-menu-edit.php';
+		}
+		$walker = 'CustomMenuEditorWalkerFields';
+
+		return $walker;
+	}
 
     /**
 	 * Print fields
@@ -75,10 +96,31 @@ final class MenuIconPicker
     public static function MenuIconPicker( $id, $item, $depth, $args ) {
         $input_id      = sprintf( 'nifty-menu-options-%d', $item->ID );
 		$input_name    = sprintf( 'nifty-menu-options[%d]', $item->ID );
-        $x = Helper::GlobalNavMenuSelectedId();
-        dump($x);
-        dump($item);
-    ?>
 
-    <?php }
+        $args = array(
+            'id'    => esc_attr( 'menu-icon-selector' ),
+            'class'  => esc_attr( 'thickbox-container' ),
+            'show'  => false,
+            'type' => esc_attr( 'inline' ),
+            'width' => esc_attr( '600' ),
+            'height' => esc_attr( '550' ),
+            'link_text' => esc_html__( 'Add Icon', 'nifty-menu-options' )
+        );
+
+        $x = Helper::GlobalNavMenuSelectedId();
+        $thickbox_class = new ThickBox( $args );
+        // dump($x);
+        // dump($item);
+        // $thickbox_class = ThickBox::getThickBox();
+
+        $thickbox_class->setThickBoxContent( self::MenuIconPickerContent() );
+        $thickbox_class->getThickBox();
+
+        ?>
+        <?php
+    }
+    public static function MenuIconPickerContent()
+    {
+        $content = '';
+    }
 }

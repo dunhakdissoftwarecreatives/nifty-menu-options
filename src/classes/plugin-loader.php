@@ -119,9 +119,9 @@ final class Loader
          */
         include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/classes/plugin-metabox.php';
         /**
-         * This class handles the registers the plugin metaboxes.
+         * This class handles the registers the plugin icon picker.
          */
-        include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'resources/includes/class-menu-icon-picker.php';
+        include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/resources/class-menu-icon-picker.php';
 
         $this->loader = new \DSC\NiftyMenuOptions\Hooks();
 
@@ -168,10 +168,12 @@ final class Loader
             $this->getLoader()
         );
         $this->loader->addAction(
-            'admin_enqueue_scripts',
+            'load-nav-menus.php',
             $plugin_admin,
-            'enqueueScripts'
+            'enqueueScripts',
+            1
         );
+
         $this->loader->addAction(
             'plugins_loaded',
             $plugin_metabox,
