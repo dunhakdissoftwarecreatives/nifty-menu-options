@@ -66,28 +66,30 @@ class ThickBox
         self::$args = $filtered_args;
     }
 
-    public static function getThickBox()
+    public static function getThickBox( $thickbox_content )
     { ?>
         <?php
-            $link = '';
-            $args = self::getArgs();
+            if ( ! empty( $thickbox_content ) ) {
+                $link = '';
+                $args = self::getArgs();
 
-            if ( 'inline' === $args[ 'type' ] ) {
-                $link = '#TB_inline?width='. esc_attr( absint( $args[ 'width' ] ) ) .'&height='. esc_attr( absint( $args[ 'height' ] ) ) .'&inlineId='. esc_attr( $args[ 'id' ] );
-            }
-            if ( 'iframe' === $args[ 'type' ] ) {
-                $link = esc_url( $args[ 'url' ] ) .'?TB_iframe=true&width='. esc_attr( absint( $args[ 'width' ] ) ) .'&height='. esc_attr( absint( $args[ 'height' ] ) );
-            }
-        ?>
+                if ( 'inline' === $args[ 'type' ] ) {
+                    $link = '#TB_inline?width='. esc_attr( absint( $args[ 'width' ] ) ) .'&height='. esc_attr( absint( $args[ 'height' ] ) ) .'&inlineId='. esc_attr( $args[ 'id' ] );
+                }
+                if ( 'iframe' === $args[ 'type' ] ) {
+                    $link = esc_url( $args[ 'url' ] ) .'?TB_iframe=true&width='. esc_attr( absint( $args[ 'width' ] ) ) .'&height='. esc_attr( absint( $args[ 'height' ] ) );
+                }
+            ?>
 
-        <div id="<?php echo esc_attr( $args['id'] ); ?>" class="<?php echo esc_attr( $args['class'] ); ?>" <?php echo self::isDisplayed(); ?> >
-            <div class="thickbox-content">
-                <?php self::setThickBoxContent(); ?>
+            <div id="<?php echo esc_attr( $args['id'] ); ?>" class="<?php echo esc_attr( $args['class'] ); ?>" <?php echo self::isDisplayed(); ?> >
+                <div class="thickbox-content">
+                    <?php echo $thickbox_content; ?>
+                </div>
             </div>
-        </div>
 
-        <a href="<?php echo $link; ?>" class="thickbox"><?php echo esc_html( $args[ 'link_text' ] ); ?></a>
-    <?php }
+            <a href="<?php echo $link; ?>" class="thickbox"><?php echo esc_html( $args[ 'link_text' ] ); ?></a>
+        <?php }
+    }
 
     /**
      * Get the ID
@@ -98,7 +100,8 @@ class ThickBox
      */
     public static function setThickBoxContent( $content = '' )
     {
-        echo $content;
+        dump($content);
+        return $content;
     }
 
     /**

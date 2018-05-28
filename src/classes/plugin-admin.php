@@ -88,6 +88,18 @@ final class Admin
         add_thickbox();
     }
 
+    public function enqueueStyles()
+    {
+        wp_enqueue_style(
+            $this->name,
+            plugin_dir_url(dirname(__FILE__)) . 'public/css/admin-nifty-menu-options.css',
+            array(),
+            $this->version,
+            'all'
+        );
+        return;
+    }
+
     /**
     * Enqueues the wp_enqueue_media() to the Wordpress Dashboad.
     *

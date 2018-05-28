@@ -173,6 +173,12 @@ final class Loader
             'enqueueScripts',
             1
         );
+        $this->loader->addAction(
+            'load-nav-menus.php',
+            $plugin_admin,
+            'enqueueStyles',
+            1
+        );
 
         $this->loader->addAction(
             'plugins_loaded',

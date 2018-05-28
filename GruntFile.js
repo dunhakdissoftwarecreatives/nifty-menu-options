@@ -4,8 +4,8 @@ module.exports = function(grunt) {
 		watch: {
 			sass: {
 				files: [
-					'public/css/sass/*.scss',
-					'public/css/sass/importer.scss',
+					'src/public/css/sass/*.scss',
+					'src/public/css/sass/importer.scss',
 				],
 				tasks: ['sass:dist'],
 				options: {
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				files: {
-					'public/css/nifty-menu-options.css': 'public/css/sass/importer.scss',
+					'src/public/css/admin-nifty-menu-options.css': 'src/public/css/sass/importer.scss',
 				}
 			}
 		}
