@@ -84,7 +84,10 @@ final class Loader
         $this->setLocale();
         $this->setAdminHooks();
         $this->setPublicHooks();
+
+        return;
     }
+
     /**
      * This method is used to load all the dependencies needed by the plugin.
      *
@@ -129,6 +132,7 @@ final class Loader
 
         new \DSC\NiftyMenuOptions\Metabox();
 
+        return;
     }
 
     /**
@@ -190,6 +194,7 @@ final class Loader
             $plugin_menu_icon_picker,
             'Init'
         );
+        return;
     }
     /**
      * This method is used to load all the actions and filters hooks in the
@@ -221,6 +226,7 @@ final class Loader
             $plugin_public,
             'setLocalizeScripts'
         );
+        return;
     }
     /**
      * Run the loader to execute all of in the hooks plugin to WordPress.
@@ -232,6 +238,7 @@ final class Loader
     public function runner()
     {
         $this->loader->runner();
+        return;
     }
 
     /**

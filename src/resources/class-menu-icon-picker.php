@@ -42,22 +42,17 @@ if (! defined('ABSPATH')) {
 final class MenuIconPicker
 {
     /**
-     * Plugin metabox class constructor
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Initialize metabox
      *
      * @since  1.0.0
      * @access public
+     * @return void
      */
     public static function Init() {
         add_filter( 'wp_edit_nav_menu_walker', array( __CLASS__, 'FilterWpEditNavMenuWalkerClass' ), 99 );
-        add_filter( 'wp_nav_menu_item_custom_fields', array( __CLASS__, 'MenuIconPicker' ), 10, 4 );
+        add_filter( 'wp_nav_menu_item_custom_fields', array( __CLASS__, 'MenuIconPickerOption' ), 10, 4 );
         add_action( 'wp_update_nav_menu_item', array( __CLASS__, 'SaveMenuIcon' ), 10, 3 );
+        return;
     }
 
 
@@ -65,7 +60,8 @@ final class MenuIconPicker
 	 * Custom WP Walker
 	 *
 	 * @since   1.0.0
-	 * @access  protected
+	 * @access  public
+	 * @return string $walker
 	 * @wp_hook filter    wp_edit_nav_menu_walker
 	 */
 	public static function FilterWpEditNavMenuWalkerClass( $walker ) {
@@ -79,7 +75,7 @@ final class MenuIconPicker
 	}
 
     /**
-	 * Print fields
+	 * Display Icon Picker Fields
 	 *
 	 * @since   1.0.0
 	 * @access  public
@@ -91,11 +87,11 @@ final class MenuIconPicker
 	 *
      * @uses    add_action() Calls 'nifty_menu_options_before_fields' hook
      * @uses    add_action() Calls 'nifty_menu_options_after_fields' hook
-     * @wp_hook action       menu_item_custom_fields
+     * @wp_hook action       wp_nav_menu_item_custom_fields
      *
 	 * @return string Form fields
 	 */
-    public static function MenuIconPicker( $id, $item, $depth, $args ) {
+    public static function MenuIconPickerOption( $id, $item, $depth, $args ) {
         $get_current_menu_id = Helper::GlobalNavMenuSelectedId();
         $input_id      = sprintf( 'nifty-menu-options-%d', $item->ID );
 		$input_name    = sprintf( 'nifty-menu-options[%d]', $item->ID );
@@ -103,64 +99,92 @@ final class MenuIconPicker
 		// $meta          = Menu_Icons_Meta::get( $item->ID, $menu_settings );
 
         $args = array(
-            'id'    => esc_attr( 'menu-icon-selector' ),
+            'id'    => esc_attr( 'menu-icon-selector-' . $id ),
             'class'  => esc_attr( 'thickbox-container' ),
-            'show'  => false,
+            'show'  => true,
             'type' => esc_attr( 'inline' ),
             'width' => esc_attr( '600' ),
             'height' => esc_attr( '550' ),
-            'link_text' => esc_html__( 'Add Icon', 'nifty-menu-options' )
+            'link_text' => esc_html__( 'Add Icon', 'nifty-menu-options' ),
         );
-
         $thickbox_class = new ThickBox( $args );
-        // dump($x);
-        // dump($item);
-        // $thickbox_class = ThickBox::getThickBox();
 
-        $thickbox_class->setThickBoxContent();
-        $thickbox_class->getThickBox( self::MenuIconPickerContent() );
+        do_action( 'nifty_menu_options_before_fields' );
+
+        $thickbox_class->getThickBox( self::MenuIconPickerContent( $id ) );
 
         ?>
         <div class="_settings hidden">
         </div>
         <?php
+
+        do_action( 'nifty_menu_options_after_fields' );
     }
-    public static function MenuIconPickerContent()
+
+    /**
+	 * Constructs the Menu Icon Picker Content
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 *
+     * @param  int    $id    Navigation menu ID.
+	 *
+     * @uses   add_filter() Calls 'DSC/NiftyMenuOptions/MenuIconPicker/MenuIconPickerContent' hook
+     *
+	 * @return string $content The content for the icon picker
+	 */
+    public static function MenuIconPickerContent( $id )
     {
         $content = '';
-        $icon_pack = new IconLibrary();
-        $icons = $icon_pack->getIcons();
+        $icons = IconLibrary::GetIcons();
+        $get_menu_icon = Metabox::GetMenuIcon( $id );
 
+        $content .= '<ul class="nifty-icon-selector-container">';
         foreach ( $icons as $icon => $icon_value ) {
-            $content .= '<i class="material-icons">'.$icon_value.'</i>';
+            $content .= '<label class="nifty-icon-item">';
+            $content .= '<input type="radio" class="nifty-icon-selector"' . checked( $icon_value, $get_menu_icon, false ) . ' value="' . esc_attr( $icon_value ) . '" name="nifty-menu-options-icon-' . esc_attr( $id ) . '" />';
+            $content .= '<i class="material-icons">' . esc_html( $icon_value ) . '</i>';
+            $content .= '</label>';
         }
+        $content .= '</ul>';
 
-        return $content;
+        return apply_filters( 'DSC/NiftyMenuOptions/MenuIconPicker/MenuIconPickerContent', $content, $id );
     }
 
-    public static function SaveMenuIcon()
+    /**
+	 * Constructs the Menu Icon Picker Content
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 *
+     * @param  int      $menu_id            Current menu ID.
+     * @param  int      $menu_item_db_id    Menu Item ID.
+     * @param  array    $menu_item_args     The menu item's data.
+	 *
+     * @wp_hook action       wp_update_nav_menu_item
+     *
+	 * @return void
+	 */
+    public static function SaveMenuIcon( $menu_id, $menu_item_db_id, $menu_item_args )
     {
         if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			return;
 		}
 
 		$screen = get_current_screen();
-		if ( ! $screen instanceof WP_Screen || 'nav-menus' !== $screen->id ) {
+		if ( ! $screen instanceof \WP_Screen || 'nav-menus' !== $screen->id ) {
 			return;
 		}
 
 		check_admin_referer( 'update-nav_menu', 'update-nav-menu-nonce' );
 
-		// Sanitize
-		if ( ! empty( $_POST['nifty-menu-options'][ $menu_item_db_id ] ) ) {
-			$value = array_map(
-				'sanitize_text_field',
-				wp_unslash( (array) $_POST['nifty-menu-options'][ $menu_item_db_id ] )
-			);
-		} else {
-			$value = array();
-		}
+        $menu_icon_name = 'nifty-menu-options-icon-' . $menu_item_db_id;
+        $sanitized_menu_icon = filter_input( INPUT_POST, $menu_icon_name, FILTER_SANITIZE_STRING );
 
-		Metabox::UpdateMenuIcon( $menu_item_db_id, $value );
+        if ( array_key_exists( $menu_icon_name, $_POST ) ) {
+            Metabox::UpdateMenuIcon( $menu_item_db_id, $sanitized_menu_icon );
+        }
+
+        return;
     }
 }

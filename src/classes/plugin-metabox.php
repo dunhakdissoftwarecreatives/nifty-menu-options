@@ -38,7 +38,13 @@ if (! defined('ABSPATH')) {
  */
 final class Metabox
 {
-    const METAKEY = 'nifty-menu-options';
+    /**
+     * Default meta value
+     *
+     * @since  1.0.0
+     * @const string METAKEY
+     */
+    const METAKEY = 'nifty-menu-options-meta-key';
 
     /**
      * Default meta value
@@ -54,21 +60,20 @@ final class Metabox
     );
 
     /**
-     * Plugin metabox class constructor
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Initialize metabox
      *
      * @since  1.0.0
      * @access public
+     * @return void
      */
     public static function Init() {
         add_filter( 'is_protected_meta', array( __CLASS__, 'ProtectedMetaKey' ), 10, 3 );
-        add_action( 'load-nav-menus.php', array( __CLASS__, 'LoadMetaBox' ), 1 );
+
+        /**
+         * @todo uncomment this action to add the Plugin Settin Metabox for the icon type.
+         */
+        // add_action( 'load-nav-menus.php', array( __CLASS__, 'LoadMetaBox' ), 1 );
+        return;
     }
 
     /**
@@ -94,18 +99,21 @@ final class Metabox
     /**
      * Loads Metabox
      *
-     *  @since  1.0.0
+     * @since  1.0.0
      * @access public
+     * @return void
      */
     public static function LoadMetaBox() {
         self::AddMetaBox();
+        return;
     }
 
     /**
-     * Settings metabox
+     * Add metabox
      *
      * @since  1.0.0
      * @access private
+     * @return void
      */
     private static function AddMetaBox() {
         add_meta_box(
@@ -117,64 +125,37 @@ final class Metabox
             'low',
             array()
         );
+        return;
     }
 
     /**
      * Settings metabox
      *
      * @since  1.0.0
-     * @access private
+     * @access public
+     * @return void
      */
     public static function MetaBoxIconsSet() {
         dump( 'hello' );
+        return;
     }
 
     /**
      * Get menu item meta value
      *
      * @since  1.0.0
-     * @since  1.0.0  Add $defaults parameter for the meta.
+     * @access public
      * @param  int    $id       Menu item ID.
-     * @param  array  $defaults Optional setting.
-     * @return array
+     * @return string $menu_icon
      */
-    public static function GetMenuIcon( $id, $defaults = array() ) {
-        $defaults = wp_parse_args( $defaults, self::$defaults );
-        $value    = get_post_meta( $id, self::METAKEY, true );
-        $value    = wp_parse_args( (array) $value, $defaults );
+    public static function GetMenuIcon( $id ) {
+        $menu_icon = '';
 
-        // Backward-compatibility.
-        if ( empty( $value['icon'] ) &&
-            ! empty( $value['type'] ) &&
-            ! empty( $value[ "{$value['type']}-icon" ] )
-        ) {
-            $value['icon'] = $value[ "{$value['type']}-icon" ];
+        if ( ! empty ( $id ) ) {
+            $menu_icon = get_post_meta( $id, self::METAKEY, true );
         }
 
-        if ( ! empty( $value['width'] ) ) {
-            $value['svg_width'] = $value['width'];
-        }
-        unset( $value['width'] );
-
-        if ( isset( $value['position'] ) &&
-            ! in_array( $value['position'], array( 'before', 'after' ), true )
-        ) {
-            $value['position'] = $defaults['position'];
-        }
-
-        if ( isset( $value['size'] ) && ! isset( $value['font_size'] ) ) {
-            $value['font_size'] = $value['size'];
-            unset( $value['size'] );
-        }
-
-        // The values below will NOT be saved
-        if ( ! empty( $value['icon'] ) &&
-            in_array( $value['type'], array( 'image', 'svg' ), true )
-        ) {
-            $value['url'] = wp_get_attachment_image_url( $value['icon'], 'thumbnail', false );
-        }
-
-        return $value;
+        return $menu_icon;
     }
 
 
@@ -182,7 +163,7 @@ final class Metabox
      * Update menu item metadata
      *
      * @since 1.0.0
-     *
+     * @access public
      * @param int   $id    Menu item ID.
      * @param mixed $value Metadata value.
      *
@@ -190,16 +171,12 @@ final class Metabox
      */
     public static function UpdateMenuIcon( $id, $value ) {
 
-        // Don't bother saving if `type` or `icon` is not set.
-        if ( empty( $value['type'] ) || empty( $value['icon'] ) ) {
-            $value = false;
-        }
-
         // Update
         if ( ! empty( $value ) ) {
             update_post_meta( $id, self::METAKEY, $value );
         } else {
             delete_post_meta( $id, self::METAKEY );
         }
+        return;
     }
 }

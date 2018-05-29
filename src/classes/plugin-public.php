@@ -83,6 +83,7 @@ final class PublicPages
         $this->loader = $loader;
         $this->name = $name;
         $this->version = $version;
+        // add_filter( 'wp_nav_menu_items', array( $this, 'displayMenuIcons' ), 10, 2 );
     }
 
     /**
@@ -119,5 +120,18 @@ final class PublicPages
     public function setLocalizeScripts()
     {
         return;
+    }
+
+    /**
+     * This method displays the menu icons.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public static function displayMenuIcons( $items, $args )
+    {
+        dump($args);
+        return $items;
     }
 }

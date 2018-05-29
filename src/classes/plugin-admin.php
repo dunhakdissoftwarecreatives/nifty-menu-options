@@ -67,14 +67,27 @@ final class Admin
 
     /**
      * Class constructor
+     *
+     * @since    1.0.0
+     * @access   public
+     * @return   void
      */
     public function __construct( $name, $version, $loader )
     {
         $this->name = $name;
         $this->version = $version;
         $this->loader = $loader;
+
+        return;
     }
 
+     /**
+      * Enqueues the Admins Script
+      *
+      * @since    1.0.0
+      * @access   public
+      * @return   void
+      */
     public function enqueueScripts()
     {
         wp_register_script(
@@ -86,8 +99,17 @@ final class Admin
         );
         wp_enqueue_script($this->name);
         add_thickbox();
+
+        return;
     }
 
+    /**
+     * Enqueues the Admins Stylesheet
+     *
+     * @since    1.0.0
+     * @access   public
+     * @return   void
+     */
     public function enqueueStyles()
     {
         wp_enqueue_style(

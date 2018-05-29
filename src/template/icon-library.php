@@ -40,8 +40,12 @@ final class IconLibrary
 {
     /**
      * Fetch the list of icons
+     *
+     * @since  1.0.0
+     * @uses   add_filter() Calls 'DSC/NiftyMenuOptions/IconLibrary/GetIcons' hook
+     * @return array $icons List of icons.
      */
-    public function getIcons()
+    public static function GetIcons()
     {
         $icons = array(
             '3d_rotation',
@@ -55,7 +59,7 @@ final class IconLibrary
             'account_circle',
             'add_shopping_cart',
         );
-        return apply_filters( 'DSC/NiftyMenuOptions/IconLibrary/getIcons', $icons );
+        return apply_filters( 'DSC/NiftyMenuOptions/IconLibrary/GetIcons', $icons );
     }
 
 }

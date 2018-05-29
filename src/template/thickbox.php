@@ -47,25 +47,51 @@ class ThickBox
      */
     public static $args = array();
 
+    /**
+	 * Constructor of the class
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 *
+     * @param  array    $set_args The Arguments for the tickbox component
+     * @uses   add_filter() Calls 'DSC/NiftyMenuOptions/ThickBox/defaults_args' hook
+     *
+	 * @return void
+	 */
     public function __construct( $set_args = array() )
     {
         $filtered_args = '';
-        $defaults_args = array(
-            'id'    => esc_attr( 'menu-icon-selector' ),
-            'class'  => esc_attr( 'thickbox-container' ),
-            'show'  => false,
-            'type' => esc_attr( 'inline' ),
-            'width' => esc_attr( '600' ),
-            'height' => esc_attr( '550' ),
-            'url' => '#',
-            'link_text' => esc_html__( 'Click to View', 'nifty-menu-options' )
-        );
+        apply_filters(
+            'DSC/NiftyMenuOptions/ThickBox/defaults_args',
+            $defaults_args = array(
+                'id'    => esc_attr( 'menu-icon-selector' ),
+                'class'  => esc_attr( 'thickbox-container' ),
+                'show'  => false,
+                'type' => esc_attr( 'inline' ),
+                'width' => esc_attr( '600' ),
+                'height' => esc_attr( '550' ),
+                'url' => '#',
+                'link_text' => esc_html__( 'Click to View', 'nifty-menu-options' ),
+            ),
+        $icons );
 
         $filtered_args = array_replace_recursive( $defaults_args, $set_args );
 
         self::$args = $filtered_args;
+
+        return;
     }
 
+    /**
+	 * Displays the Thichbox
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 *
+     * @param  string   $thickbox_content The content for the thickbox component
+     *
+	 * @return void
+	 */
     public static function getThickBox( $thickbox_content )
     { ?>
         <?php
@@ -83,24 +109,28 @@ class ThickBox
 
             <div id="<?php echo esc_attr( $args['id'] ); ?>" class="<?php echo esc_attr( $args['class'] ); ?>" <?php echo self::isDisplayed(); ?> >
                 <div class="thickbox-content">
+
                     <?php echo $thickbox_content; ?>
                 </div>
             </div>
 
             <a href="<?php echo $link; ?>" class="thickbox"><?php echo esc_html( $args[ 'link_text' ] ); ?></a>
         <?php }
+        return;
     }
 
     /**
-     * Get the ID
+	 * Sets the content for the Thichbox
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 *
+     * @param  string   $content The content for the thickbox component
      *
-     * @since  1.0.0
-     * @access public
-     * @return array args   Returns the arguments for the thickbox.
-     */
+	 * @return string $content
+	 */
     public static function setThickBoxContent( $content = '' )
     {
-        dump($content);
         return $content;
     }
 
@@ -117,11 +147,11 @@ class ThickBox
     }
 
     /**
-     * Get the ID
+     * Check if the thickbox set to be displayed.
      *
      * @since  1.0.0
      * @access public
-     * @return boolean args   Returns the arguments for the thickbox.
+     * @return string Returns display none.
      */
     public static function isDisplayed()
     {

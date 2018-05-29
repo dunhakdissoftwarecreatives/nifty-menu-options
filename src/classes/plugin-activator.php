@@ -41,6 +41,8 @@ class Activator
 {
     /**
      * Set default value for the plugin settings
+     * 
+     * @since 1.0.0
      * @return void
      */
     public function activate()
