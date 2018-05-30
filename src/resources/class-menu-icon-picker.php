@@ -93,31 +93,30 @@ final class MenuIconPicker
 	 */
     public static function MenuIconPickerOption( $id, $item, $depth, $args ) {
         $get_current_menu_id = Helper::GlobalNavMenuSelectedId();
-        $input_id      = sprintf( 'nifty-menu-options-%d', $item->ID );
-		$input_name    = sprintf( 'nifty-menu-options[%d]', $item->ID );
-        // $menu_settings = Menu_Icons_Settings::get_menu_settings( Menu_Icons_Settings::get_current_menu_id() );
-		// $meta          = Menu_Icons_Meta::get( $item->ID, $menu_settings );
 
-        $args = array(
-            'id'    => esc_attr( 'menu-icon-selector-' . $id ),
-            'class'  => esc_attr( 'thickbox-container' ),
-            'show'  => true,
+        $thickbox_args = array(
+            'id'    => esc_attr( 'nifty-icon-selector-' . $id ),
+            'class'  => esc_attr( 'nifty-thickbox-container' ),
+            'content_class'  => esc_attr( 'nifty-thickbox-content' ),
+            'button_class'  => esc_attr( 'nifty-icon-picker' ),
+            'show'  => false,
             'type' => esc_attr( 'inline' ),
             'width' => esc_attr( '600' ),
             'height' => esc_attr( '550' ),
             'link_text' => esc_html__( 'Add Icon', 'nifty-menu-options' ),
         );
-        $thickbox_class = new ThickBox( $args );
+        $thickbox_class = new ThickBox( $thickbox_args );
+        $get_menu_icon = Metabox::GetMenuIcon( $id );
 
         do_action( 'nifty_menu_options_before_fields' );
 
-        $thickbox_class->getThickBox( self::MenuIconPickerContent( $id ) );
-
+        $thickbox_class->getThickBox();
+        echo '<i class="material-icons nifty-icon-selected">' . esc_html( $get_menu_icon ) . '</i>';
         ?>
-        <div class="_settings hidden">
+        <div class="_settings hidden nifty-menu-settings">
+            <input type="text" class="nifty-menu-id" name="nifty-menu-id" value="<?php echo $id; ?>">
         </div>
         <?php
-
         do_action( 'nifty_menu_options_after_fields' );
     }
 
@@ -125,30 +124,35 @@ final class MenuIconPicker
 	 * Constructs the Menu Icon Picker Content
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access private
 	 *
      * @param  int    $id    Navigation menu ID.
 	 *
-     * @uses   add_filter() Calls 'DSC/NiftyMenuOptions/MenuIconPicker/MenuIconPickerContent' hook
+     * @uses   add_filter() Calls 'DSC/NiftyMenuOptions/MenuIconPicker/setMenuIconPickerContent' hook
      *
 	 * @return string $content The content for the icon picker
 	 */
-    public static function MenuIconPickerContent( $id )
+    public function setMenuIconPickerContents( $id = '' )
     {
         $content = '';
         $icons = IconLibrary::GetIcons();
-        $get_menu_icon = Metabox::GetMenuIcon( $id );
+        $get_menu_icon = '';
+        if ( !empty( $id ) ) {
 
-        $content .= '<ul class="nifty-icon-selector-container">';
-        foreach ( $icons as $icon => $icon_value ) {
-            $content .= '<label class="nifty-icon-item">';
-            $content .= '<input type="radio" class="nifty-icon-selector"' . checked( $icon_value, $get_menu_icon, false ) . ' value="' . esc_attr( $icon_value ) . '" name="nifty-menu-options-icon-' . esc_attr( $id ) . '" />';
-            $content .= '<i class="material-icons">' . esc_html( $icon_value ) . '</i>';
-            $content .= '</label>';
+            $get_menu_icon = Metabox::GetMenuIcon( $id );
+
+            $content .= '<ul class="nifty-icon-selector-container">';
+            foreach ( $icons as $icon => $icon_value ) {
+                $content .= '<label class="nifty-icon-item">';
+                $content .= '<input type="radio" class="nifty-icon-selector"' . checked( $icon_value, $get_menu_icon, false ) . ' value="' . esc_attr( $icon_value ) . '" name="nifty-menu-options-icon-' . esc_attr( $id ) . '" />';
+                $content .= '<i class="material-icons">' . esc_html( $icon_value ) . '</i>';
+                $content .= '</label>';
+            }
+            $content .= '</ul>';
         }
-        $content .= '</ul>';
+        $content = apply_filters( 'DSC/NiftyMenuOptions/MenuIconPicker/setMenuIconPickerContents', $content, $id );
 
-        return apply_filters( 'DSC/NiftyMenuOptions/MenuIconPicker/MenuIconPickerContent', $content, $id );
+        return $content;
     }
 
     /**

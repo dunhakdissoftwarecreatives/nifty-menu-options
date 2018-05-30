@@ -83,7 +83,7 @@ final class PublicPages
         $this->loader = $loader;
         $this->name = $name;
         $this->version = $version;
-        // add_filter( 'wp_nav_menu_items', array( $this, 'displayMenuIcons' ), 10, 2 );
+        add_filter( 'nav_menu_item_title', array( $this, 'displayMenuIcons' ), 10, 4 );
     }
 
     /**
@@ -129,9 +129,11 @@ final class PublicPages
      * @access public
      * @return void
      */
-    public static function displayMenuIcons( $items, $args )
+    public static function displayMenuIcons( $title, $item, $args, $depth )
     {
-        dump($args);
-        return $items;
+        $get_icon = Metabox::GetMenuIcon( $item->ID );
+        $args->link_before = '<i class="material-icons">'.$get_icon.'</i>';
+
+        return $title;
     }
 }

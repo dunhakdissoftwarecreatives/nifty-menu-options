@@ -84,7 +84,6 @@ final class Loader
         $this->setLocale();
         $this->setAdminHooks();
         $this->setPublicHooks();
-
         return;
     }
 
@@ -106,7 +105,14 @@ final class Loader
          * This class handles the localization functionality of the plugin.
          */
         include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/classes/plugin-i18n.php';
-
+        /**
+         * This class handles the registers the plugin metaboxes.
+         */
+        include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/classes/plugin-metabox.php';
+        /**
+         * This class handles the registers the plugin icon picker.
+         */
+        include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/resources/class-menu-icon-picker.php';
         /**
          * This class handles all the defined hooks in the WordPress backend.
          */
@@ -117,18 +123,11 @@ final class Loader
          */
         include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/classes/plugin-public.php';
 
-        /**
-         * This class handles the registers the plugin metaboxes.
-         */
-        include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/classes/plugin-metabox.php';
-        /**
-         * This class handles the registers the plugin icon picker.
-         */
-        include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/resources/class-menu-icon-picker.php';
-
         $this->loader = new \DSC\NiftyMenuOptions\Hooks();
 
         new \DSC\NiftyMenuOptions\Language();
+
+        new \DSC\NiftyMenuOptions\MenuIconPicker();
 
         new \DSC\NiftyMenuOptions\Metabox();
 
@@ -181,6 +180,12 @@ final class Loader
             'load-nav-menus.php',
             $plugin_admin,
             'enqueueStyles',
+            1
+        );
+        $this->loader->addAction(
+            'init',
+            $plugin_admin,
+            'initAjax',
             1
         );
 

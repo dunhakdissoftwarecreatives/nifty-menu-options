@@ -21,6 +21,8 @@
 
 namespace DSC\NiftyMenuOptions;
 
+include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/resources/class-menu-icon-picker.php';
+
 if (! defined('ABSPATH')) {
     return;
 }
@@ -60,8 +62,7 @@ final class Admin
      * Initialize the class and set its properties.
      *
      * @since    1.0.0
-     * @var      string    $name       The name of this plugin.
-     * @var      string    $version    The version of this plugin.
+     * @var      string    $loader      Holds the hooks.
      */
     public $loader;
 
@@ -90,6 +91,8 @@ final class Admin
       */
     public function enqueueScripts()
     {
+        add_thickbox();
+
         wp_register_script(
             $this->name,
             plugin_dir_url( dirname( __FILE__ ) ) . 'public/js/admin-nifty-menu-options.js',
@@ -98,10 +101,50 @@ final class Admin
             false
         );
         wp_enqueue_script($this->name);
-        add_thickbox();
+        $icons = new MenuIconPicker();
+
+        wp_localize_script(
+            $this->name,
+            $this->name . '_admin_object',
+            array(
+                'ajaxurl' => admin_url('admin-ajax.php'),
+                'loading' => '<div class="loading-wrapper"><span class="loading"></span></div>',
+                'iconset' => $this->getIcons(),
+            )
+        );
+        return;
+    }
+    public function getIcons() {
+        do_action('NiftyIcons');
+    }
+
+     /**
+      * Enqueues the Admins Ajax
+      *
+      * @since    1.0.0
+      * @access   public
+      * @return   void
+      */
+    public function initAjax()
+    {
+        add_action(
+            'wp_ajax_niftyAdminAjax',
+            array(
+                $this,
+                'niftyAdminAjax'
+            )
+        );
+        add_action(
+            'wp_ajax_nopriv_niftyAdminAjax',
+            array(
+                $this,
+                'niftyAdminAjax'
+            )
+        );
 
         return;
     }
+
 
     /**
      * Enqueues the Admins Stylesheet
@@ -134,5 +177,33 @@ final class Admin
         wp_enqueue_media();
 
         return;
+    }
+
+
+    /**
+     * This method initialize admin ajax.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function niftyAdminAjax()
+    {
+        header('Content-Type: application/json');
+
+        $nifty_menu_id = filter_input(
+            INPUT_POST,
+            'nifty-menu-id',
+            FILTER_SANITIZE_NUMBER_INT
+        );
+
+        echo wp_json_encode(
+            array(
+                'status' => 202,
+                'nifty_icon_picker_list' => MenuIconPicker::setMenuIconPickerContents( $nifty_menu_id ),
+                'selected_icon' => $selected_icon,
+            )
+        );
+        die();
     }
 }

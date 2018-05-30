@@ -27,7 +27,7 @@ if (! defined('ABSPATH')) {
 }
 
 // Setup plugin Constants.
-define( 'NIFTY_MENU_OPTION_NAME', 'Nifty Menu Options' );
+define( 'NIFTY_MENU_OPTION_NAME', 'nifty_menu_options' );
 
 define( 'NIFTY_MENU_OPTION_VERSION', '1.0.0' );
 

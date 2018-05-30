@@ -64,16 +64,18 @@ class ThickBox
         apply_filters(
             'DSC/NiftyMenuOptions/ThickBox/defaults_args',
             $defaults_args = array(
-                'id'    => esc_attr( 'menu-icon-selector' ),
+                'id'    => esc_attr( 'thickbox-selector' ),
                 'class'  => esc_attr( 'thickbox-container' ),
+                'content_class'  => esc_attr( 'thickbox-content-container' ),
+                'button_class'  => esc_attr( 'thickbox-btn' ),
                 'show'  => false,
                 'type' => esc_attr( 'inline' ),
                 'width' => esc_attr( '600' ),
                 'height' => esc_attr( '550' ),
                 'url' => '#',
                 'link_text' => esc_html__( 'Click to View', 'nifty-menu-options' ),
-            ),
-        $icons );
+            )
+        );
 
         $filtered_args = array_replace_recursive( $defaults_args, $set_args );
 
@@ -92,10 +94,9 @@ class ThickBox
      *
 	 * @return void
 	 */
-    public static function getThickBox( $thickbox_content )
+    public static function getThickBox( $thickbox_content = '' )
     { ?>
         <?php
-            if ( ! empty( $thickbox_content ) ) {
                 $link = '';
                 $args = self::getArgs();
 
@@ -108,30 +109,14 @@ class ThickBox
             ?>
 
             <div id="<?php echo esc_attr( $args['id'] ); ?>" class="<?php echo esc_attr( $args['class'] ); ?>" <?php echo self::isDisplayed(); ?> >
-                <div class="thickbox-content">
-
+                <div class="thickbox-content <?php echo esc_attr( $args['content_class'] ); ?>">
                     <?php echo $thickbox_content; ?>
                 </div>
             </div>
 
-            <a href="<?php echo $link; ?>" class="thickbox"><?php echo esc_html( $args[ 'link_text' ] ); ?></a>
-        <?php }
+            <a href="<?php echo $link; ?>" class="thickbox <?php echo esc_attr( $args['button_class'] ); ?>"><?php echo esc_html( $args[ 'link_text' ] ); ?></a>
+        <?php
         return;
-    }
-
-    /**
-	 * Sets the content for the Thichbox
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 *
-     * @param  string   $content The content for the thickbox component
-     *
-	 * @return string $content
-	 */
-    public static function setThickBoxContent( $content = '' )
-    {
-        return $content;
     }
 
     /**
