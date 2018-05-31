@@ -154,8 +154,7 @@ final class Metabox
         if ( ! empty ( $id ) ) {
             $menu_icon = get_post_meta( $id, self::METAKEY, true );
         }
-
-        return $menu_icon;
+        return $menu_icon['icon_name'];
     }
 
 

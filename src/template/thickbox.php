@@ -74,6 +74,8 @@ class ThickBox
                 'height' => esc_attr( '550' ),
                 'url' => '#',
                 'link_text' => esc_html__( 'Click to View', 'nifty-menu-options' ),
+                'link_text_before' => '',
+                'link_text_after' => '',
             )
         );
 
@@ -114,7 +116,11 @@ class ThickBox
                 </div>
             </div>
 
-            <a href="<?php echo $link; ?>" class="thickbox <?php echo esc_attr( $args['button_class'] ); ?>"><?php echo esc_html( $args[ 'link_text' ] ); ?></a>
+            <a href="<?php echo $link; ?>" class="thickbox <?php echo esc_attr( $args['button_class'] ); ?>">
+                <?php echo $args[ 'link_text_before' ]; ?>
+                <span class="thickbox-link-text"><?php echo esc_html( $args[ 'link_text' ] ); ?></span>
+                <?php echo $args[ 'link_text_after' ]; ?>
+            </a>
         <?php
         return;
     }

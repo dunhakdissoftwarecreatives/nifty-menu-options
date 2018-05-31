@@ -132,7 +132,7 @@ final class PublicPages
     public static function displayMenuIcons( $title, $item, $args, $depth )
     {
         $get_icon = Metabox::GetMenuIcon( $item->ID );
-        $args->link_before = '<i class="material-icons">'.$get_icon.'</i>';
+        $args->link_before = '<i class="material-icons nifty-displayed-icon">'.$get_icon.'</i>';
 
         return $title;
     }

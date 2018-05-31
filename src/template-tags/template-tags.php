@@ -23,7 +23,7 @@ if (! defined('ABSPATH')) {
     return;
 }
 
-function dump( $content, $display_type = '' )
+function niftyDump( $content, $display_type = '' )
 {
     if ( ! empty( $content ) ) {
         if ( empty( $display_type ) ) {

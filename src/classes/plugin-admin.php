@@ -92,6 +92,9 @@ final class Admin
     public function enqueueScripts()
     {
         add_thickbox();
+        
+        // Add the color picker css file
+        wp_enqueue_style( 'wp-color-picker' );
 
         wp_register_script(
             $this->name,
@@ -197,10 +200,16 @@ final class Admin
             FILTER_SANITIZE_NUMBER_INT
         );
 
+        $selected_icon = filter_input(
+            INPUT_POST,
+            'selected-icon',
+            FILTER_SANITIZE_STRING
+        );
+
         echo wp_json_encode(
             array(
                 'status' => 202,
-                'nifty_icon_picker_list' => MenuIconPicker::setMenuIconPickerContents( $nifty_menu_id ),
+                'nifty_icon_picker_list' => MenuIconPicker::setMenuIconPickerContents( $nifty_menu_id, $selected_icon ),
                 'selected_icon' => $selected_icon,
             )
         );
