@@ -94,10 +94,11 @@ final class MenuIconPicker
     public static function MenuIconPickerOption( $id, $item, $depth, $args ) {
         $get_current_menu_id = Helper::GlobalNavMenuSelectedId();
         $get_menu_icon = Metabox::GetMenuIcon( $id );
-        $link_text = esc_html__( 'Change Icon:', 'nifty-menu-options' );
+        $get_menu_icon_color = Metabox::GetMenuIconColor( $id );
+        $link_text = esc_html__( 'Change Icon', 'nifty-menu-options' );
 
         if ( empty ( $get_menu_icon ) ) {
-            $link_text = esc_html__( 'Add Icon: Select Here', 'nifty-menu-options' );
+            $link_text = esc_html__( 'Add Icon', 'nifty-menu-options' );
         }
 
         $thickbox_args = array(
@@ -110,6 +111,7 @@ final class MenuIconPicker
             'width' => esc_attr( '600' ),
             'height' => esc_attr( '550' ),
             'link_text' => $link_text,
+            'link_text_class'  => esc_attr( 'button button-small' ),
             'link_text_after' => '<i class="material-icons nifty-icon-selected nifty-icon-selected-'. esc_attr( $id ) .'">' . esc_html( $get_menu_icon ) . '</i>',
         );
 
@@ -129,8 +131,7 @@ final class MenuIconPicker
                     </div>
                 </div>
                 <div class="nifty-icon-color-picker-wrap nifty-section">
-                    <label><?php echo esc_html__( 'Select Icon Color:', 'nifty-menu-options' ); ?></label>
-                    <input type="text" value="#bada55" class="nifty-icon-color-picker" data-default-color="#effeff" id="nifty-menu-color-<?php echo esc_attr( $id ); ?>" name="nifty-menu-color-<?php echo esc_attr( $id ); ?>" />
+                    <input type="text" value="<?php echo esc_attr( $get_menu_icon_color ); ?>" class="nifty-icon-color-picker" data-default-color="<?php echo esc_attr( $get_menu_icon_color ); ?>" id="nifty-menu-color-<?php echo esc_attr( $id ); ?>" name="nifty-menu-color[<?php echo esc_attr( $id ); ?>]" />
                 </div>
             </div>
         </div>
@@ -175,7 +176,7 @@ final class MenuIconPicker
 
                     $content .= '<li class="nifty-icon-item">';
                         $content .= '<label class="nifty-icon-label ' . esc_attr( $is_selected ) . '">';
-                            $content .= '<input type="radio" class="nifty-icon-selector" ' . checked( $icon_value, $get_menu_icon, false ) . ' value="' . esc_attr( $icon_value ) . '" name="nifty-menu-options-icon-' . esc_attr( $id ) . '" data-id="' . esc_attr( $id ) . '" />';
+                            $content .= '<input type="radio" class="nifty-icon-selector" ' . checked( $icon_value, $get_menu_icon, false ) . ' value="' . esc_attr( $icon_value ) . '" name="nifty-menu-options-icon[' . esc_attr( $id ) . ']" data-id="' . esc_attr( $id ) . '" />';
                             $content .= '<i class="material-icons nifty-displayed-icon" data-id="' . esc_attr( $id ) . '">' . esc_html( $icon_value ) . '</i>';
                         $content .= '</label>';
                     $content .= '</li>';
@@ -216,20 +217,48 @@ final class MenuIconPicker
 
 		check_admin_referer( 'update-nav_menu', 'update-nav-menu-nonce' );
 
-        $menu_icon_name = 'nifty-menu-options-icon-' . $menu_item_db_id;
-        $sanitized_menu_icon = filter_input( INPUT_POST, $menu_icon_name, FILTER_SANITIZE_STRING );
+        // $menu_icon_name = 'nifty-menu-options-icon[' . $menu_item_db_id . ']';
+        // $menu_icon_color = 'nifty-menu-color[' . $menu_item_db_id . ']';
+        // $sanitized_menu_icon = filter_input( INPUT_POST, $menu_icon_name, FILTER_SANITIZE_STRING );
+        // $sanitized_menu_icon_color = filter_input( INPUT_POST, $menu_icon_color, FILTER_SANITIZE_STRING );
+
+        $menu_icon = '';
+        $menu_icon_name = 'nifty-menu-options-icon';
+        $menu_icon_color = '';
+        $menu_icon_color_name = 'nifty-menu-color';
+        $filters = [
+            $menu_icon_name => [
+                'filter' => FILTER_SANITIZE_STRING,
+                'flags'  => FILTER_FORCE_ARRAY
+            ],
+            $menu_icon_color_name => [
+                'filter' => FILTER_SANITIZE_STRING,
+                'flags'  => FILTER_FORCE_ARRAY
+            ],
+        ];
+
+        // Sanitize
+		if ( ! empty( $_POST[$menu_icon_name][ $menu_item_db_id ] ) ) {
+            $menu_icon = filter_input_array( INPUT_POST, $filters );
+            $menu_icon = $menu_icon[$menu_icon_name][ $menu_item_db_id ];
+		}
+
+		if ( ! empty( $_POST[$menu_icon_color_name][ $menu_item_db_id ] ) ) {
+            $menu_icon_color = filter_input_array( INPUT_POST, $filters );
+            $menu_icon_color = $menu_icon_color[$menu_icon_color_name][ $menu_item_db_id ];
+		}
 
         $nifty_icon_save_meta = array(
-            'icon_name' => $sanitized_menu_icon,
+            'icon_name' => $menu_icon,
+            'icon_color' => $menu_icon_color,
             'icon_library' => '',
             'icon_category' => '',
             'icon_position' => '',
-            'icon_color' => '',
             'icon_size' => ''
         );
-        if ( array_key_exists( $menu_icon_name, $_POST ) ) {
-            Metabox::UpdateMenuIcon( $menu_item_db_id, $nifty_icon_save_meta );
-        }
+        Metabox::UpdateMenuIcon( $menu_item_db_id, $nifty_icon_save_meta );
+        // if ( array_key_exists( $menu_icon_name, $_POST ) ) {
+        // }
 
         return;
     }

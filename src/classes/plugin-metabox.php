@@ -141,7 +141,7 @@ final class Metabox
     }
 
     /**
-     * Get menu item meta value
+     * Get menu item icon
      *
      * @since  1.0.0
      * @access public
@@ -149,14 +149,38 @@ final class Metabox
      * @return string $menu_icon
      */
     public static function GetMenuIcon( $id ) {
+        $get_menu_icon = '';
         $menu_icon = '';
 
         if ( ! empty ( $id ) ) {
-            $menu_icon = get_post_meta( $id, self::METAKEY, true );
+            $get_menu_icon = get_post_meta( $id, self::METAKEY, true );
         }
-        return $menu_icon['icon_name'];
+        if ( ! empty( $get_menu_icon['icon_name'] ) ) {
+            $menu_icon = $get_menu_icon['icon_name'];
+        }
+        return $menu_icon;
     }
 
+    /**
+     * Get menu item icon color
+     *
+     * @since  1.0.0
+     * @access public
+     * @param  int    $id       Menu item ID.
+     * @return string $menu_icon
+     */
+    public static function GetMenuIconColor( $id ) {
+        $get_menu_icon = '';
+        $menu_icon = '';
+
+        if ( ! empty ( $id ) ) {
+            $get_menu_icon = get_post_meta( $id, self::METAKEY, true );
+        }
+        if ( ! empty( $get_menu_icon['icon_color'] ) ) {
+            $menu_icon = $get_menu_icon['icon_color'];
+        }
+        return $menu_icon;
+    }
 
     /**
      * Update menu item metadata

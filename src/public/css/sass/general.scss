@@ -18,6 +18,11 @@
         display: inline-block;
         vertical-align: middle;
     }
+    .nifty-icon-selected {
+        color: #212121;
+        font-size: 18px;
+        margin-left: 5px;
+    }
 }
 .nifty-section {
     padding: 5px 3px;
@@ -27,7 +32,21 @@
         margin-top: 0;
     }
 }
-
+// Thinkbox Modal
+#TB_title {
+    &.nifty-thickbox-title {
+        height: auto;
+        min-height: 40px;
+    }
+    #TB_ajaxWindowTitle {
+        h2 {
+            width: 100%;
+            margin: 0;
+            padding: 5px 0;
+            display: inline-block;
+        }
+    }
+}
 
 ul.nifty-icon-selector-container {
     display: flex;
@@ -66,5 +85,11 @@ ul.nifty-icon-selector-container {
             font-size: 1.25em;
             transition: transform 0.15s ease-in-out;
         }
+    }
+}
+
+.nifty-icon-color-picker-wrap {
+    .wp-color-result.button {
+        margin: 0;
     }
 }

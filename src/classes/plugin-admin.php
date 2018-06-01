@@ -92,7 +92,7 @@ final class Admin
     public function enqueueScripts()
     {
         add_thickbox();
-        
+
         // Add the color picker css file
         wp_enqueue_style( 'wp-color-picker' );
 
@@ -112,6 +112,7 @@ final class Admin
             array(
                 'ajaxurl' => admin_url('admin-ajax.php'),
                 'loading' => '<div class="loading-wrapper"><span class="loading"></span></div>',
+                'thickbox_title' => '<h2>'. __( 'Select Nifty Icon', 'nifty-menu-options' ) .'</h2>',
                 'iconset' => $this->getIcons(),
             )
         );
@@ -194,6 +195,12 @@ final class Admin
     {
         header('Content-Type: application/json');
 
+        $nifty_setting = filter_input(
+            INPUT_POST,
+            'nifty-setting',
+            FILTER_SANITIZE_STRING
+        );
+
         $nifty_menu_id = filter_input(
             INPUT_POST,
             'nifty-menu-id',
@@ -206,13 +213,17 @@ final class Admin
             FILTER_SANITIZE_STRING
         );
 
-        echo wp_json_encode(
-            array(
-                'status' => 202,
-                'nifty_icon_picker_list' => MenuIconPicker::setMenuIconPickerContents( $nifty_menu_id, $selected_icon ),
-                'selected_icon' => $selected_icon,
-            )
-        );
+        if ( 'nifty-icon-picker' === $nifty_setting ) {
+            echo wp_json_encode(
+                array(
+                    'status' => 202,
+                    'nifty_setting' => $nifty_setting,
+                    'nifty_icon_picker_list' => MenuIconPicker::setMenuIconPickerContents( $nifty_menu_id, $selected_icon ),
+                    'selected_icon' => $selected_icon,
+                )
+            );
+        }
+
         die();
     }
 }
