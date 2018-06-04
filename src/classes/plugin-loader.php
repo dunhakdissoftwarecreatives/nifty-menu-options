@@ -112,6 +112,10 @@ final class Loader
         /**
          * This class handles the registers the plugin icon picker.
          */
+        include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/resources/includes/library/custom-fields/nifty-menu-item-custom-fields.php';
+        /**
+         * This class handles the registers the plugin icon picker.
+         */
         include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/resources/class-menu-icon-picker.php';
         /**
          * This class handles all the defined hooks in the WordPress backend.
@@ -126,8 +130,6 @@ final class Loader
         $this->loader = new \DSC\NiftyMenuOptions\Hooks();
 
         new \DSC\NiftyMenuOptions\Language();
-
-        new \DSC\NiftyMenuOptions\MenuIconPicker();
 
         new \DSC\NiftyMenuOptions\Metabox();
 

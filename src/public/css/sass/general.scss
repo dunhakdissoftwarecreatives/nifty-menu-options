@@ -87,7 +87,23 @@ ul.nifty-icon-selector-container {
         }
     }
 }
-
+.wp-core-ui .button {
+    &.nifty-remove-icon {
+        transition: color 0.25s ease-in-out,
+                    border-color 0.25s ease-in-out,
+                    box-shadow 0.25s ease-in-out;
+        float: right;
+        &:hover {
+            color: #F44336;
+            border-color: #F44336;
+        }
+        &:focus {
+            color: #F44336;
+            border-color: #F44336;
+            box-shadow: 0 0 3px rgba(244, 67, 54, 0.8);
+        }
+    }
+}
 .nifty-icon-color-picker-wrap {
     .wp-color-result.button {
         margin: 0;

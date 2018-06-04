@@ -17,10 +17,23 @@ jQuery(document).ready( function($) {
         });
     });
 
+    $('.nifty-remove-icon').on( 'click', function(e) {
+        e.preventDefault();
+        $( this ).siblings('.nifty-icon-picker').find('.thickbox-link-text').text( nifty_menu_options_admin_object.add_icon );
+        $( this ).siblings('.nifty-icon-picker').find('.nifty-icon-selected').text('');
+        $( this ).siblings('.nifty-thickbox-container').find('.nifty-icon-label.selected .nifty-icon-selector').val('');
+        $( this ).siblings('.nifty-thickbox-container').find('.nifty-icon-label.selected').removeClass('selected');
+    });
+
     $('.nifty-icon-picker').on( 'click', function(e) {
         e.preventDefault();
+        var new_selected_icon = '';
         var $menu_id = $( this ).siblings('.nifty-menu-settings').find('.nifty-menu-id').attr('value');
         var $selected_icon = $( this ).find('.nifty-icon-selected').text();
+        var data_value = $( this ).siblings('.nifty-thickbox-container').find('.nifty-icon-label.selected .nifty-icon-selector').attr('data-value');
+
+        $( this ).find('.thickbox-link-text').text( nifty_menu_options_admin_object.change_icon );
+        $( this ).siblings('.nifty-thickbox-container').find('.nifty-icon-label.selected .nifty-icon-selector').val(data_value);
 
         $.ajax({
             type: 'POST',
@@ -44,7 +57,7 @@ jQuery(document).ready( function($) {
                     $('#TB_title').addClass('nifty-thickbox-title');
                     $('#TB_ajaxWindowTitle').append(nifty_menu_options_admin_object.thickbox_title);
                 }, 2000);
-                $('.nifty-thickbox-content').addClass('loading').html(nifty_menu_options_admin_object.loading);
+                $(this).siblings('.nifty-thickbox-container').find('.nifty-thickbox-content').addClass('loading').html(nifty_menu_options_admin_object.loading);
             },
 
             success: function( response ) {
@@ -52,6 +65,10 @@ jQuery(document).ready( function($) {
                 // console.log( response.status );
                 if ( response.status == 202 ) {
                     $( '#TB_ajaxContent .nifty-thickbox-content' ).removeClass( 'loading' ).html( response.nifty_icon_picker_list );
+
+                    new_selected_icon = $( '#TB_ajaxContent .nifty-thickbox-content' ).find( '.nifty-icon-label.selected .nifty-displayed-icon' ).text();
+
+                    $( this ).siblings('.nifty-icon-picker').find('.nifty-icon-selected').text(new_selected_icon);
                 } else {
                 }
             }

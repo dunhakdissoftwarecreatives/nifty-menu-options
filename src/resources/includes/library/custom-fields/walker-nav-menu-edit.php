@@ -13,7 +13,7 @@
  *
  * PHP Version 5.4
  *
- * @category NiftyMenuOptions\CustomMenuEditorWalkerFields
+ * @category NiftyMenuOptions\Nifty_Menu_Item_Custom_Fields_Walker
  * @package  NiftyMenuOptions
  * @author   Dunhakdis Software Creatives <emailnotdisplayed@domain.tld>
  * @author   Jasper J. <emailnotdisplayed@domain.tld>
@@ -32,7 +32,7 @@ if (! defined('ABSPATH')) {
 /**
  * The class that handles Menu Icon picker.
  *
- * @category NiftyMenuOptions\CustomMenuEditorWalkerFields
+ * @category NiftyMenuOptions\Nifty_Menu_Item_Custom_Fields_Walker
  * @package  NiftyMenuOptions
  * @author   Dunhakdis Software Creatives <emailnotdisplayed@domain.tld>
  * @author   Jasper J. <emailnotdisplayed@domain.tld>
@@ -40,7 +40,7 @@ if (! defined('ABSPATH')) {
  * @link     https://github.com/jasperjardin/nifty-menu-options
  * @since    1.0.0
  */
-class CustomMenuEditorWalkerFields extends \Walker_Nav_Menu_Edit
+class Nifty_Menu_Item_Custom_Fields_Walker extends \Walker_Nav_Menu_Edit
 {
 
 	/**
@@ -103,7 +103,7 @@ class CustomMenuEditorWalkerFields extends \Walker_Nav_Menu_Edit
 		 *
 		 * @return string Custom fields HTML.
 		 */
-		do_action( 'wp_nav_menu_item_custom_fields', $item->ID, $item, $depth, $args, $id );
+		do_action( 'wp_nav_nifty_menu_item_custom_fields', $item->ID, $item, $depth, $args, $id );
 
 		return ob_get_clean();
 	}

@@ -99,12 +99,11 @@ final class Admin
         wp_register_script(
             $this->name,
             plugin_dir_url( dirname( __FILE__ ) ) . 'public/js/admin-nifty-menu-options.js',
-            array('jquery'),
+            array( 'jquery', 'wp-color-picker' ),
             $this->version,
             false
         );
         wp_enqueue_script($this->name);
-        $icons = new MenuIconPicker();
 
         wp_localize_script(
             $this->name,
@@ -113,13 +112,11 @@ final class Admin
                 'ajaxurl' => admin_url('admin-ajax.php'),
                 'loading' => '<div class="loading-wrapper"><span class="loading"></span></div>',
                 'thickbox_title' => '<h2>'. __( 'Select Nifty Icon', 'nifty-menu-options' ) .'</h2>',
-                'iconset' => $this->getIcons(),
+                'add_icon' => __( 'Add Icon', 'nifty-menu-options' ),
+                'change_icon' => __( 'Change Icon', 'nifty-menu-options' ),
             )
         );
         return;
-    }
-    public function getIcons() {
-        do_action('NiftyIcons');
     }
 
      /**

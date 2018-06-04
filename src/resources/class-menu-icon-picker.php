@@ -50,7 +50,7 @@ final class MenuIconPicker
      */
     public static function Init() {
         add_filter( 'wp_edit_nav_menu_walker', array( __CLASS__, 'FilterWpEditNavMenuWalkerClass' ), 99 );
-        add_filter( 'wp_nav_menu_item_custom_fields', array( __CLASS__, 'MenuIconPickerOption' ), 10, 4 );
+        add_filter( 'wp_nav_nifty_menu_item_custom_fields', array( __CLASS__, 'MenuIconPickerOption' ), 10, 4 );
         add_action( 'wp_update_nav_menu_item', array( __CLASS__, 'SaveMenuIcon' ), 10, 3 );
         return;
     }
@@ -66,10 +66,11 @@ final class MenuIconPicker
 	 */
 	public static function FilterWpEditNavMenuWalkerClass( $walker ) {
 		// Load menu item custom fields plugin
-		if ( ! class_exists( 'CustomMenuEditorWalkerFields' ) ) {
+        $walker = 'DSC\NiftyMenuOptions\Nifty_Menu_Item_Custom_Fields_Walker';
+
+		if ( ! class_exists( $walker ) ) {
 			require_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/resources/includes/library/custom-fields/walker-nav-menu-edit.php';
 		}
-		$walker = 'CustomMenuEditorWalkerFields';
 
 		return $walker;
 	}
@@ -87,7 +88,7 @@ final class MenuIconPicker
 	 *
      * @uses    add_action() Calls 'nifty_menu_options_before_fields' hook
      * @uses    add_action() Calls 'nifty_menu_options_after_fields' hook
-     * @wp_hook action       wp_nav_menu_item_custom_fields
+     * @wp_hook action       wp_nav_nifty_menu_item_custom_fields
      *
 	 * @return string Form fields
 	 */
@@ -126,6 +127,9 @@ final class MenuIconPicker
             <div class="nifty-menu-options-settings-inner">
                 <div class="nifty-icon-selector-wrap nifty-section">
                     <?php $thickbox_class->getThickBox(); ?>
+
+                    <a href="#" class="nifty-remove-icon button button-small"><?php echo esc_html__( 'Remove Icon', 'nifty-menu-options' ); ?></a>
+
                     <div class="_settings hidden nifty-menu-settings">
                         <input type="text" class="nifty-menu-id" name="nifty-menu-id" value="<?php echo esc_attr( $id ); ?>">
                     </div>
@@ -176,7 +180,7 @@ final class MenuIconPicker
 
                     $content .= '<li class="nifty-icon-item">';
                         $content .= '<label class="nifty-icon-label ' . esc_attr( $is_selected ) . '">';
-                            $content .= '<input type="radio" class="nifty-icon-selector" ' . checked( $icon_value, $get_menu_icon, false ) . ' value="' . esc_attr( $icon_value ) . '" name="nifty-menu-options-icon[' . esc_attr( $id ) . ']" data-id="' . esc_attr( $id ) . '" />';
+                            $content .= '<input type="radio" class="nifty-icon-selector" ' . checked( $icon_value, $get_menu_icon, false ) . ' value="' . esc_attr( $icon_value ) . '" data-value="' . esc_attr( $icon_value ) . '" name="nifty-menu-options-icon[' . esc_attr( $id ) . ']" data-id="' . esc_attr( $id ) . '" />';
                             $content .= '<i class="material-icons nifty-displayed-icon" data-id="' . esc_attr( $id ) . '">' . esc_html( $icon_value ) . '</i>';
                         $content .= '</label>';
                     $content .= '</li>';
@@ -241,7 +245,9 @@ final class MenuIconPicker
 		if ( ! empty( $_POST[$menu_icon_name][ $menu_item_db_id ] ) ) {
             $menu_icon = filter_input_array( INPUT_POST, $filters );
             $menu_icon = $menu_icon[$menu_icon_name][ $menu_item_db_id ];
-		}
+		} else {
+            $menu_icon = Metabox::GetMenuIcon( $menu_item_db_id );
+        }
 
 		if ( ! empty( $_POST[$menu_icon_color_name][ $menu_item_db_id ] ) ) {
             $menu_icon_color = filter_input_array( INPUT_POST, $filters );
@@ -256,9 +262,8 @@ final class MenuIconPicker
             'icon_position' => '',
             'icon_size' => ''
         );
+
         Metabox::UpdateMenuIcon( $menu_item_db_id, $nifty_icon_save_meta );
-        // if ( array_key_exists( $menu_icon_name, $_POST ) ) {
-        // }
 
         return;
     }
