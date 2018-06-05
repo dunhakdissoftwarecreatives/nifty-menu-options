@@ -43,28 +43,31 @@ final class IconLibrary
      *
      * @since  1.0.0
      * @uses   add_filter() Calls 'DSC/NiftyMenuOptions/IconLibrary/GetIcons' hook
-     * @return array $icons List of icons.
+     * @return array $get_icons List of icons.
      */
-    public static function GetIcons( $icon_library = '' )
+    public static function GetIcons( $set_icon_library = '' )
     {
-        if ( empty( $icon_library ) ) {
-            $icons = self::getMateriIcons();
-        } else {
-            $icons = array(
-                '3d_rotation',
-                'accessibility',
-                'accessibility_new',
-                'accessible',
-                'accessible_forward',
-                'account_balance',
-                'account_balance_wallet',
-                'account_box',
-                'account_circle',
-                'add_shopping_cart',
-            );
+        $get_icons = '';
+        $default_libraries = array(
+            'material_icons' => self::getMateriIcons(),
+        );
+
+        $icon_libraries = apply_filters(
+            'DSC/NiftyMenuOptions/IconLibrary/add_icon_library',
+            $default_libraries
+        );
+
+        foreach ( $icon_libraries as $icon_library => $icons) {
+            if ( ! empty( $set_icon_library ) ) {
+                if( $icon_library === $set_icon_library) {
+                    $get_icons = $icons;
+                }
+            } else {
+                $get_icons = $icon_libraries['material_icons'];
+            }
         }
 
-        return apply_filters( 'DSC/NiftyMenuOptions/IconLibrary/GetIcons', $icons );
+        return apply_filters( 'DSC/NiftyMenuOptions/IconLibrary/get_icon_library', $get_icons );
     }
 
     /**

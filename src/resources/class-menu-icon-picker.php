@@ -49,7 +49,7 @@ final class MenuIconPicker
      * @return void
      */
     public static function Init() {
-        add_filter( 'wp_edit_nav_menu_walker', array( __CLASS__, 'FilterWpEditNavMenuWalkerClass' ), 99 );
+        add_filter( 'wp_edit_nav_menu_walker', array( __CLASS__, 'FilterWpEditNavMenuWalkerClass' ), 100 );
         add_filter( 'wp_nav_nifty_menu_item_custom_fields', array( __CLASS__, 'MenuIconPickerOption' ), 10, 4 );
         add_action( 'wp_update_nav_menu_item', array( __CLASS__, 'SaveMenuIcon' ), 10, 3 );
         return;
@@ -96,7 +96,14 @@ final class MenuIconPicker
         $get_current_menu_id = Helper::GlobalNavMenuSelectedId();
         $get_menu_icon = Metabox::GetMenuIcon( $id );
         $get_menu_icon_color = Metabox::GetMenuIconColor( $id );
+        $get_menu_icon_position = Metabox::GetMenuIconPosition( $id );
+        $icon_position = $get_menu_icon_position['position'];
+        $get_menu_icon_size = Metabox::GetMenuIconSize( $id );
+        $icon_size = $get_menu_icon_size['size'];
+
         $link_text = esc_html__( 'Change Icon', 'nifty-menu-options' );
+        $gutter_placeholder = esc_attr__( '15px', 'nifty-menu-options' );
+        $size_placeholder = esc_attr__( '15px', 'nifty-menu-options' );
 
         if ( empty ( $get_menu_icon ) ) {
             $link_text = esc_html__( 'Add Icon', 'nifty-menu-options' );
@@ -112,8 +119,8 @@ final class MenuIconPicker
             'width' => esc_attr( '600' ),
             'height' => esc_attr( '550' ),
             'link_text' => $link_text,
-            'link_text_class'  => esc_attr( 'button button-small' ),
-            'link_text_after' => '<i class="material-icons nifty-icon-selected nifty-icon-selected-'. esc_attr( $id ) .'">' . esc_html( $get_menu_icon ) . '</i>',
+            'link_text_class'  => esc_attr( 'button button-small thickbox-link-text-'.$id ),
+            'link_text_after' => '<i class="material-icons nifty-icon-selected nifty-icon-selected-'. esc_attr( $id ) .'" data-status="" style="color:'. esc_attr( $get_menu_icon_color ) .';">' . esc_html( $get_menu_icon ) . '</i>',
         );
 
         $thickbox_class = new ThickBox( $thickbox_args );
@@ -128,14 +135,29 @@ final class MenuIconPicker
                 <div class="nifty-icon-selector-wrap nifty-section">
                     <?php $thickbox_class->getThickBox(); ?>
 
-                    <a href="#" class="nifty-remove-icon button button-small"><?php echo esc_html__( 'Remove Icon', 'nifty-menu-options' ); ?></a>
+                    <a href="#" class="nifty-remove-icon" title="<?php echo esc_attr__( 'Remove Icon', 'nifty-menu-options' ); ?>"><i class="dashicons-before dashicons-trash"></i></a>
 
                     <div class="_settings hidden nifty-menu-settings">
                         <input type="text" class="nifty-menu-id" name="nifty-menu-id" value="<?php echo esc_attr( $id ); ?>">
+                        <input type="text" class="nifty-remove-icon-field" name="nifty-remove-icon[<?php echo esc_attr( $id ); ?>]" value="">
                     </div>
                 </div>
                 <div class="nifty-icon-color-picker-wrap nifty-section">
                     <input type="text" value="<?php echo esc_attr( $get_menu_icon_color ); ?>" class="nifty-icon-color-picker" data-default-color="<?php echo esc_attr( $get_menu_icon_color ); ?>" id="nifty-menu-color-<?php echo esc_attr( $id ); ?>" name="nifty-menu-color[<?php echo esc_attr( $id ); ?>]" />
+                </div>
+                <div class="nifty-icon-gutters-wrap label_vcenter nifty-section">
+                    <label for="nifty-icon-gutter-top-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Top:', 'nifty-menu-options' ); ?></label>
+                    <input type="text" value="<?php echo esc_attr( $icon_position['top'] ); ?>" min="1" class="nifty-icon-gutter small-text" id="nifty-icon-gutter-top-<?php echo esc_attr( $id ); ?>" name="nifty-icon-gutter[top][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo $gutter_placeholder; ?>"/>
+                    <label for="nifty-icon-gutter-right-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Right:', 'nifty-menu-options' ); ?></label>
+                    <input type="text" value="<?php echo esc_attr( $icon_position['right'] ); ?>" min="1" class="nifty-icon-gutter small-text" id="nifty-icon-gutter-right-<?php echo esc_attr( $id ); ?>" name="nifty-icon-gutter[right][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo $gutter_placeholder; ?>"/>
+                    <label for="nifty-icon-gutter-bottom-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Bottom:', 'nifty-menu-options' ); ?></label>
+                    <input type="text" value="<?php echo esc_attr( $icon_position['bottom'] ); ?>" min="1" class="nifty-icon-gutter small-text" id="nifty-icon-gutter-bottom-<?php echo esc_attr( $id ); ?>" name="nifty-icon-gutter[bottom][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo $gutter_placeholder; ?>"/>
+                    <label for="nifty-icon-gutter-left-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Left:', 'nifty-menu-options' ); ?></label>
+                    <input type="text" value="<?php echo esc_attr( $icon_position['left'] ); ?>" min="1" class="nifty-icon-gutter small-text" id="nifty-icon-gutter-left-<?php echo esc_attr( $id ); ?>" name="nifty-icon-gutter[left][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo $gutter_placeholder; ?>"/>
+                </div>
+                <div class="nifty-icon-size-wrap label_vcenter nifty-section">
+                    <label for="nifty-icon-size-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Icon Size:', 'nifty-menu-options' ); ?></label>
+                    <input type="text" value="<?php echo esc_attr( $icon_size ); ?>" min="1" class="nifty-icon-size small-text" id="nifty-icon-size-<?php echo esc_attr( $id ); ?>" name="nifty-icon-size[<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo $size_placeholder; ?>"/>
                 </div>
             </div>
         </div>
@@ -165,8 +187,6 @@ final class MenuIconPicker
 
             if ( !empty( $selected_icon ) ) {
                 $get_menu_icon = $selected_icon;
-            } else {
-                $get_menu_icon = Metabox::GetMenuIcon( $id );
             }
 
             $content .= '<ul class="nifty-icon-selector-container">';
@@ -230,6 +250,13 @@ final class MenuIconPicker
         $menu_icon_name = 'nifty-menu-options-icon';
         $menu_icon_color = '';
         $menu_icon_color_name = 'nifty-menu-color';
+        $menu_icon_gutter = '';
+        $menu_icon_gutter_array = array();
+        $menu_icon_gutter_name = 'nifty-icon-gutter';
+        $menu_icon_size = '';
+        $menu_icon_size_name = 'nifty-icon-size';
+        $remove_icon = '';
+        $remove_icon_name = 'nifty-remove-icon';
         $filters = [
             $menu_icon_name => [
                 'filter' => FILTER_SANITIZE_STRING,
@@ -239,28 +266,72 @@ final class MenuIconPicker
                 'filter' => FILTER_SANITIZE_STRING,
                 'flags'  => FILTER_FORCE_ARRAY
             ],
+            $menu_icon_gutter_name => [
+                'filter' => FILTER_SANITIZE_STRING,
+                'flags'  => FILTER_FORCE_ARRAY
+            ],
+            $menu_icon_size_name => [
+                'filter' => FILTER_SANITIZE_STRING,
+                'flags'  => FILTER_FORCE_ARRAY
+            ],
+            $remove_icon_name => [
+                'filter' => FILTER_SANITIZE_STRING,
+                'flags'  => FILTER_FORCE_ARRAY
+            ],
         ];
 
         // Sanitize
-		if ( ! empty( $_POST[$menu_icon_name][ $menu_item_db_id ] ) ) {
+		if ( ! empty( $_POST[ $menu_icon_name ][ $menu_item_db_id ] ) ) {
             $menu_icon = filter_input_array( INPUT_POST, $filters );
-            $menu_icon = $menu_icon[$menu_icon_name][ $menu_item_db_id ];
+            $menu_icon = $menu_icon[ $menu_icon_name ][ $menu_item_db_id ];
 		} else {
             $menu_icon = Metabox::GetMenuIcon( $menu_item_db_id );
         }
 
-		if ( ! empty( $_POST[$menu_icon_color_name][ $menu_item_db_id ] ) ) {
+		if ( ! empty( $_POST[ $menu_icon_color_name ][ $menu_item_db_id ] ) ) {
             $menu_icon_color = filter_input_array( INPUT_POST, $filters );
-            $menu_icon_color = $menu_icon_color[$menu_icon_color_name][ $menu_item_db_id ];
+            $menu_icon_color = $menu_icon_color[ $menu_icon_color_name ][ $menu_item_db_id ];
 		}
 
+		if ( ! empty( $_POST[ $menu_icon_gutter_name ][ 'top' ][ $menu_item_db_id ]  ) ) {
+            $menu_icon_gutter = filter_input_array( INPUT_POST, $filters );
+            $menu_icon_gutter_array['top'] = $menu_icon_gutter[ $menu_icon_gutter_name ][ 'top' ][ $menu_item_db_id ];
+		}
+		if ( ! empty( $_POST[ $menu_icon_gutter_name ][ 'right' ][ $menu_item_db_id ]  ) ) {
+            $menu_icon_gutter = filter_input_array( INPUT_POST, $filters );
+            $menu_icon_gutter_array['right'] = $menu_icon_gutter[ $menu_icon_gutter_name ][ 'right' ][ $menu_item_db_id ];
+		}
+		if ( ! empty( $_POST[ $menu_icon_gutter_name ][ 'bottom' ][ $menu_item_db_id ]  ) ) {
+            $menu_icon_gutter = filter_input_array( INPUT_POST, $filters );
+            $menu_icon_gutter_array['bottom'] = $menu_icon_gutter[ $menu_icon_gutter_name ][ 'bottom' ][ $menu_item_db_id ];
+		}
+		if ( ! empty( $_POST[ $menu_icon_gutter_name ][ 'left' ][ $menu_item_db_id ]  ) ) {
+            $menu_icon_gutter = filter_input_array( INPUT_POST, $filters );
+            $menu_icon_gutter_array['left'] = $menu_icon_gutter[ $menu_icon_gutter_name ][ 'left' ][ $menu_item_db_id ];
+		}
+
+        if ( ! empty( $_POST[ $menu_icon_size_name ][ $menu_item_db_id ] ) ) {
+            $menu_icon_size = filter_input_array( INPUT_POST, $filters );
+            $menu_icon_size = $menu_icon_size[ $menu_icon_size_name ][ $menu_item_db_id ];
+        }
+        if ( ! empty( $_POST[ $remove_icon_name ][ $menu_item_db_id ] ) ) {
+            $remove_icon = filter_input_array( INPUT_POST, $filters );
+            $remove_icon = $remove_icon[ $remove_icon_name ][ $menu_item_db_id ];
+        }
+
+        if ( 'true' === $remove_icon ) {
+            $menu_icon = '';
+        }
+
         $nifty_icon_save_meta = array(
+            'menu_id' => $menu_item_db_id,
             'icon_name' => $menu_icon,
             'icon_color' => $menu_icon_color,
             'icon_library' => '',
             'icon_category' => '',
-            'icon_position' => '',
-            'icon_size' => ''
+            'icon_position' => $menu_icon_gutter_array,
+            'icon_size' => $menu_icon_size,
+            'display_icon' => $remove_icon
         );
 
         Metabox::UpdateMenuIcon( $menu_item_db_id, $nifty_icon_save_meta );

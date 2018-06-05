@@ -4,10 +4,11 @@
 }
 .nifty-menu-options-settings-inner {
     display: block;
-    padding: 0;
     color: #72777c;
     font-size: 12px;
     font-style: italic;
+    padding: 0 5px;
+    border: 1px solid #ddd;
 }
 .nifty-icon-picker {
     text-decoration: none;
@@ -25,11 +26,15 @@
     }
 }
 .nifty-section {
-    padding: 5px 3px;
-    border: 1px solid #ddd;
-    margin: 10px 0;
-    &.nifty-icon-selector-wrap {
+    padding: 10px 0 10px;
+    margin: 0;
+    border-bottom: 1px solid #ddd;
+    &:first-child {
         margin-top: 0;
+    }
+    &:last-child {
+        margin-bottom: 0;
+        border-bottom: none;
     }
 }
 // Thinkbox Modal
@@ -87,22 +92,21 @@ ul.nifty-icon-selector-container {
         }
     }
 }
-.wp-core-ui .button {
-    &.nifty-remove-icon {
-        transition: color 0.25s ease-in-out,
-                    border-color 0.25s ease-in-out,
-                    box-shadow 0.25s ease-in-out;
-        float: right;
-        &:hover {
-            color: #F44336;
-            border-color: #F44336;
-        }
-        &:focus {
-            color: #F44336;
-            border-color: #F44336;
-            box-shadow: 0 0 3px rgba(244, 67, 54, 0.8);
-        }
+.nifty-remove-icon {
+    color: #72777c;
+    transition: color 0.25s ease-in-out;
+    float: right;
+    &:hover {
+        color: #F44336;
     }
+    &:focus {
+        color: #F44336;
+        box-shadow: none;
+    }
+}
+.label_vcenter label {
+    position: relative;
+    top: -4.5px;
 }
 .nifty-icon-color-picker-wrap {
     .wp-color-result.button {

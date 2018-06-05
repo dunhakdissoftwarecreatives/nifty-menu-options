@@ -72,3 +72,19 @@ function nifty_menu_options_activate()
 // // Bootstrap the plugin.
 $plugin = new \DSC\NiftyMenuOptions\Loader();
 $plugin->runner();
+
+/**
+ * @todo Remove this later on releasing
+ */
+add_filter( 'DSC/NiftyMenuOptions/IconLibrary/add_icon_library', 'my_library' );
+function my_library( $icon_libraries ) {
+    $icon_libraries['my_library'] = array(
+        '3d_rotation',
+        'ac_unit',
+        'access_alarm',
+        'access_alarms',
+        'access_time',
+        'accessibility'
+    );
+    return $icon_libraries;
+}

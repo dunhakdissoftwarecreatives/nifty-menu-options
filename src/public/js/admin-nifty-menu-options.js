@@ -5,6 +5,8 @@ jQuery(document).ready( function($) {
        var $selected_icon = $(this).attr('value');
        var $selected_icon_id = $(this).attr('data-id');
 
+       $( '.thickbox-link-text-' + $selected_icon_id ).text( nifty_menu_options_admin_object.change_icon );
+
        $( '.nifty-icon-label' ).removeClass( 'selected' );
        $( this ).parent().addClass( 'selected' );
        $( '.nifty-icon-selected-' + $selected_icon_id ).text( $selected_icon );
@@ -20,9 +22,10 @@ jQuery(document).ready( function($) {
     $('.nifty-remove-icon').on( 'click', function(e) {
         e.preventDefault();
         $( this ).siblings('.nifty-icon-picker').find('.thickbox-link-text').text( nifty_menu_options_admin_object.add_icon );
-        $( this ).siblings('.nifty-icon-picker').find('.nifty-icon-selected').text('');
+        $( this ).siblings('.nifty-icon-picker').find('.nifty-icon-selected').text( '' );
         $( this ).siblings('.nifty-thickbox-container').find('.nifty-icon-label.selected .nifty-icon-selector').val('');
         $( this ).siblings('.nifty-thickbox-container').find('.nifty-icon-label.selected').removeClass('selected');
+        $( this ).siblings('.nifty-menu-settings').find('.nifty-remove-icon-field').attr( 'value', 'true' );
     });
 
     $('.nifty-icon-picker').on( 'click', function(e) {
@@ -32,7 +35,8 @@ jQuery(document).ready( function($) {
         var $selected_icon = $( this ).find('.nifty-icon-selected').text();
         var data_value = $( this ).siblings('.nifty-thickbox-container').find('.nifty-icon-label.selected .nifty-icon-selector').attr('data-value');
 
-        $( this ).find('.thickbox-link-text').text( nifty_menu_options_admin_object.change_icon );
+        $( this ).siblings('.nifty-menu-settings').find('.nifty-remove-icon-field').attr( 'value', 'false' );
+
         $( this ).siblings('.nifty-thickbox-container').find('.nifty-icon-label.selected .nifty-icon-selector').val(data_value);
 
         $.ajax({
@@ -56,7 +60,7 @@ jQuery(document).ready( function($) {
                 setTimeout(function(){
                     $('#TB_title').addClass('nifty-thickbox-title');
                     $('#TB_ajaxWindowTitle').append(nifty_menu_options_admin_object.thickbox_title);
-                }, 2000);
+                }, 100);
                 $(this).siblings('.nifty-thickbox-container').find('.nifty-thickbox-content').addClass('loading').html(nifty_menu_options_admin_object.loading);
             },
 
@@ -69,40 +73,18 @@ jQuery(document).ready( function($) {
                     new_selected_icon = $( '#TB_ajaxContent .nifty-thickbox-content' ).find( '.nifty-icon-label.selected .nifty-displayed-icon' ).text();
 
                     $( this ).siblings('.nifty-icon-picker').find('.nifty-icon-selected').text(new_selected_icon);
-                } else {
                 }
             }
 
         });
     });
 
-    $( '.nifty-icon-color-picker' ).wpColorPicker();
-    // $('.nifty-icon-color-picker').parents('.wp-picker-container').on( 'click', function(e) {
-    //     e.preventDefault();
-    //     console.log( $(this).find('.wp-color-result').attr('style', 'background-color') );
-    //     console.log( $(this).find('.nifty-icon-color-picker').attr('name') );
-    //     console.log( $(this).find('.nifty-icon-color-picker').attr('name') );
-    //     console.log( $(this).find('.nifty-icon-color-picker').val() );
-    // });
-    // $( '.nifty-icon-color-picker' ).each(function() {
-    //
-	// 	var block	= $( this ).parents( 'div.gppro-input' );
-	// 	var target	= $( block ).find( 'input.gppro-color-value' ).data( 'target' );
-	// 	var type	= $( block ).find( 'input.gppro-color-value' ).data( 'type' );
-	// 	var view	= $( block ).find( 'input.gppro-color-value' ).data( 'view' );
-    //
-	// 	$( this ).wpColorPicker({
-	// 		palettes:   true,
-	// 		change:		function( event, ui ) {
-	// 			var hexcolor = $( this ).wpColorPicker( 'color' );
-	// 			$( block ).find( 'input.gppro-color-value' ).val( hexcolor );
-	// 			// trigger the preview set
-	// 			if ( $( 'div.gppro-frame-wrap' ).is( ':visible' ) )
-	// 				gppro_color_preview( target, type, view, hexcolor );
-	// 		}
-	// 	});
-    //
-    //
-	// });
+    $( '.nifty-icon-color-picker' ).wpColorPicker({
+        // a callback to fire whenever the color changes to a valid color
+        change: function(event, ui) {
+            var hexcolor = $( this ).wpColorPicker( 'color' );
+            $( this ).parents( '.nifty-icon-color-picker-wrap' ).siblings('.nifty-icon-selector-wrap').find('.nifty-icon-selected').css( 'color', hexcolor );
+        }
+	});
 
 });

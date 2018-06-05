@@ -39,10 +39,11 @@
 
 .nifty-menu-options-settings-inner {
   display: block;
-  padding: 0;
   color: #72777c;
   font-size: 12px;
   font-style: italic;
+  padding: 0 5px;
+  border: 1px solid #ddd;
 }
 
 .nifty-icon-picker {
@@ -65,13 +66,18 @@
 }
 
 .nifty-section {
-  padding: 5px 3px;
-  border: 1px solid #ddd;
-  margin: 10px 0;
+  padding: 10px 0 10px;
+  margin: 0;
+  border-bottom: 1px solid #ddd;
 }
 
-.nifty-section.nifty-icon-selector-wrap {
+.nifty-section:first-child {
   margin-top: 0;
+}
+
+.nifty-section:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
 }
 
 #TB_title.nifty-thickbox-title {
@@ -131,20 +137,24 @@ ul.nifty-icon-selector-container .nifty-icon-label .nifty-displayed-icon {
   transition: transform 0.15s ease-in-out;
 }
 
-.wp-core-ui .button.nifty-remove-icon {
-  transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+.nifty-remove-icon {
+  color: #72777c;
+  transition: color 0.25s ease-in-out;
   float: right;
 }
 
-.wp-core-ui .button.nifty-remove-icon:hover {
+.nifty-remove-icon:hover {
   color: #F44336;
-  border-color: #F44336;
 }
 
-.wp-core-ui .button.nifty-remove-icon:focus {
+.nifty-remove-icon:focus {
   color: #F44336;
-  border-color: #F44336;
-  box-shadow: 0 0 3px rgba(244, 67, 54, 0.8);
+  box-shadow: none;
+}
+
+.label_vcenter label {
+  position: relative;
+  top: -4.5px;
 }
 
 .nifty-icon-color-picker-wrap .wp-color-result.button {

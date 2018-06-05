@@ -95,6 +95,57 @@ final class PublicPages
      */
     public function setEnqueueStyles()
     {
+        $plugin_dir_url = plugin_dir_url(dirname(__FILE__)) . 'public/css/icon-stylesheet/';
+
+        $enqueued_icon_libraries = apply_filters(
+            'nifty_enqueued_icon_libraries',
+            array(
+                'nifty-material-icon' => array(
+                    'id' => 'nifty-material-icon',
+                    'src' => 'material-icon.css',
+                    'enqueued' => true
+                )
+            )
+        );
+
+        if ( !empty( $enqueued_icon_libraries ) ) {
+            foreach ( $enqueued_icon_libraries as $enqueued_icon_library ) {
+
+                if ( empty( $enqueued_icon_library['version'] ) ) {
+                    $enqueued_icon_library['version'] = $this->version;
+                }
+
+                if ( empty( $enqueued_icon_library['dependencies'] ) ) {
+                    $enqueued_icon_library['dependencies'] = array();
+                }
+
+                if ( empty( $enqueued_icon_library['media'] ) ) {
+                    $enqueued_icon_library['media'] = 'all';
+                }
+
+                if ( $enqueued_icon_library['enqueued'] && empty( $enqueued_icon_library['external_src'] )) {
+                    wp_enqueue_style(
+                        $enqueued_icon_library['id'],
+                        $plugin_dir_url . $enqueued_icon_library['src'],
+                        $enqueued_icon_library['dependencies'],
+                        $enqueued_icon_library['version'],
+                        $enqueued_icon_library['media']
+                    );
+                }
+
+                if ( ! empty( $enqueued_icon_library['external_src'] ) ) {
+                    wp_enqueue_style(
+                        $enqueued_icon_library['id'],
+                        $enqueued_icon_library['external_src'],
+                        $enqueued_icon_library['dependencies'],
+                        $enqueued_icon_library['version'],
+                        $enqueued_icon_library['media']
+                    );
+                }
+
+            }
+        }
+
         return;
     }
 
@@ -133,7 +184,16 @@ final class PublicPages
     {
         $get_icon = Metabox::GetMenuIcon( $item->ID );
         $get_icon_color = Metabox::GetMenuIconColor( $item->ID );
-        $args->link_before = '<i class="material-icons nifty-displayed-icon" style="color:'.$get_icon_color.'">'.$get_icon.'</i>';
+        $get_icon_position = Metabox::GetMenuIconPosition( $item->ID );
+        $get_icon_position_css = $get_icon_position['css'];
+        $get_icon_size = Metabox::GetMenuIconSize( $item->ID );
+        $get_icon_size_css = $get_icon_size['css'];
+
+        if ( !empty( $get_icon ) ) {
+            $style = 'style="color:'.esc_attr($get_icon_color).'; margin:'.esc_attr($get_icon_position_css).'; font-size:'. esc_attr($get_icon_size_css) .';"';
+
+            $args->link_before = '<i class="material-icons nifty-displayed-icon" '. $style.'>'. esc_html( $get_icon ) .'</i>';
+        }
 
         return $title;
     }

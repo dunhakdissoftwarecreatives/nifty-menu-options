@@ -149,14 +149,14 @@ final class Metabox
      * @return string $menu_icon
      */
     public static function GetMenuIcon( $id ) {
-        $get_menu_icon = '';
+        $get_menu_icon_meta = '';
         $menu_icon = '';
 
         if ( ! empty ( $id ) ) {
-            $get_menu_icon = get_post_meta( $id, self::METAKEY, true );
+            $get_menu_icon_meta = get_post_meta( $id, self::METAKEY, true );
         }
-        if ( ! empty( $get_menu_icon['icon_name'] ) ) {
-            $menu_icon = $get_menu_icon['icon_name'];
+        if ( ! empty( $get_menu_icon_meta['icon_name'] ) ) {
+            $menu_icon = $get_menu_icon_meta['icon_name'];
         }
         return $menu_icon;
     }
@@ -167,19 +167,96 @@ final class Metabox
      * @since  1.0.0
      * @access public
      * @param  int    $id       Menu item ID.
-     * @return string $menu_icon
+     * @return string $menu_icon_color
      */
     public static function GetMenuIconColor( $id ) {
-        $get_menu_icon = '';
-        $menu_icon = '';
+        $get_menu_icon_meta = '';
+        $menu_icon_color = '';
 
         if ( ! empty ( $id ) ) {
-            $get_menu_icon = get_post_meta( $id, self::METAKEY, true );
+            $get_menu_icon_meta = get_post_meta( $id, self::METAKEY, true );
         }
-        if ( ! empty( $get_menu_icon['icon_color'] ) ) {
-            $menu_icon = $get_menu_icon['icon_color'];
+        if ( ! empty( $get_menu_icon_meta['icon_color'] ) ) {
+            $menu_icon_color = $get_menu_icon_meta['icon_color'];
         }
-        return $menu_icon;
+        return $menu_icon_color;
+    }
+
+    /**
+     * Get menu item icon gutter
+     *
+     * @since  1.0.0
+     * @access public
+     * @param  int    $id       Menu item ID.
+     * @return array $returned_values
+     */
+    public static function GetMenuIconPosition( $id ) {
+        $get_menu_icon_meta = '';
+        $menu_icon_position = '';
+        $gutter = '';
+        $returned_values = array();
+
+        if ( ! empty ( $id ) ) {
+            $get_menu_icon_meta = get_post_meta( $id, self::METAKEY, true );
+        }
+
+        if ( ! empty( $get_menu_icon_meta['icon_position'] ) ) {
+            $menu_icon_position = $get_menu_icon_meta['icon_position'];
+
+            foreach ( $menu_icon_position as $icon_position => $position ) {
+
+                if ( is_numeric( $position ) ) {
+                    $position = $position . 'px';
+                }
+
+                $gutter .= $position . ' ';
+            }
+
+            $returned_values = array(
+                'position' => $menu_icon_position,
+                'css' => $gutter,
+            );
+
+            return $returned_values;
+        }
+
+        return;
+    }
+
+    /**
+     * Get menu item icon size
+     *
+     * @since  1.0.0
+     * @access public
+     * @param  int    $id       Menu item ID.
+     * @return array $returned_values
+     */
+    public static function GetMenuIconSize( $id ) {
+        $get_menu_icon_meta = '';
+        $menu_icon_size = '';
+        $menu_icon_size_css = '';
+        $returned_values = '';
+
+        if ( ! empty ( $id ) ) {
+            $get_menu_icon_meta = get_post_meta( $id, self::METAKEY, true );
+        }
+
+        if ( ! empty( $get_menu_icon_meta['icon_size'] ) ) {
+            $menu_icon_size = $get_menu_icon_meta['icon_size'];
+
+            if ( is_numeric( $menu_icon_size ) ) {
+                $menu_icon_size_css = $menu_icon_size . 'px';
+            }
+
+            $returned_values = array(
+                'size' => $menu_icon_size,
+                'css' => $menu_icon_size_css,
+            );
+
+            return $returned_values;
+        }
+
+        return;
     }
 
     /**
