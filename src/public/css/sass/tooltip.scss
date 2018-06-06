@@ -1,0 +1,83 @@
+.nifty-tooltip {
+    position: relative;
+    &:before,
+    &:after {
+        opacity: 0;
+        transition: opacity 0.25s ease-in-out;
+        &:hover {
+            opacity: 1;
+        }
+    }
+    &:before {
+        border: 5px solid transparent;
+        border-bottom-color: rgba(0, 0, 0, 0.8);
+        color: rgba(0, 0, 0, 0.8);
+        content: "";
+        display: none;
+        height: 0;
+        margin-right: -5px;
+        pointer-events: none;
+        position: absolute;
+        right: 50%;
+        top: auto;
+        bottom: 0;
+        width: 0;
+        z-index: 999;
+        font-size: 14px;
+    }
+    &:after {
+        content: attr(data-icon-name);
+        background: rgba(0, 0, 0, 0.8);
+        box-shadow: 0 0 2px 2px hsla(360, 50%, 100%, .5);
+        color: #fff;
+        display: none;
+        font-size: 11px;
+        letter-spacing: normal;
+        line-height: 1.5;
+        padding: 5px 8px;
+        position: absolute;
+        right: 50%;
+        text-align: center;
+        text-decoration: none;
+        text-shadow: none;
+        text-transform: none;
+        transform: translateX(50%);
+        -webkit-transform: translateX(50%);
+        top: 100%;
+        word-wrap: break-word;
+        white-space: pre;
+        z-index: 998;
+    }
+    &:hover,
+    &:active,
+    &:focus {
+        &:before,
+        &:after {
+            display: inline-block;
+            text-decoration: none;
+            -webkit-animation-name: tooltip-appear;
+            animation-name: tooltip-appear;
+            -webkit-animation-duration: 0.1s;
+            animation-duration: 0.1s;
+            -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+            -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+            -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+        }
+    }
+}
+
+.nifty-tooltip-no-delay {
+    &:hover,
+    &:active,
+    &:focus {
+        &:before,
+        &:after {
+            opacity: 1;
+            -webkit-animation: none;
+            animation: none;
+        }
+    }
+}

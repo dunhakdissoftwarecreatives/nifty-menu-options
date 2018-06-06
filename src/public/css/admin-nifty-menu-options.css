@@ -32,135 +32,6 @@
   font-feature-settings: 'liga';
 }
 
-.nifty-menu-options-settings-container {
-  padding-top: 15px;
-  padding-bottom: 7px;
-}
-
-.nifty-menu-options-settings-inner {
-  display: block;
-  color: #72777c;
-  font-size: 12px;
-  font-style: italic;
-  padding: 0 5px;
-  border: 1px solid #ddd;
-}
-
-.nifty-icon-picker {
-  text-decoration: none;
-}
-
-.nifty-icon-picker:focus {
-  box-shadow: none;
-}
-
-.nifty-icon-picker * {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.nifty-icon-picker .nifty-icon-selected {
-  color: #212121;
-  font-size: 18px;
-  margin-left: 5px;
-}
-
-.nifty-section {
-  padding: 10px 0 10px;
-  margin: 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.nifty-section:first-child {
-  margin-top: 0;
-}
-
-.nifty-section:last-child {
-  margin-bottom: 0;
-  border-bottom: none;
-}
-
-#TB_title.nifty-thickbox-title {
-  height: auto;
-  min-height: 40px;
-}
-
-#TB_title #TB_ajaxWindowTitle h2 {
-  width: 100%;
-  margin: 0;
-  padding: 5px 0;
-  display: inline-block;
-}
-
-ul.nifty-icon-selector-container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: left;
-  margin: -2px -12px;
-}
-
-ul.nifty-icon-selector-container li.nifty-icon-item {
-  width: 100%;
-  position: relative;
-  flex-grow: 1;
-  flex-basis: 10%;
-  max-width: 10%;
-  text-align: center;
-  margin: 0;
-}
-
-ul.nifty-icon-selector-container .nifty-icon-label {
-  width: 100%;
-  color: #4c4c4c;
-  padding: 15px 0;
-  border: 1px solid #E0E0E0;
-  display: inline-block;
-  transition: background color 0.15s ease-in-out;
-}
-
-ul.nifty-icon-selector-container .nifty-icon-label.selected, ul.nifty-icon-selector-container .nifty-icon-label:hover {
-  color: #00b8ff;
-  background-color: #cef2f7;
-}
-
-ul.nifty-icon-selector-container .nifty-icon-label.selected .nifty-displayed-icon, ul.nifty-icon-selector-container .nifty-icon-label:hover .nifty-displayed-icon {
-  transform: scale(1.5);
-}
-
-ul.nifty-icon-selector-container .nifty-icon-label .nifty-icon-selector {
-  display: none;
-}
-
-ul.nifty-icon-selector-container .nifty-icon-label .nifty-displayed-icon {
-  font-size: 1.25em;
-  transition: transform 0.15s ease-in-out;
-}
-
-.nifty-remove-icon {
-  color: #72777c;
-  transition: color 0.25s ease-in-out;
-  float: right;
-}
-
-.nifty-remove-icon:hover {
-  color: #F44336;
-}
-
-.nifty-remove-icon:focus {
-  color: #F44336;
-  box-shadow: none;
-}
-
-.label_vcenter label {
-  position: relative;
-  top: -4.5px;
-}
-
-.nifty-icon-color-picker-wrap .wp-color-result.button {
-  margin: 0;
-}
-
 .nifty-thickbox-content.loading {
   display: table;
   width: 100%;
@@ -223,6 +94,292 @@ ul.nifty-icon-selector-container .nifty-icon-label .nifty-displayed-icon {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+
+@-webkit-keyframes tooltip-appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes tooltip-appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.nifty-menu-options-settings-container {
+  padding-top: 15px;
+  padding-bottom: 7px;
+}
+
+.nifty-menu-options-settings-inner {
+  display: block;
+  color: #72777c;
+  font-size: 12px;
+  font-style: italic;
+  padding: 0 5px;
+  border: 1px solid #ddd;
+}
+
+.nifty-icon-picker {
+  text-decoration: none;
+}
+
+.nifty-icon-picker:focus {
+  box-shadow: none;
+}
+
+.nifty-icon-picker * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.nifty-icon-picker .nifty-icon-selected {
+  color: #212121;
+  font-size: 18px;
+  margin-left: 5px;
+}
+
+.nifty-section {
+  padding: 10px 0 10px;
+  margin: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.nifty-section:first-child {
+  margin-top: 0;
+}
+
+.nifty-section:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+#TB_ajaxContent.nifty-thickbox-modal {
+  overflow-x: hidden;
+}
+
+#TB_title.nifty-thickbox-title {
+  height: auto;
+  min-height: 40px;
+}
+
+#TB_title.nifty-thickbox-title #TB_closeWindowButton:focus .tb-close-icon {
+  box-shadow: none;
+}
+
+#TB_title.nifty-thickbox-title .tb-close-icon {
+  min-height: 40px;
+  min-width: 40px;
+  line-height: 45px;
+}
+
+#TB_title #TB_ajaxWindowTitle h2 {
+  width: 100%;
+  margin: 0;
+  padding: 5px 0;
+  display: inline-block;
+}
+
+#TB_ajaxContent .nifty-message {
+  background: #03a9f4;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+#TB_ajaxContent .nifty-message.warning {
+  background: #ffa726;
+}
+
+#TB_ajaxContent .nifty-message.invalid {
+  background: #EF5350;
+}
+
+.nifty-header-wrapper {
+  margin: -4px -15px 0px;
+  padding: 20px 5px;
+  background: #f1f0f0;
+  position: sticky;
+  top: -2px;
+  z-index: 9;
+}
+
+.nifty-header-wrapper .nifty-inner-wrap {
+  display: inline-block;
+  width: 50%;
+}
+
+.nifty-header-wrapper .nifty-icon-search {
+  width: 100%;
+}
+
+ul.nifty-icon-selector-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: left;
+  margin: 0px -15px -2px;
+}
+
+ul.nifty-icon-selector-container li.nifty-icon-item {
+  width: 100%;
+  position: relative;
+  flex-grow: 1;
+  flex-basis: 10%;
+  max-width: 10%;
+  text-align: center;
+  margin: 0;
+}
+
+ul.nifty-icon-selector-container li.nifty-icon-item.hide {
+  display: none;
+}
+
+ul.nifty-icon-selector-container .nifty-icon-label {
+  width: 100%;
+  color: #4c4c4c;
+  padding: 15px 0;
+  border: 1px solid #E0E0E0;
+  display: inline-block;
+  transition: background color 0.15s ease-in-out;
+}
+
+ul.nifty-icon-selector-container .nifty-icon-label.selected, ul.nifty-icon-selector-container .nifty-icon-label:hover {
+  color: #00b8ff;
+  background-color: #cef2f7;
+}
+
+ul.nifty-icon-selector-container .nifty-icon-label.selected .nifty-displayed-icon, ul.nifty-icon-selector-container .nifty-icon-label:hover .nifty-displayed-icon {
+  transform: scale(1.5);
+}
+
+ul.nifty-icon-selector-container .nifty-icon-label .nifty-icon-selector {
+  display: none;
+}
+
+ul.nifty-icon-selector-container .nifty-icon-label .nifty-displayed-icon {
+  font-size: 1.25em;
+  transition: transform 0.15s ease-in-out;
+}
+
+input[type=number].nifty-number-field.small-text {
+  width: 50px;
+}
+
+.wp-admin select.nifty-select {
+  text-transform: capitalize;
+  margin: 0;
+  height: 27px;
+  vertical-align: unset;
+}
+
+.nifty-remove-icon {
+  color: #72777c;
+  transition: color 0.25s ease-in-out;
+  float: right;
+}
+
+.nifty-remove-icon:hover {
+  color: #F44336;
+}
+
+.nifty-remove-icon:focus {
+  color: #F44336;
+  box-shadow: none;
+}
+
+.label_vcenter label {
+  position: relative;
+  top: -4.5px;
+}
+
+.nifty-icon-color-picker-wrap .wp-color-result.button {
+  margin: 0;
+}
+
+.nifty-tooltip {
+  position: relative;
+}
+
+.nifty-tooltip:before, .nifty-tooltip:after {
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.nifty-tooltip:before:hover, .nifty-tooltip:after:hover {
+  opacity: 1;
+}
+
+.nifty-tooltip:before {
+  border: 5px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.8);
+  color: rgba(0, 0, 0, 0.8);
+  content: "";
+  display: none;
+  height: 0;
+  margin-right: -5px;
+  pointer-events: none;
+  position: absolute;
+  right: 50%;
+  top: auto;
+  bottom: 0;
+  width: 0;
+  z-index: 999;
+  font-size: 14px;
+}
+
+.nifty-tooltip:after {
+  content: attr(data-icon-name);
+  background: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 2px 2px rgba(255, 255, 255, 0.5);
+  color: #fff;
+  display: none;
+  font-size: 11px;
+  letter-spacing: normal;
+  line-height: 1.5;
+  padding: 5px 8px;
+  position: absolute;
+  right: 50%;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: none;
+  text-transform: none;
+  transform: translateX(50%);
+  -webkit-transform: translateX(50%);
+  top: 100%;
+  word-wrap: break-word;
+  white-space: pre;
+  z-index: 998;
+}
+
+.nifty-tooltip:hover:before, .nifty-tooltip:hover:after, .nifty-tooltip:active:before, .nifty-tooltip:active:after, .nifty-tooltip:focus:before, .nifty-tooltip:focus:after {
+  display: inline-block;
+  text-decoration: none;
+  -webkit-animation-name: tooltip-appear;
+  animation-name: tooltip-appear;
+  -webkit-animation-duration: 0.1s;
+  animation-duration: 0.1s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+.nifty-tooltip-no-delay:hover:before, .nifty-tooltip-no-delay:hover:after, .nifty-tooltip-no-delay:active:before, .nifty-tooltip-no-delay:active:after, .nifty-tooltip-no-delay:focus:before, .nifty-tooltip-no-delay:focus:after {
+  opacity: 1;
+  -webkit-animation: none;
+  animation: none;
 }
 
 /*# sourceMappingURL=admin-nifty-menu-options.css.map */

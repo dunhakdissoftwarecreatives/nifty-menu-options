@@ -38,10 +38,33 @@
     }
 }
 // Thinkbox Modal
+#TB_ajaxContent {
+    &.nifty-thickbox-modal {
+        overflow-x: hidden;
+        // overflow: visible;
+        // .nifty-icon-selector-container {
+        //     overflow: hidden;
+        //     overflow-y: scroll;
+        //     height: 493px;
+        // }
+    }
+}
 #TB_title {
     &.nifty-thickbox-title {
         height: auto;
         min-height: 40px;
+        #TB_closeWindowButton {
+            &:focus {
+                .tb-close-icon {
+                    box-shadow: none;
+                }
+            }
+        }
+        .tb-close-icon {
+            min-height: 40px;
+            min-width: 40px;
+            line-height: 45px;
+        }
     }
     #TB_ajaxWindowTitle {
         h2 {
@@ -52,13 +75,45 @@
         }
     }
 }
+#TB_ajaxContent {
+    .nifty-message {
+        background: #03a9f4;
+        color: #fff;
+        padding: 10px 15px;
+        border-radius:  4px;
+        font-size: 12px;
+        &.warning {
+            background: #ffa726;
+        }
+        &.invalid {
+            background: #EF5350;
+        }
+    }
+}
+
+.nifty-header-wrapper {
+    margin: -4px -15px 0px;
+    padding:  20px 5px;
+    background: #f1f0f0;
+    position: sticky;
+    top: -2px;
+    z-index: 9;
+    .nifty-inner-wrap {
+        display:  inline-block;
+        width: 50%;
+    }
+    .nifty-icon-search {
+        width: 100%;
+    }
+}
+
 
 ul.nifty-icon-selector-container {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: left;
-    margin: -2px -12px;
+    margin: 0px -15px -2px;
     li.nifty-icon-item {
         width: 100%;
         position: relative;
@@ -67,6 +122,9 @@ ul.nifty-icon-selector-container {
         max-width: 10%;
         text-align: center;
         margin: 0;
+        &.hide {
+            display: none;
+        }
     }
     .nifty-icon-label {
         width: 100%;
@@ -90,6 +148,19 @@ ul.nifty-icon-selector-container {
             font-size: 1.25em;
             transition: transform 0.15s ease-in-out;
         }
+    }
+}
+input[type=number].nifty-number-field {
+    &.small-text {
+        width: 50px;
+    }
+}
+.wp-admin select {
+    &.nifty-select {
+        text-transform: capitalize;
+        margin: 0;
+        height: 27px;
+        vertical-align: unset;
     }
 }
 .nifty-remove-icon {

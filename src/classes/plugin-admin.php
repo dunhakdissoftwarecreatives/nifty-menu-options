@@ -114,6 +114,8 @@ final class Admin
                 'thickbox_title' => '<h2>'. __( 'Select Nifty Icon', 'nifty-menu-options' ) .'</h2>',
                 'add_icon' => __( 'Add Icon', 'nifty-menu-options' ),
                 'change_icon' => __( 'Change Icon', 'nifty-menu-options' ),
+                'search_nothing_found' => '<p class="nifty-message nothing-found-here warning">' . __( 'Oops, nothing found here! Try searching another icon.', 'nifty-menu-options' ) . '</p>',
+                'search_invalid' => '<p class="nifty-message invalid">' . __( 'Oops, invalid input! Try typing a valid icon name.', 'nifty-menu-options' ) . '</p>',
             )
         );
         return;

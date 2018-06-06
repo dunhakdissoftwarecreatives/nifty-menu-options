@@ -182,6 +182,12 @@ final class PublicPages
      */
     public static function displayMenuIcons( $title, $item, $args, $depth )
     {
+        $style = '';
+        $css = array(
+            'icon_color' => '',
+            'icon_position' => '',
+            'icon_size' => ''
+        );
         $get_icon = Metabox::GetMenuIcon( $item->ID );
         $get_icon_color = Metabox::GetMenuIconColor( $item->ID );
         $get_icon_position = Metabox::GetMenuIconPosition( $item->ID );
@@ -189,10 +195,22 @@ final class PublicPages
         $get_icon_size = Metabox::GetMenuIconSize( $item->ID );
         $get_icon_size_css = $get_icon_size['css'];
 
+        if ( !empty( $get_icon_color ) ) {
+            $css['icon_color'] = 'color:'.esc_attr($get_icon_color).'; ';
+        }
+        if ( !empty( $get_icon_position_css ) ) {
+            $css['icon_position'] = 'margin:'.esc_attr($get_icon_position_css).'; ';
+        }
+        if ( !empty( $get_icon_size_css ) ) {
+            $css['icon_size'] = 'font-size:'.esc_attr($get_icon_size_css).'; ';
+        }
+
         if ( !empty( $get_icon ) ) {
-            $style = 'style="color:'.esc_attr($get_icon_color).'; margin:'.esc_attr($get_icon_position_css).'; font-size:'. esc_attr($get_icon_size_css) .';"';
+            $style = 'style="'. esc_attr( $css['icon_color'].$css['icon_position'].$css['icon_size'] ) .'"';
 
             $args->link_before = '<i class="material-icons nifty-displayed-icon" '. $style.'>'. esc_html( $get_icon ) .'</i>';
+        } else {
+            $args->link_before = '';
         }
 
         return $title;
