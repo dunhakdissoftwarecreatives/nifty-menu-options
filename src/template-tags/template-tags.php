@@ -44,3 +44,14 @@ function niftyDump( $content, $display_type = '' )
 
     return;
 }
+
+function nifty_default_color() {
+    $color = apply_filters( 'filter_nifty_default_color', '#9e9e9e' );
+
+    return $color;
+}
+function nifty_default_position_min() {
+    $min = apply_filters( 'filter_nifty_default_position_min', '-200' );
+
+    return $min;
+}

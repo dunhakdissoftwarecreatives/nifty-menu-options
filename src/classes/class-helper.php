@@ -12,7 +12,6 @@
  * @category NiftyMenuOptions\Helper
  * @package  NiftyMenuOptions
  * @author   Dunhakdis Software Creatives <emailnotdisplayed@domain.tld>
- * @author   Jasper J. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php  GNU Public License
  * @version  GIT:github.com/jasperjardin/nifty-menu-options
  * @link     https://github.com/jasperjardin/nifty-menu-options
@@ -21,8 +20,8 @@
 
 namespace DSC\NiftyMenuOptions;
 
-if (! defined('ABSPATH')) {
-    return;
+if ( ! defined( 'ABSPATH' ) ) {
+	return;
 }
 
 /**
@@ -31,24 +30,22 @@ if (! defined('ABSPATH')) {
  * @category NiftyMenuOptions\Helper
  * @package  NiftyMenuOptions
  * @author   Dunhakdis Software Creatives <emailnotdisplayed@domain.tld>
- * @author   Jasper J. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php  GNU Public License
  * @link     https://github.com/jasperjardin/nifty-menu-options
  * @since    1.0.0
  */
-final class Helper
-{
-    /**
-     * Use to get the current selected navigation menu id.
-     *
-     * @since  1.0.0
-     * @access public
-     * @return object $nav_menu_selected_id Returns the global $nav_menu_selected_id.
-     */
-    public static function GlobalNavMenuSelectedId()
-    {
-        global $nav_menu_selected_id;
+final class Helper {
 
-        return $nav_menu_selected_id;
-    }
+	/**
+	 * Use to get the current selected navigation menu id.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return object $nav_menu_selected_id Returns the global $nav_menu_selected_id.
+	 */
+	public static function global_nav_menu_selected_id() {
+		global $nav_menu_selected_id;
+
+		return $nav_menu_selected_id;
+	}
 }

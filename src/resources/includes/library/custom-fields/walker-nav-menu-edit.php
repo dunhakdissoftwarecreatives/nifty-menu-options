@@ -92,7 +92,6 @@ class Nifty_Menu_Item_Custom_Fields_Walker extends \Walker_Nav_Menu_Edit
 		/**
 		 * Get menu item custom fields from plugins/themes
 		 *
-		 * @since 1.0.0
 		 * @since 1.0.0 Pass correct parameters.
 		 *
 		 * @param int    $item_id  Menu item ID.

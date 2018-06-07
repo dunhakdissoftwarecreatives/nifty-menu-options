@@ -62,18 +62,25 @@ jQuery(document).ready( function($) {
             }); //Returns array that matches search value
 
         }
-        console.log(searched_result);
-        console.log(typeof(searched_result));
-        console.log(typeof(searched_result).length);
+
         if( $.isEmptyObject( searched_result ) ) {
-            $('.nifty-message-wrapper').html( nifty_menu_options_admin_object.search_nothing_found ).hide().fadeIn();
             if ( '' == searched_value ) {
                 $('.nifty-message-wrapper').hide();
-            }
-            if ( false === nifty_alpha_numeric( searched_value ) ) {
-                $('.nifty-message-wrapper').html( nifty_menu_options_admin_object.search_invalid ).hide().fadeIn();
             } else {
-                $('.nifty-message-wrapper').hide();
+                $('.nifty-message-wrapper').html( nifty_menu_options_admin_object.search_nothing_found ).hide().fadeIn();
+                $('.nifty-message').find('.search-icon-name').text( searched_value );
+                $('.nifty-message').find('.search-icon-category').text( $selected_category );
+            }
+
+            if ( false == nifty_alpha_numeric( searched_value ) ) {
+                $('.nifty-message-wrapper').html( nifty_menu_options_admin_object.search_invalid ).hide().fadeIn();
+                $('.nifty-message').find('.search-icon-name').text( searched_value );
+            } else {
+                if( false == $.isEmptyObject( searched_result ) ) {
+                    $('.nifty-message-wrapper').html( nifty_menu_options_admin_object.search_nothing_found ).hide().fadeIn();
+                    $('.nifty-message').find('.search-icon-name').text( searched_value );
+                    $('.nifty-message').find('.search-icon-category').text( $selected_category );
+                }
             }
         }
         if( false === $.isEmptyObject( searched_result ) ) {
@@ -122,7 +129,7 @@ jQuery(document).ready( function($) {
             url: nifty_menu_options_admin_object.ajaxurl,
 
             data: {
-                'action': 'niftyAdminAjax', //calls niftyAdminAjax
+                'action': 'nifty_admin_ajax', //calls nifty_admin_ajax
 
                 'nifty-setting': 'nifty-icon-picker',
 
@@ -156,6 +163,7 @@ jQuery(document).ready( function($) {
     });
 
     $( '.nifty-icon-color-picker' ).wpColorPicker({
+        defaultColor: true,
         // a callback to fire whenever the color changes to a valid color
         change: function(event, ui) {
             var hexcolor = $( this ).wpColorPicker( 'color' );

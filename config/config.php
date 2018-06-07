@@ -12,13 +12,12 @@
  * @category Nifty Menu Options
  * @package  nifty-menu-options/config
  * @author   Dunhakdis Software Creatives <emailnotdisplayed@domain.tld>
- * @author   Jasper J. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php  GNU Public License
  * @version  GIT:github.com/jasperjardin/nifty-menu-options
  * @link     https://github.com/jasperjardin/nifty-menu-options
- * @since    1.0
+ * @since    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-    return;
+	return;
 }

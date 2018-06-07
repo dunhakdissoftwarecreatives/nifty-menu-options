@@ -12,7 +12,6 @@
  * @category NiftyMenuOptions\Activator
  * @package  NiftyMenuOptions
  * @author   Dunhakdis Software Creatives <emailnotdisplayed@domain.tld>
- * @author   Jasper J. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php  GNU Public License
  * @version  GIT:github.com/jasperjardin/nifty-menu-options
  * @link     https://github.com/jasperjardin/nifty-menu-options
@@ -21,8 +20,8 @@
 
 namespace DSC\NiftyMenuOptions;
 
-if (! defined('ABSPATH')) {
-    return;
+if ( ! defined( 'ABSPATH' ) ) {
+	return;
 }
 
 /**
@@ -31,22 +30,18 @@ if (! defined('ABSPATH')) {
  * @category NiftyMenuOptions\Activator
  * @package  NiftyMenuOptions
  * @author   Dunhakdis Software Creatives <emailnotdisplayed@domain.tld>
- * @author   Jasper J. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php  GNU Public License
  * @link     https://github.com/jasperjardin/nifty-menu-options
  * @since    1.0.0
  */
+class Activator {
 
-class Activator
-{
-    /**
-     * Set default value for the plugin settings
-     * 
-     * @since 1.0.0
-     * @return void
-     */
-    public function activate()
-    {
-        return;
-    }
+	/**
+	 * Set default value for the plugin settings
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public function activate() {
+	}
 }

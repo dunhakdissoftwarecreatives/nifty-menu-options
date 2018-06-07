@@ -93,9 +93,18 @@ final class PublicPages
      * @access public
      * @return void
      */
-    public function setEnqueueStyles()
+    public function set_enqueue_styles()
     {
-        $plugin_dir_url = plugin_dir_url(dirname(__FILE__)) . 'public/css/icon-stylesheet/';
+        $plugin_dir_url = plugin_dir_url(dirname(__FILE__));
+        $icon_stylesheet = plugin_dir_url(dirname(__FILE__)) . 'public/css/icon-stylesheet/';
+
+        wp_enqueue_style(
+            $this->name,
+            $plugin_dir_url . 'public/css/nifty-menu-options.css',
+            array(),
+            $this->version,
+            'all'
+        );
 
         $enqueued_icon_libraries = apply_filters(
             'nifty_enqueued_icon_libraries',
@@ -126,7 +135,7 @@ final class PublicPages
                 if ( $enqueued_icon_library['enqueued'] && empty( $enqueued_icon_library['external_src'] )) {
                     wp_enqueue_style(
                         $enqueued_icon_library['id'],
-                        $plugin_dir_url . $enqueued_icon_library['src'],
+                        $icon_stylesheet . $enqueued_icon_library['src'],
                         $enqueued_icon_library['dependencies'],
                         $enqueued_icon_library['version'],
                         $enqueued_icon_library['media']
@@ -156,7 +165,7 @@ final class PublicPages
      * @access public
      * @return void
      */
-    public function setEnqueueScripts()
+    public function set_enqueue_scripts()
     {
         return;
     }
@@ -199,8 +208,9 @@ final class PublicPages
             $css['icon_color'] = 'color:'.esc_attr($get_icon_color).'; ';
         }
         if ( !empty( $get_icon_position_css ) ) {
-            $css['icon_position'] = 'margin:'.esc_attr($get_icon_position_css).'; ';
+            $css['icon_position'] = esc_attr($get_icon_position_css);
         }
+
         if ( !empty( $get_icon_size_css ) ) {
             $css['icon_size'] = 'font-size:'.esc_attr($get_icon_size_css).'; ';
         }

@@ -47,6 +47,14 @@ final class Metabox
     const METAKEY = 'nifty-menu-options-meta-key';
 
     /**
+     * Default cache value
+     *
+     * @since  1.0.0
+     * @const string WPCACHEKEY
+     */
+    const WPCACHEKEY = 'nifty_menu_options_meta_key';
+
+    /**
      * Default meta value
      *
      * @since  1.0.0
@@ -206,7 +214,8 @@ final class Metabox
             foreach ( $menu_icon_position as $icon_position => $position ) {
 
                 if ( is_numeric( $position ) ) {
-                    $position = $position . 'px';
+
+                    $position = $icon_position.': '.$position . 'px; ';
                 }
 
                 $gutter .= $position . ' ';

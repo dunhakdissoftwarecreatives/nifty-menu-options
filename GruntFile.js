@@ -6,6 +6,8 @@ module.exports = function(grunt) {
 				files: [
 					'src/public/css/sass/*.scss',
 					'src/public/css/sass/importer.scss',
+                    'src/public/css/sass/frontend/*.scss',
+					'src/public/css/sass/frontend/importer.scss',
 				],
 				tasks: ['sass:dist'],
 				options: {
@@ -23,6 +25,7 @@ module.exports = function(grunt) {
 			dist: {
 				files: {
 					'src/public/css/admin-nifty-menu-options.css': 'src/public/css/sass/importer.scss',
+					'src/public/css/nifty-menu-options.css': 'src/public/css/sass/frontend/importer.scss',
 				}
 			}
 		}

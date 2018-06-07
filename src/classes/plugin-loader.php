@@ -99,7 +99,7 @@ final class Loader
         /**
          * Includes the class that handles the actions and filters of the plugin.
          */
-        include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/classes/plugin-hooks.php';
+        include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/classes/class-hooks.php';
 
         /**
          * This class handles the localization functionality of the plugin.
@@ -120,7 +120,7 @@ final class Loader
         /**
          * This class handles all the defined hooks in the WordPress backend.
          */
-        include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/classes/plugin-admin.php';
+        include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/classes/class-admin.php';
 
         /**
          * This class handles all the defined hooks in the WordPress frontend.
@@ -175,19 +175,19 @@ final class Loader
         $this->loader->addAction(
             'load-nav-menus.php',
             $plugin_admin,
-            'enqueueScripts',
+            'enqueue_scripts',
             1
         );
         $this->loader->addAction(
             'load-nav-menus.php',
             $plugin_admin,
-            'enqueueStyles',
+            'enqueue_styles',
             1
         );
         $this->loader->addAction(
             'init',
             $plugin_admin,
-            'initAjax',
+            'init_ajax',
             1
         );
 
@@ -221,12 +221,12 @@ final class Loader
         $this->loader->addAction(
             'wp_enqueue_scripts',
             $plugin_public,
-            'setEnqueueStyles'
+            'set_enqueue_styles'
         );
         $this->loader->addAction(
             'wp_enqueue_scripts',
             $plugin_public,
-            'setEnqueueScripts'
+            'set_enqueue_scripts'
         );
         $this->loader->addAction(
             'wp_enqueue_scripts',

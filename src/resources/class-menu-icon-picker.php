@@ -93,13 +93,15 @@ final class MenuIconPicker
 	 * @return string Form fields
 	 */
     public static function MenuIconPickerOption( $id, $item, $depth, $args ) {
-        $get_current_menu_id = Helper::GlobalNavMenuSelectedId();
+        $get_current_menu_id = Helper::global_nav_menu_selected_id();
         $get_menu_icon = Metabox::GetMenuIcon( $id );
         $get_menu_icon_color = Metabox::GetMenuIconColor( $id );
         $get_menu_icon_position = Metabox::GetMenuIconPosition( $id );
         $icon_position = $get_menu_icon_position['position'];
         $get_menu_icon_size = Metabox::GetMenuIconSize( $id );
         $icon_size = $get_menu_icon_size['size'];
+        $min = nifty_default_position_min();
+        $default_color = nifty_default_color();
 
         $link_text = esc_html__( 'Change Icon', 'nifty-menu-options' );
         $gutter_placeholder = esc_attr__( '15', 'nifty-menu-options' );
@@ -143,21 +145,21 @@ final class MenuIconPicker
                     </div>
                 </div>
                 <div class="nifty-icon-color-picker-wrap nifty-section">
-                    <input type="text" value="<?php echo esc_attr( $get_menu_icon_color ); ?>" class="nifty-icon-color-picker" data-default-color="<?php echo esc_attr( $get_menu_icon_color ); ?>" id="nifty-menu-color-<?php echo esc_attr( $id ); ?>" name="nifty-menu-color[<?php echo esc_attr( $id ); ?>]" />
+                    <input type="text" value="<?php echo esc_attr( $get_menu_icon_color ); ?>" class="nifty-icon-color-picker" data-default-color="<?php echo esc_attr( $default_color ); ?>" id="nifty-menu-color-<?php echo esc_attr( $id ); ?>" name="nifty-menu-color[<?php echo esc_attr( $id ); ?>]" />
                 </div>
                 <div class="nifty-icon-gutters-wrap label_vcenter nifty-section">
                     <label for="nifty-icon-gutter-top-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Top:', 'nifty-menu-options' ); ?></label>
-                    <input type="number" value="<?php echo esc_attr( $icon_position['top'] ); ?>" min="1" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-top-<?php echo esc_attr( $id ); ?>" name="nifty-icon-gutter[top][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo $gutter_placeholder; ?>"/>
+                    <input type="number" value="<?php echo esc_attr( $icon_position['top'] ); ?>" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-top-<?php echo esc_attr( $id ); ?>" name="nifty-icon-gutter[top][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo $gutter_placeholder; ?>"/>
                     <label for="nifty-icon-gutter-right-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Right:', 'nifty-menu-options' ); ?></label>
-                    <input type="number" value="<?php echo esc_attr( $icon_position['right'] ); ?>" min="1" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-right-<?php echo esc_attr( $id ); ?>" name="nifty-icon-gutter[right][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo $gutter_placeholder; ?>"/>
+                    <input type="number" value="<?php echo esc_attr( $icon_position['right'] ); ?>" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-right-<?php echo esc_attr( $id ); ?>" name="nifty-icon-gutter[right][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo $gutter_placeholder; ?>"/>
                     <label for="nifty-icon-gutter-bottom-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Bottom:', 'nifty-menu-options' ); ?></label>
-                    <input type="number" value="<?php echo esc_attr( $icon_position['bottom'] ); ?>" min="1" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-bottom-<?php echo esc_attr( $id ); ?>" name="nifty-icon-gutter[bottom][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo $gutter_placeholder; ?>"/>
+                    <input type="number" value="<?php echo esc_attr( $icon_position['bottom'] ); ?>" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-bottom-<?php echo esc_attr( $id ); ?>" name="nifty-icon-gutter[bottom][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo $gutter_placeholder; ?>"/>
                     <label for="nifty-icon-gutter-left-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Left:', 'nifty-menu-options' ); ?></label>
-                    <input type="number" value="<?php echo esc_attr( $icon_position['left'] ); ?>" min="1" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-left-<?php echo esc_attr( $id ); ?>" name="nifty-icon-gutter[left][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo $gutter_placeholder; ?>"/>
+                    <input type="number" value="<?php echo esc_attr( $icon_position['left'] ); ?>" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-left-<?php echo esc_attr( $id ); ?>" name="nifty-icon-gutter[left][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo $gutter_placeholder; ?>"/>
                 </div>
                 <div class="nifty-icon-size-wrap label_vcenter nifty-section">
                     <label for="nifty-icon-size-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Icon Size:', 'nifty-menu-options' ); ?></label>
-                    <input type="number" value="<?php echo esc_attr( $icon_size ); ?>" min="1" class="nifty-icon-size nifty-number-field small-text" id="nifty-icon-size-<?php echo esc_attr( $id ); ?>" name="nifty-icon-size[<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo $size_placeholder; ?>"/>
+                    <input type="number" value="<?php echo esc_attr( $icon_size ); ?>" min="0" class="nifty-icon-size nifty-number-field small-text" id="nifty-icon-size-<?php echo esc_attr( $id ); ?>" name="nifty-icon-size[<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo $size_placeholder; ?>"/>
                 </div>
             </div>
         </div>
@@ -270,11 +272,11 @@ final class MenuIconPicker
                 'flags'  => FILTER_FORCE_ARRAY
             ],
             $menu_icon_gutter_name => [
-                'filter' => FILTER_SANITIZE_STRING,
+                'filter' => FILTER_SANITIZE_NUMBER_INT,
                 'flags'  => FILTER_FORCE_ARRAY
             ],
             $menu_icon_size_name => [
-                'filter' => FILTER_SANITIZE_STRING,
+                'filter' => FILTER_SANITIZE_NUMBER_INT,
                 'flags'  => FILTER_FORCE_ARRAY
             ],
             $remove_icon_name => [
@@ -311,14 +313,17 @@ final class MenuIconPicker
             $menu_icon_gutter = filter_input_array( INPUT_POST, $filters );
             $menu_icon_gutter_array['top'] = $menu_icon_gutter[ $menu_icon_gutter_name ][ 'top' ][ $menu_item_db_id ];
 		}
+
 		if ( ! empty( $_POST[ $menu_icon_gutter_name ][ 'right' ][ $menu_item_db_id ]  ) ) {
             $menu_icon_gutter = filter_input_array( INPUT_POST, $filters );
             $menu_icon_gutter_array['right'] = $menu_icon_gutter[ $menu_icon_gutter_name ][ 'right' ][ $menu_item_db_id ];
-		}
+        }
+
 		if ( ! empty( $_POST[ $menu_icon_gutter_name ][ 'bottom' ][ $menu_item_db_id ]  ) ) {
             $menu_icon_gutter = filter_input_array( INPUT_POST, $filters );
             $menu_icon_gutter_array['bottom'] = $menu_icon_gutter[ $menu_icon_gutter_name ][ 'bottom' ][ $menu_item_db_id ];
 		}
+
 		if ( ! empty( $_POST[ $menu_icon_gutter_name ][ 'left' ][ $menu_item_db_id ]  ) ) {
             $menu_icon_gutter = filter_input_array( INPUT_POST, $filters );
             $menu_icon_gutter_array['left'] = $menu_icon_gutter[ $menu_icon_gutter_name ][ 'left' ][ $menu_item_db_id ];
