@@ -30,6 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @category NiftyMenuOptions\Hooks
  * @package  NiftyMenuOptions
  * @author   Dunhakdis Software Creatives <emailnotdisplayed@domain.tld>
+ * @author   Jasper J. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php  GNU Public License
  * @link     https://github.com/jasperjardin/nifty-menu-options
  * @since    1.0.0
@@ -98,7 +99,7 @@ final class Hooks {
 	 * @access public
 	 * @return void
 	 */
-	public function addAction(
+	public function add_action(
 		$hook,
 		$component,
 		$callback,
@@ -113,7 +114,6 @@ final class Hooks {
 			$priority,
 			$accepted_args
 		);
-		return;
 	}
 
 	/**
@@ -134,7 +134,7 @@ final class Hooks {
 	 * @access public
 	 * @return void
 	 */
-	public function addFilter(
+	public function add_filter(
 		$hook,
 		$component,
 		$callback,
@@ -149,7 +149,6 @@ final class Hooks {
 			$priority,
 			$accepted_args
 		);
-		return;
 	}
 
 	/**
@@ -165,9 +164,9 @@ final class Hooks {
 	 *                                    filter to register.
 	 * @param object       $component     The instance of the object
 	 *                                    where the filter is
-	 *                                    defined
+	 *                                    defined.
 	 * @param string       $callback      Name of the function defined
-	 *                                    on the $component
+	 *                                    on the $component.
 	 * @param int Optional $priority      Priority of function
 	 *                                    should be fired.
 	 * @param int Optional $accepted_args Number of arguments
@@ -219,6 +218,5 @@ final class Hooks {
 				$hook['accepted_args']
 			);
 		}
-		return;
 	}
 }

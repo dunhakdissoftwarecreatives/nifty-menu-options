@@ -46,7 +46,7 @@ require_once NIFTY_MENU_OPTION_DIR_PATH . 'config/config.php';
 require_once NIFTY_MENU_OPTION_DIR_PATH . 'src/classes/class-activator.php';
 
 // Require the loader class.
-require_once NIFTY_MENU_OPTION_DIR_PATH . 'src/classes/plugin-loader.php';
+require_once NIFTY_MENU_OPTION_DIR_PATH . 'src/classes/class-loader.php';
 
 // Require the helper class.
 require_once NIFTY_MENU_OPTION_DIR_PATH . 'src/classes/class-helper.php';
@@ -95,3 +95,13 @@ function my_library( $icon_libraries ) {
 	);
 	return $icon_libraries;
 }
+/**
+ * This is just a test enqueue icon library
+ *
+ * @param array $enqueued_icon_libraries collection of icons Libraries.
+ * @todo Remove this later on releasing
+ */
+add_filter( 'nifty_enqueued_icon_libraries', function( $enqueued_icon_libraries ) {
+	$enqueued_icon_libraries['nifty-material-icon']['enqueued'] = true;
+	return $enqueued_icon_libraries;
+});

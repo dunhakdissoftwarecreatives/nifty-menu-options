@@ -12,7 +12,6 @@
  * @category NiftyMenuOptions\Language
  * @package  NiftyMenuOptions
  * @author   Dunhakdis Software Creatives <emailnotdisplayed@domain.tld>
- * @author   Jasper J. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php  GNU Public License
  * @version  GIT:github.com/jasperjardin/nifty-menu-options
  * @link     https://github.com/jasperjardin/nifty-menu-options
@@ -21,8 +20,8 @@
 
 namespace DSC\NiftyMenuOptions;
 
-if (! defined('ABSPATH')) {
-    return;
+if ( ! defined( 'ABSPATH' ) ) {
+	return;
 }
 
 /**
@@ -36,6 +35,6 @@ if (! defined('ABSPATH')) {
  * @link     https://github.com/jasperjardin/nifty-menu-options
  * @since    1.0.0
  */
-final class Language
-{
+final class Language {
+
 }

@@ -16,7 +16,6 @@
  * @category NiftyMenuOptions\Nifty_Menu_Item_Custom_Fields_Walker
  * @package  NiftyMenuOptions
  * @author   Dunhakdis Software Creatives <emailnotdisplayed@domain.tld>
- * @author   Jasper J. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php  GNU Public License
  * @version  GIT:github.com/jasperjardin/nifty-menu-options
  * @link     https://github.com/jasperjardin/nifty-menu-options
@@ -25,8 +24,8 @@
 
 namespace DSC\NiftyMenuOptions;
 
-if (! defined('ABSPATH')) {
-    return;
+if ( ! defined( 'ABSPATH' ) ) {
+	return;
 }
 
 /**
@@ -40,8 +39,8 @@ if (! defined('ABSPATH')) {
  * @link     https://github.com/jasperjardin/nifty-menu-options
  * @since    1.0.0
  */
-class Nifty_Menu_Item_Custom_Fields_Walker extends \Walker_Nav_Menu_Edit
-{
+class Nifty_Menu_Item_Custom_Fields_Walker extends \Walker_Nav_Menu_Edit {
+
 
 	/**
 	 * Initialize the output of the element.
@@ -58,7 +57,7 @@ class Nifty_Menu_Item_Custom_Fields_Walker extends \Walker_Nav_Menu_Edit
 	 * @param array  $args   Menu item args.
 	 * @param int    $id     Navigation menu ID.
 	 */
-	function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
 		$item_output = '';
 
 		parent::start_el( $item_output, $item, $depth, $args, $id );

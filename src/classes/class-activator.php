@@ -30,6 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @category NiftyMenuOptions\Activator
  * @package  NiftyMenuOptions
  * @author   Dunhakdis Software Creatives <emailnotdisplayed@domain.tld>
+ * @author   Jasper J. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php  GNU Public License
  * @link     https://github.com/jasperjardin/nifty-menu-options
  * @since    1.0.0

@@ -45,6 +45,13 @@ function niftyDump( $content, $display_type = '' )
     return;
 }
 
+function nifty_sanity_check( $mixed_data ) {
+	if ( ! empty ( $mixed_data ) ) {
+		return $mixed_data;
+	}
+	return "";
+}
+
 function nifty_default_color() {
     $color = apply_filters( 'filter_nifty_default_color', '#9e9e9e' );
 

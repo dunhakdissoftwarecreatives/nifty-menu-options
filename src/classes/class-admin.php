@@ -20,7 +20,7 @@
 
 namespace DSC\NiftyMenuOptions;
 
-require_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/resources/class-menu-icon-picker.php';
+require_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/resources/class-menuiconpicker.php';
 
 if ( ! defined( 'ABSPATH' ) ) {
 	return;
@@ -32,6 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @category NiftyMenuOptions\Admin
  * @package  NiftyMenuOptions
  * @author   Dunhakdis Software Creatives <emailnotdisplayed@domain.tld>
+ * @author   Jasper J. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php  GNU Public License
  * @link     https://github.com/jasperjardin/nifty-menu-options
  * @since    1.0.0
@@ -205,7 +206,7 @@ final class Admin {
 				array(
 					'status'                 => 202,
 					'nifty_setting'          => $nifty_setting,
-					'nifty_icon_picker_list' => MenuIconPicker::setMenuIconPickerContents( $nifty_menu_id, $selected_icon ),
+					'nifty_icon_picker_list' => MenuIconPicker::set_menu_icon_picker_contents( $nifty_menu_id, $selected_icon ),
 					'selected_icon'          => $selected_icon,
 				)
 			);

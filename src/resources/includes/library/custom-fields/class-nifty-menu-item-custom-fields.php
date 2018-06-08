@@ -14,7 +14,6 @@
  * @category NiftyMenuOptions\Nifty_Menu_Item_Custom_Fields
  * @package  NiftyMenuOptions
  * @author   Dunhakdis Software Creatives <emailnotdisplayed@domain.tld>
- * @author   Jasper J. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php  GNU Public License
  * @version  GIT:github.com/jasperjardin/nifty-menu-options
  * @link     https://github.com/jasperjardin/nifty-menu-options
@@ -23,8 +22,8 @@
 
 namespace DSC\NiftyMenuOptions;
 
-if (! defined('ABSPATH')) {
-    return;
+if ( ! defined( 'ABSPATH' ) ) {
+	return;
 }
 
 /**
@@ -40,42 +39,41 @@ if (! defined('ABSPATH')) {
  */
 if ( ! class_exists( 'Nifty_Menu_Item_Custom_Fields' ) ) :
 	/**
-	* Menu Item Custom Fields Loader
-	*/
+	 * Menu Item Custom Fields Loader
+	 */
 	class Nifty_Menu_Item_Custom_Fields {
 
 		/**
-		* Add filter
-		*
-		* @since 1.0.0
-		* @wp_hook action wp_loaded
-        * @return void
-		*/
+		 * Add filter
+		 *
+		 * @since 1.0.0
+		 * @wp_hook action wp_loaded
+		 * @return void
+		 */
 		public static function load() {
 			add_filter( 'wp_edit_nav_menu_walker', array( __CLASS__, 'nifty_filter_walker' ), 99 );
-            return;
 		}
 
 
 		/**
-		* Does not replace the default menu editor walker
-		* and just append the additional setting of the plugin.
-		*
-		* @since   1.0.0
-		* @access  public
-		* @wp_hook filter wp_edit_nav_menu_walker
-		* @param   string $walker Walker class name
-		* @return  string Walker class name
-		*/
+		 * Does not replace the default menu editor walker
+		 * and just append the additional setting of the plugin.
+		 *
+		 * @since   1.0.0
+		 * @access  public
+		 * @wp_hook filter wp_edit_nav_menu_walker
+		 * @param   string $walker Walker class name.
+		 * @return  string $walker class name.
+		 */
 		public static function nifty_filter_walker( $walker ) {
 			$walker = 'DSC\NiftyMenuOptions\Nifty_Menu_Item_Custom_Fields_Walker';
 
 			if ( ! class_exists( $walker ) ) {
-                require_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/resources/includes/library/custom-fields/walker-nav-menu-edit.php';
+				require_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/resources/includes/library/custom-fields/class-nifty-menu-item-custom-fields-walker.php';
 			}
 
 			return $walker;
 		}
 	}
-    add_action( 'wp_loaded', array( 'DSC\NiftyMenuOptions\Nifty_Menu_Item_Custom_Fields', 'load' ), 9 );
+	add_action( 'wp_loaded', array( 'DSC\NiftyMenuOptions\Nifty_Menu_Item_Custom_Fields', 'load' ), 9 );
 endif;
