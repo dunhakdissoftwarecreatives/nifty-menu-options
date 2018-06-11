@@ -115,14 +115,14 @@ final class PublicPages {
 	 * @access public
 	 * @return void
 	 */
-	public static function set_enqueue_styles( $id ) {
+	public static function set_enqueue_styles() {
 		$name            = self::get_name();
 		$version         = self::get_version();
 		$plugin_dir_url  = plugin_dir_url( dirname( __FILE__ ) );
 		$icon_stylesheet = plugin_dir_url( dirname( __FILE__ ) ) . 'public/css/icon-stylesheet/';
-
-		$get_menu_icon = Metabox::get_menu_icon( $id );
-
+        
+        $has_menu_icon = Helper::menu_has_icon();
+        
 		$enqueued_icon_libraries = apply_filters(
 			'nifty_enqueued_icon_libraries',
 			array(
@@ -135,14 +135,6 @@ final class PublicPages {
 		);
 
 		if ( ! empty( $enqueued_icon_libraries ) ) {
-
-			wp_enqueue_style(
-				$name,
-				$plugin_dir_url . 'public/css/nifty-menu-options.css',
-				array(),
-				$version,
-				'all'
-			);
 
 			foreach ( $enqueued_icon_libraries as $enqueued_icon_library ) {
 
@@ -178,7 +170,21 @@ final class PublicPages {
 					);
 				}
 			}
+            
+			wp_enqueue_style(
+				$name,
+				$plugin_dir_url . 'public/css/nifty-menu-options.css',
+				array(),
+				$version,
+				'all'
+			);
 		}
+        if ( empty( $has_menu_icon ) ) {
+            foreach ( $enqueued_icon_libraries as $enqueued_icon_library ) {
+                wp_dequeue_style( $enqueued_icon_library['id'] );
+            }
+            wp_dequeue_style( $name );
+        }
 	}
 
 	/**
@@ -226,8 +232,6 @@ final class PublicPages {
 		$get_icon_position_css = $get_icon_position['css'];
 		$get_icon_size         = Metabox::get_menu_icon_size( $item->ID );
 		$get_icon_size_css     = $get_icon_size['css'];
-
-		self::set_enqueue_styles( $item->ID );
 
 		if ( ! empty( $get_icon_color ) ) {
 			$css['icon_color'] = 'color:' . esc_attr( $get_icon_color ) . '; ';

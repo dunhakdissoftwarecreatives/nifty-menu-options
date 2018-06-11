@@ -354,6 +354,8 @@ final class MenuIconPicker {
 			);
 
 			Metabox::update_menu_icon( $menu_item_db_id, $nifty_icon_save_meta );
-		}
+		} else {
+			Metabox::update_menu_icon( $menu_item_db_id, $nifty_icon_save_meta );       
+        }
 	}
 }
