@@ -2,14 +2,19 @@
 /**
  * Plugin Name:  Nifty Menu Options
  * Plugin URI:   https://wordpress.org/plugins/nifty-menu-options/
- * Description:  A nifty plugin that allows you to add nifty icons to your menu items.
+ * Description:  Adds beautiful icons to your WordPress menu items. More menu item options are coming soon!
  * Version:      1.0.0
  * Author:       Dunhakdis
  * Contributors: dunhakdis, wpjasper
  * Author URI:   https://profiles.wordpress.org/dunhakdis/
  * Text Domain:  nifty-menu-options
  * Domain Path:  /languages
- * License:      GPL2
+ * Requires at least: 4.5
+ * Tested up to: 4.9.6
+ * Requires PHP: 5.4
+ * Stable tag: 1.0.0
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  *
  * PHP Version 5.4
  *
