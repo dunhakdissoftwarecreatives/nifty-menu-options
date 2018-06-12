@@ -143,8 +143,8 @@ jQuery(document).ready( function($) {
                     $('#TB_ajaxContent').addClass('nifty-thickbox-modal');
                     $('#TB_title').addClass('nifty-thickbox-title');
                     $('#TB_ajaxWindowTitle').append(nifty_menu_options_admin_object.thickbox_title);
+					$( '#TB_ajaxContent .nifty-thickbox-content' ).addClass('loading').html(nifty_menu_options_admin_object.loading);
                 }, 100);
-                $(this).siblings('.nifty-thickbox-container').find('.nifty-thickbox-content').addClass('loading').html(nifty_menu_options_admin_object.loading);
             },
 
             success: function( response ) {

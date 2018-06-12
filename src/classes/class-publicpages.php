@@ -120,9 +120,9 @@ final class PublicPages {
 		$version         = self::get_version();
 		$plugin_dir_url  = plugin_dir_url( dirname( __FILE__ ) );
 		$icon_stylesheet = plugin_dir_url( dirname( __FILE__ ) ) . 'public/css/icon-stylesheet/';
-        
+
         $has_menu_icon = Helper::menu_has_icon();
-        
+
 		$enqueued_icon_libraries = apply_filters(
 			'nifty_enqueued_icon_libraries',
 			array(
@@ -170,7 +170,7 @@ final class PublicPages {
 					);
 				}
 			}
-            
+
 			wp_enqueue_style(
 				$name,
 				$plugin_dir_url . 'public/css/nifty-menu-options.css',
@@ -220,36 +220,39 @@ final class PublicPages {
 	 * @return string $title  Menu item title.
 	 */
 	public static function display_menu_icons( $title, $item, $args, $depth ) {
-		$style                 = '';
-		$css                   = array(
-			'icon_color'    => '',
-			'icon_position' => '',
-			'icon_size'     => '',
-		);
-		$get_icon              = Metabox::get_menu_icon( $item->ID );
-		$get_icon_color        = Metabox::get_menu_icon_color( $item->ID );
-		$get_icon_position     = Metabox::get_menu_icon_position( $item->ID );
-		$get_icon_position_css = $get_icon_position['css'];
-		$get_icon_size         = Metabox::get_menu_icon_size( $item->ID );
-		$get_icon_size_css     = $get_icon_size['css'];
 
-		if ( ! empty( $get_icon_color ) ) {
-			$css['icon_color'] = 'color:' . esc_attr( $get_icon_color ) . '; ';
-		}
-		if ( ! empty( $get_icon_position_css ) ) {
-			$css['icon_position'] = esc_attr( $get_icon_position_css );
-		}
+		$icon = Helper::get_unserialize_nifty_menu_icons($item->ID);
 
-		if ( ! empty( $get_icon_size_css ) ) {
-			$css['icon_size'] = 'font-size:' . esc_attr( $get_icon_size_css ) . '; ';
-		}
+		if ( ! empty( $icon ) ) {
 
-		if ( ! empty( $get_icon ) ) {
+			$css = array(
+				'icon_color' => '',
+				'icon_position' => '',
+				'icon_size' => '',
+			);
+
+			// Icon color.
+			if ( ! empty( $icon['icon_color'] ) ) {
+				$css['icon_color'] = 'color:' . esc_attr( $icon['icon_color'] ) . '; ';
+			}
+			// Icon position.
+			if ( ! empty( $icon['icon_position'] ) ) {
+				$css['icon_position'] = Helper::get_icon_css_position( $icon['icon_position'] );
+			}
+			// Icon size.
+			if ( ! empty( $icon['icon_size'] ) ) {
+				$css['icon_size'] = 'font-size:' . esc_attr( $icon['icon_size'] ) . 'px; ';
+			}
+
+			// Construct inline style.
 			$style = 'style="' . esc_attr( $css['icon_color'] . $css['icon_position'] . $css['icon_size'] ) . '"';
 
-			$args->link_before = '<i class="material-icons nifty-displayed-icon" ' . $style . '>' . esc_html( $get_icon ) . '</i>';
+			$args->link_before = '<i '. trim( $style ) .' class="material-icons nifty-displayed-icon">'.esc_html( $icon['icon_name'] ).'</i>';
+
 		} else {
+
 			$args->link_before = '';
+
 		}
 
 		return $title;

@@ -51,7 +51,7 @@ final class Metabox {
 	 * @since  1.0.0
 	 * @const string WPCACHEKEY
 	 */
-	const WPCACHEKEY = 'nifty_menu_options_meta_key';
+	const CACHEKEY = 'nifty_menu_options_meta_key';
 
 	/**
 	 * Default meta value
@@ -75,7 +75,6 @@ final class Metabox {
 	 */
 	public static function init_metabox() {
 		add_filter( 'is_protected_meta', array( __CLASS__, 'protected_metakey' ), 10, 3 );
-
 		/**
 		 * Reapply this action if Icon Library is already develop.
 		 *
@@ -83,6 +82,7 @@ final class Metabox {
 		 */
 		// Apply add_action() to 'load-nav-menus.php' to hook array( __CLASS__, 'load_metabox' ) priority '1'.
 	}
+
 
 	/**
 	 * Protect the meta key for the icon picker
@@ -287,13 +287,22 @@ final class Metabox {
 	 *
 	 * @return void
 	 */
-	public static function update_menu_icon( $id, $value ) {
 
+	public static function update_menu_icon( $id, $value ) {
 		// Update the menu icon.
+		$menu_icon = array();
+
 		if ( ! empty( $value ) ) {
 			update_post_meta( $id, self::METAKEY, $value );
+
+			$menu_icon[$id][] = $value;
+
 		} else {
+			$menu_icon[$id] = array();
 			delete_post_meta( $id, self::METAKEY );
 		}
+
+
+
 	}
 }
