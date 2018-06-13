@@ -260,4 +260,41 @@ final class Helper {
         }
         return false;
     }
+
+	/**
+	 * Filters the icon library and exclude defined icons.
+	 *
+	 *	@param array  $default_libraries 	The default icon libraries.
+	 *	@param string $target_icon_library	The target icon library to filter.
+	 *	@param array  $icons_to_remove		The icons to remove on the target library.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return array $default_libraries Return the filtered icon library.
+	 */
+	public function remove_icon_from_library( $default_libraries, $target_icon_library, $icons_to_remove ) {
+		$remove_icons = array();
+
+		// Checks if $default_libraries is empty.
+		if ( ! empty( $default_libraries ) ) {
+			if ( ! empty( $target_icon_library ) && ! empty( $icons_to_remove ) ) {
+				// Set the value for the $remove_icons.
+				$remove_icons = array(
+					$target_icon_library => $icons_to_remove,
+				);
+			}
+
+			// Checks if $remove_icons is empty.
+			if ( !empty( $remove_icons ) ) {
+				foreach ( $remove_icons[ $target_icon_library ] as $remove_icon ) {
+					if ( ! empty( $default_libraries[ $target_icon_library ] ) ) {
+						// Remove the defined icon from the icon library.
+						unset( $default_libraries[ $target_icon_library ][ $remove_icon ] );
+					}
+				}
+			}
+		}
+
+		return $default_libraries;
+	}
 }
