@@ -38,6 +38,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class Helper {
 
 	/**
+	 * Allows you to dump values.
+	 *
+	 * @param string $content The content to be displayed.
+	 * @param string $display_type The display type of the content.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function dump( $content, $display_type = '' ) {
+		if ( ! empty( $content ) ) {
+	        if ( empty( $display_type ) ) {
+	            $display_type = 'print_r';
+	        }
+	        echo '<pre class="nifty-dump display-'. esc_attr( $display_type ) .'">';
+	            if ( 'echo' === $display_type ) {
+	                echo $content;
+	            }
+	            if ( 'print_r' === $display_type ) {
+	                print_r( $content );
+	            }
+	            if ( 'var_dump' === $display_type ) {
+	                var_dump( $content );
+	            }
+	        echo '</pre>';
+	    }
+	}
+
+	/**
 	 * Use to get the current selected navigation menu id.
 	 *
 	 * @since  1.0.0
@@ -121,7 +150,7 @@ final class Helper {
 		if ( ! empty( $css_positions ) ) {
 			foreach ( $css_positions as $css_position => $position ) {
 
-				if ( is_numeric( $position ) && ! empty( $position ) ) {
+				if ( is_numeric( $position ) ) {
 					$position = $css_position . ': ' . $position . 'px; ';
 				}
 
@@ -131,6 +160,13 @@ final class Helper {
 		}
 	}
 
+	/**
+	 * Get menu assigned on Theme Location.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return array $menu_collection Array that contains list of assigned menu on Theme Location.
+	 */
     public static function get_nav_menu_locations_object() {
         $theme_locations = get_nav_menu_locations();
         $menu_collection = array();
@@ -148,6 +184,14 @@ final class Helper {
         }
         return $menu_collection;
     }
+
+	/**
+	 * Get menu items on assigned menu on Theme Location.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return array $menu_items Array that contains list of menu items.
+	 */
     public static function get_menu_items_object() {
         $menus = self::get_nav_menu_locations_object();
         $menu_items = array();
@@ -161,12 +205,20 @@ final class Helper {
 		}
         return $menu_items;
     }
+
+	/**
+	 * Get id of menu items.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return array $filtered_menu_items Array that contains list of id for each menu items.
+	 */
     public static function get_menu_items_id() {
         $menu_items = self::get_menu_items_object();
         $filtered_menu_items = array();
 		if ( ! empty ( $menu_items ) ) {
 	        foreach ( $menu_items as $menu_item => $menu_item_value ) {
-				// niftyDump($menu_item_value);
+
 	            foreach ( $menu_item_value as $value ) {
 	                if ( $menu_item ) {
 	                    $filtered_menu_items[$menu_item][] = $value->ID;
@@ -177,6 +229,13 @@ final class Helper {
         return $filtered_menu_items;
     }
 
+	/**
+	 * Checks if menu item has icons.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean $has_menu_icon Returns true if menu icon has icon otherwise, false.
+	 */
     public static function menu_has_icon() {
         $menus = self::get_menu_items_id();
         $menu_icon = array();

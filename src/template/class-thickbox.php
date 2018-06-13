@@ -53,15 +53,15 @@ class ThickBox {
 	 * @access public
 	 *
 	 * @param  array $set_args The Arguments for the tickbox component.
-	 * @uses   add_filter() Calls 'filter_nifty_thickbox_defaults_args' hook
+	 * @uses   add_filter() Calls 'nifty_menu_options_thickbox_default_args_filter' hook
 	 *
 	 * @return void
 	 */
 	public function __construct( $set_args = array() ) {
 		$filtered_args     = '';
 		apply_filters(
-			'filter_nifty_thickbox_defaults_args',
-			$defaults_args = array(
+			'nifty_menu_options_thickbox_default_args_filter',
+			$default_args = array(
 				'id'               => esc_attr( 'thickbox-selector' ),
 				'class'            => esc_attr( 'thickbox-container' ),
 				'content_class'    => esc_attr( 'thickbox-content-container' ),
@@ -78,7 +78,7 @@ class ThickBox {
 			)
 		);
 
-		$filtered_args = array_replace_recursive( $defaults_args, $set_args );
+		$filtered_args = array_replace_recursive( $default_args, $set_args );
 
 		self::$args = $filtered_args;
 	}
@@ -100,7 +100,7 @@ class ThickBox {
 				$args = self::get_args();
 
 				apply_filters(
-					'filter_nifty_thickbox_allowed_html',
+					'nifty_menu_options_thickbox_content_allowed_html_filter',
 					$allowed_html  = array(
 						'div'    => array(
 							'id'    => array(),
@@ -154,20 +154,23 @@ class ThickBox {
 						'strong' => array(),
 					)
 				);
-				$allowed_text_html = array(
-					'a'      => array(
-						'href'  => array(),
-						'title' => array(),
-					),
-					'i'      => array(
-						'class'       => array(),
-						'id'          => array(),
-						'data-status' => array(),
-						'style'       => array(),
-					),
-					'br'     => array(),
-					'em'     => array(),
-					'strong' => array(),
+				apply_filters(
+					'nifty_menu_options_thickbox_link_text_allowed_html_filter',
+					$allowed_text_html = array(
+						'a'      => array(
+							'href'  => array(),
+							'title' => array(),
+						),
+						'i'      => array(
+							'class'       => array(),
+							'id'          => array(),
+							'data-status' => array(),
+							'style'       => array(),
+						),
+						'br'     => array(),
+						'em'     => array(),
+						'strong' => array(),
+					)
 				);
 
 		if ( 'inline' === $args['type'] ) {

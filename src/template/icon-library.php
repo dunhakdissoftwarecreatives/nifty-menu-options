@@ -42,7 +42,8 @@ final class IconLibrary {
 	 * Fetch the list of icons
 	 *
 	 * @since  1.0.0
-	 * @uses   add_filter() Calls 'DSC/NiftyMenuOptions/IconLibrary/GetIcons' hook
+	 * @uses   add_filter() Calls 'nifty_menu_options_add_icon_library_filter' hook
+	 * @uses   add_filter() Calls 'nifty_menu_options_get_icon_library_filter' hook
 	 * @return array $get_icons List of icons.
 	 */
 	public static function GetIcons( $set_icon_library = '' ) {
@@ -52,7 +53,7 @@ final class IconLibrary {
 		);
 
 		$icon_libraries = apply_filters(
-			'DSC/NiftyMenuOptions/IconLibrary/add_icon_library',
+			'nifty_menu_options_add_icon_library_filter',
 			$default_libraries
 		);
 
@@ -66,7 +67,7 @@ final class IconLibrary {
 			}
 		}
 
-		return apply_filters( 'DSC/NiftyMenuOptions/IconLibrary/get_icon_library', $get_icons );
+		return apply_filters( 'nifty_menu_options_get_icon_library_filter', $get_icons );
 	}
 
 	/**

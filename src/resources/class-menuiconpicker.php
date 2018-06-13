@@ -98,8 +98,8 @@ final class MenuIconPicker {
 		$icon_position          = $get_menu_icon_position['position'];
 		$get_menu_icon_size     = Metabox::get_menu_icon_size( $id );
 		$icon_size              = $get_menu_icon_size['size'];
-		$min                    = nifty_default_position_min();
-		$default_color          = nifty_default_color();
+		$min                    = nifty_menu_options_default_min_position();
+		$default_color          = nifty_menu_options_default_color();
 
 		$link_text          = esc_html__( 'Change Icon', 'nifty-menu-options' );
 		$gutter_placeholder = esc_attr__( '15', 'nifty-menu-options' );
@@ -125,7 +125,7 @@ final class MenuIconPicker {
 
 		$thickbox_class = new ThickBox( $thickbox_args );
 
-		do_action( 'nifty_menu_options_before_fields' ); ?>
+		do_action( 'nifty_menu_options_before_menu_item_settings_field' ); ?>
 
 		<div class="nifty-menu-options-settings-container description-wide">
 			<p class="description">
@@ -163,7 +163,7 @@ final class MenuIconPicker {
 		</div>
 
 		<?php
-		do_action( 'nifty_menu_options_after_fields' );
+		do_action( 'nifty_menu_options_after_menu_item_settings_field' );
 	}
 
 	/**
@@ -175,7 +175,7 @@ final class MenuIconPicker {
 	 * @param  int    $id    Navigation menu ID.
 	 * @param  string $selected_icon    Selected icon.
 	 *
-	 * @uses   add_filter()    Calls 'filter_nifty_menu_icon_picker_contents' hook
+	 * @uses   add_filter()    Calls 'nifty_menu_options_icon_picker_contents_filter' hook
 	 *
 	 * @return string $content    The content for the icon picker
 	 */
@@ -227,7 +227,7 @@ final class MenuIconPicker {
 			}
 			$content .= '</ul>';
 		}
-		$content = apply_filters( 'filter_nifty_menu_icon_picker_contents', $content, $id );
+		$content = apply_filters( 'nifty_menu_options_icon_picker_contents_filter', $content, $id );
 
 		return $content;
 	}
@@ -307,27 +307,27 @@ final class MenuIconPicker {
 			$menu_icon_color = $menu_icon_color[ $menu_icon_color_name ][ $menu_item_db_id ];
 		}
 
-		if ( ! empty( $_POST[ $menu_icon_gutter_name ]['top'][ $menu_item_db_id ] ) ) {
+		if ( is_numeric( $_POST[ $menu_icon_gutter_name ]['top'][ $menu_item_db_id ] ) ) {
 			$menu_icon_gutter              = filter_input_array( INPUT_POST, $filters );
 			$menu_icon_gutter_array['top'] = $menu_icon_gutter[ $menu_icon_gutter_name ]['top'][ $menu_item_db_id ];
 		}
 
-		if ( ! empty( $_POST[ $menu_icon_gutter_name ]['right'][ $menu_item_db_id ] ) ) {
+		if ( is_numeric( $_POST[ $menu_icon_gutter_name ]['right'][ $menu_item_db_id ] ) ) {
 			$menu_icon_gutter                = filter_input_array( INPUT_POST, $filters );
 			$menu_icon_gutter_array['right'] = $menu_icon_gutter[ $menu_icon_gutter_name ]['right'][ $menu_item_db_id ];
 		}
 
-		if ( ! empty( $_POST[ $menu_icon_gutter_name ]['bottom'][ $menu_item_db_id ] ) ) {
+		if ( is_numeric( $_POST[ $menu_icon_gutter_name ]['bottom'][ $menu_item_db_id ] ) ) {
 			$menu_icon_gutter                 = filter_input_array( INPUT_POST, $filters );
 			$menu_icon_gutter_array['bottom'] = $menu_icon_gutter[ $menu_icon_gutter_name ]['bottom'][ $menu_item_db_id ];
 		}
 
-		if ( ! empty( $_POST[ $menu_icon_gutter_name ]['left'][ $menu_item_db_id ] ) ) {
+		if ( is_numeric( $_POST[ $menu_icon_gutter_name ]['left'][ $menu_item_db_id ] ) ) {
 			$menu_icon_gutter               = filter_input_array( INPUT_POST, $filters );
 			$menu_icon_gutter_array['left'] = $menu_icon_gutter[ $menu_icon_gutter_name ]['left'][ $menu_item_db_id ];
 		}
 
-		if ( ! empty( $_POST[ $menu_icon_size_name ][ $menu_item_db_id ] ) ) {
+		if ( is_numeric( $_POST[ $menu_icon_size_name ][ $menu_item_db_id ] ) ) {
 			$menu_icon_size = filter_input_array( INPUT_POST, $filters );
 			$menu_icon_size = $menu_icon_size[ $menu_icon_size_name ][ $menu_item_db_id ];
 		}
@@ -355,7 +355,7 @@ final class MenuIconPicker {
 
 			Metabox::update_menu_icon( $menu_item_db_id, $nifty_icon_save_meta );
 		} else {
-			Metabox::update_menu_icon( $menu_item_db_id, $nifty_icon_save_meta );       
+			Metabox::update_menu_icon( $menu_item_db_id, $nifty_icon_save_meta );
         }
 	}
 }

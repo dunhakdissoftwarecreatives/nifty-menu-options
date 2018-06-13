@@ -75,38 +75,3 @@ function nifty_menu_options_activate() {
 // Bootstrap the plugin.
 $plugin = new \DSC\NiftyMenuOptions\Loader();
 $plugin->runner();
-
-/**
- * This is just a test
- *
- * @todo Remove this later on releasing
- */
-add_filter( 'DSC/NiftyMenuOptions/IconLibrary/add_icon_library', 'my_library' );
-
-/**
- * This is just a test icon library
- *
- * @param array $icon_libraries collection of icons.
- * @todo Remove this later on releasing
- */
-function my_library( $icon_libraries ) {
-	$icon_libraries['my_library'] = array(
-		'3d_rotation',
-		'ac_unit',
-		'access_alarm',
-		'access_alarms',
-		'access_time',
-		'accessibility',
-	);
-	return $icon_libraries;
-}
-/**
- * This is just a test enqueue icon library
- *
- * @param array $enqueued_icon_libraries collection of icons Libraries.
- * @todo Remove this later on releasing
- */
-add_filter( 'nifty_enqueued_icon_libraries', function( $enqueued_icon_libraries ) {
-	$enqueued_icon_libraries['nifty-material-icon']['enqueued'] = true;
-	return $enqueued_icon_libraries;
-});

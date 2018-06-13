@@ -124,7 +124,7 @@ final class PublicPages {
         $has_menu_icon = Helper::menu_has_icon();
 
 		$enqueued_icon_libraries = apply_filters(
-			'nifty_enqueued_icon_libraries',
+			'nifty_menu_options_enqueued_icon_libraries_filter',
 			array(
 				'nifty-material-icon' => array(
 					'id'       => 'nifty-material-icon',
@@ -240,7 +240,7 @@ final class PublicPages {
 				$css['icon_position'] = Helper::get_icon_css_position( $icon['icon_position'] );
 			}
 			// Icon size.
-			if ( ! empty( $icon['icon_size'] ) ) {
+			if ( is_numeric( $icon['icon_size'] ) ) {
 				$css['icon_size'] = 'font-size:' . esc_attr( $icon['icon_size'] ) . 'px; ';
 			}
 

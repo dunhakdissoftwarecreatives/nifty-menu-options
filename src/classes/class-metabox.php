@@ -262,7 +262,7 @@ final class Metabox {
 			$get_menu_icon_meta = get_post_meta( $id, self::METAKEY, true );
 		}
 
-		if ( ! empty( $get_menu_icon_meta['icon_size'] ) ) {
+		if ( is_numeric( $get_menu_icon_meta['icon_size'] ) ) {
 			$menu_icon_size = $get_menu_icon_meta['icon_size'];
 
 			if ( is_numeric( $menu_icon_size ) ) {

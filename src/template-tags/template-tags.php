@@ -23,42 +23,58 @@ if (! defined('ABSPATH')) {
     return;
 }
 
-function niftyDump( $content, $display_type = '' )
-{
-    if ( ! empty( $content ) ) {
-        if ( empty( $display_type ) ) {
-            $display_type = 'print_r';
-        }
-        echo '<pre>';
-            if ( 'echo' === $display_type ) {
-                echo $content;
-            }
-            if ( 'print_r' === $display_type ) {
-                print_r( $content );
-            }
-            if ( 'var_dump' === $display_type ) {
-                var_dump( $content );
-            }
-        echo '</pre>';
-    }
-
-    return;
+/**
+ * This function allows you to dump values.
+ *
+ * @param string $content The content to be displayed.
+ * @param string $display_type The display type of the content.
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function nifty_menu_options_dump( $content, $display_type = '' ) {
+	$dump = '';
+	if ( ! empty( $content ) ) {
+		$dump = new DSC\NiftyMenuOptions\Helper();
+		$dump->dump( $content, $display_type );
+	}
 }
 
-function nifty_sanity_check( $mixed_data ) {
+/**
+ * This function handle the plugin sanity check.
+ *
+ * @param mixed $mixed_data The data to check.
+ *
+ * @since  1.0.0
+ * @return mixed $mixed_data Return the sanitize value.
+ */
+function nifty_menu_options_sanity_check( $mixed_data ) {
 	if ( ! empty ( $mixed_data ) ) {
 		return $mixed_data;
 	}
 	return "";
 }
 
-function nifty_default_color() {
-    $color = apply_filters( 'filter_nifty_default_color', '#9e9e9e' );
+/**
+ * This function that holds the default color for icon color picker.
+ *
+ * @since  1.0.0
+ * @return string $color Return default color for color picker.
+ */
+function nifty_menu_options_default_color() {
+    $color = apply_filters( 'nifty_menu_options_default_color_picker_color_filter', '#9e9e9e' );
 
     return $color;
 }
-function nifty_default_position_min() {
-    $min = apply_filters( 'filter_nifty_default_position_min', '-200' );
+
+/**
+ * This function that holds the default min value for position fields.
+ *
+ * @since  1.0.0
+ * @return int $min Return default min value for position fields.
+ */
+function nifty_menu_options_default_min_position() {
+    $min = apply_filters( 'nifty_menu_options_default_min_position_filter', '-200' );
 
     return $min;
 }
