@@ -218,6 +218,18 @@
   width: 50%;
 }
 
+.nifty-header-wrapper .nifty-inner-wrap.wrapper-center, .nifty-header-wrapper .nifty-inner-wrap.wrapper-right {
+  width: 25%;
+}
+
+.nifty-header-wrapper .nifty-inner-wrap.wrapper-center select {
+  width: 95%;
+}
+
+.nifty-header-wrapper .nifty-inner-wrap.wrapper-right select {
+  width: 100%;
+}
+
 .nifty-header-wrapper .nifty-icon-search {
   width: 95%;
 }
@@ -304,6 +316,10 @@ input[type=number].nifty-number-field.small-text {
 
 .nifty-icon-color-picker-wrap .wp-color-result.button {
   margin: 0;
+}
+
+.nifty-dump {
+  margin-left: 200px;
 }
 
 .nifty-tooltip {

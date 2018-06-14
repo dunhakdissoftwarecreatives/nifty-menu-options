@@ -150,20 +150,65 @@ final class Metabox {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @param  int $id           Menu item ID.
+	 * @param int $menu_id       The menu id.
+	 * @param int $menu_item_id	The menu item id.
 	 * @return string $menu_icon Returns the menu icon.
 	 */
-	public static function get_menu_icon( $id ) {
+	public static function get_menu_icon( $menu_id, $menu_item_id ) {
 		$get_menu_icon_meta = '';
 		$menu_icon          = '';
 
-		if ( ! empty( $id ) ) {
-			$get_menu_icon_meta = get_post_meta( $id, self::METAKEY, true );
+		if ( ! empty( $menu_id ) && ! empty( $menu_item_id ) ) {
+			$get_menu_icon_meta = nifty_menu_options_get_data( $menu_id, $menu_item_id );
 		}
-		if ( ! empty( $get_menu_icon_meta['icon_name'] ) ) {
-			$menu_icon = $get_menu_icon_meta['icon_name'];
+		if ( ! empty( $get_menu_icon_meta['nifty-menu-options-icon'] ) ) {
+			$menu_icon = $get_menu_icon_meta['nifty-menu-options-icon'];
 		}
 		return $menu_icon;
+	}
+
+	/**
+	 * Get menu item icon library.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param int $menu_id      The menu id.
+	 * @param int $menu_item_id	The menu item id.
+	 * @return string $menu_icon_library Returns the menu item icon library.
+	 */
+	public static function get_menu_icon_library( $menu_id, $menu_item_id ) {
+		$get_menu_icon_meta = '';
+		$menu_icon_library  = '';
+
+		if ( ! empty( $menu_id ) ) {
+			$get_menu_icon_meta = nifty_menu_options_get_data( $menu_id, $menu_item_id );
+		}
+		if ( ! empty( $get_menu_icon_meta['nifty-menu-options-icon-library'] ) ) {
+			$menu_icon_library = $get_menu_icon_meta['nifty-menu-options-icon-library'];
+		}
+		return $menu_icon_library;
+	}
+
+	/**
+	 * Get menu item icon category.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param int $menu_id      The menu id.
+	 * @param int $menu_item_id	The menu item id.
+	 * @return string $menu_icon_library Returns the menu item icon category.
+	 */
+	public static function get_menu_icon_category( $menu_id, $menu_item_id ) {
+		$get_menu_icon_meta = '';
+		$menu_icon_category  = '';
+
+		if ( ! empty( $menu_id ) ) {
+			$get_menu_icon_meta = nifty_menu_options_get_data( $menu_id, $menu_item_id );
+		}
+		if ( ! empty( $get_menu_icon_meta['nifty-menu-options-icon-category'] ) ) {
+			$menu_icon_category = $get_menu_icon_meta['nifty-menu-options-icon-category'];
+		}
+		return $menu_icon_category;
 	}
 
 	/**
@@ -171,18 +216,19 @@ final class Metabox {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @param  int $id       Menu item ID.
-	 * @return string $menu_icon_color
+	 * @param int $menu_id      The menu id.
+	 * @param int $menu_item_id	The menu item id.
+	 * @return string $menu_icon_color Returns the color for the icon.
 	 */
-	public static function get_menu_icon_color( $id ) {
+	public static function get_menu_icon_color( $menu_id, $menu_item_id ) {
 		$get_menu_icon_meta = '';
 		$menu_icon_color    = '';
 
-		if ( ! empty( $id ) ) {
-			$get_menu_icon_meta = get_post_meta( $id, self::METAKEY, true );
+		if ( ! empty( $menu_id ) ) {
+			$get_menu_icon_meta = nifty_menu_options_get_data( $menu_id, $menu_item_id );
 		}
-		if ( ! empty( $get_menu_icon_meta['icon_color'] ) ) {
-			$menu_icon_color = $get_menu_icon_meta['icon_color'];
+		if ( ! empty( $get_menu_icon_meta['nifty-menu-options-icon-color'] ) ) {
+			$menu_icon_color = $get_menu_icon_meta['nifty-menu-options-icon-color'];
 		}
 		return $menu_icon_color;
 	}
@@ -192,10 +238,11 @@ final class Metabox {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @param  int $id       Menu item ID.
-	 * @return array $returned_values
+	 * @param int $menu_id      The menu id.
+	 * @param int $menu_item_id	The menu item id.
+	 * @return array $returned_values Returns the array position values and CSS position values.
 	 */
-	public static function get_menu_icon_position( $id ) {
+	public static function get_menu_icon_position( $menu_id, $menu_item_id ) {
 		$get_menu_icon_meta          = '';
 		$menu_icon_position          = '';
 		$default_positions           = array(
@@ -208,12 +255,12 @@ final class Metabox {
 		$gutter                      = '';
 		$returned_values             = array();
 
-		if ( ! empty( $id ) ) {
-			$get_menu_icon_meta = get_post_meta( $id, self::METAKEY, true );
+		if ( ! empty( $menu_id ) ) {
+			$get_menu_icon_meta = nifty_menu_options_get_data( $menu_id, $menu_item_id );
 		}
 
-		if ( ! empty( $get_menu_icon_meta['icon_position'] ) ) {
-			$menu_icon_position = $get_menu_icon_meta['icon_position'];
+		if ( ! empty( $get_menu_icon_meta['nifty-menu-options-icon-gutter'] ) ) {
+			$menu_icon_position = $get_menu_icon_meta['nifty-menu-options-icon-gutter'];
 		}
 
 		if ( ! empty( $menu_icon_position ) ) {
@@ -249,21 +296,22 @@ final class Metabox {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @param  int $id       Menu item ID.
-	 * @return array $returned_values
+	 * @param int $menu_id      The menu id.
+	 * @param int $menu_item_id	The menu item id.
+	 * @return array $returned_values Returns the array size and CSS size value.
 	 */
-	public static function get_menu_icon_size( $id ) {
-		$get_menu_icon_meta = '';
+	public static function get_menu_icon_size( $menu_id, $menu_item_id ) {
+		$get_menu_icon_meta = array();
 		$menu_icon_size     = '';
 		$menu_icon_size_css = '';
 		$returned_values    = '';
 
-		if ( ! empty( $id ) ) {
-			$get_menu_icon_meta = get_post_meta( $id, self::METAKEY, true );
+		if ( ! empty( $menu_id ) ) {
+			$get_menu_icon_meta = nifty_menu_options_get_data( $menu_id, $menu_item_id );
 		}
 
-		if ( is_numeric( $get_menu_icon_meta['icon_size'] ) ) {
-			$menu_icon_size = $get_menu_icon_meta['icon_size'];
+		if ( is_numeric( $get_menu_icon_meta['nifty-menu-options-icon-size'] ) && 0 !== $get_menu_icon_meta['nifty-menu-options-icon-size'] ) {
+			$menu_icon_size = $get_menu_icon_meta['nifty-menu-options-icon-size'];
 
 			if ( is_numeric( $menu_icon_size ) ) {
 				$menu_icon_size_css = $menu_icon_size . 'px';
@@ -275,6 +323,28 @@ final class Metabox {
 			);
 			return $returned_values;
 		}
+	}
+
+	/**
+	 * Check if menu item has icon.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param int $menu_id       The menu id.
+	 * @param int $menu_item_id	The menu item id.
+	 * @return string $menu_icon Returns the menu icon.
+	 */
+	public static function has_icon( $menu_id, $menu_item_id ) {
+		$get_menu_icon_meta = '';
+		$menu_icon          = '';
+
+		if ( ! empty( $menu_id ) && ! empty( $menu_item_id ) ) {
+			$get_menu_icon_meta = nifty_menu_options_get_data( $menu_id, $menu_item_id );
+		}
+		if ( ! empty( $get_menu_icon_meta['nifty-menu-options-remove-icon'] ) ) {
+			$menu_icon = $get_menu_icon_meta['nifty-menu-options-remove-icon'];
+		}
+		return $menu_icon;
 	}
 
 	/**
@@ -301,8 +371,5 @@ final class Metabox {
 			$menu_icon[$id] = array();
 			delete_post_meta( $id, self::METAKEY );
 		}
-
-
-
 	}
 }

@@ -2,14 +2,23 @@ jQuery(document).ready( function($) {
     "use strict";
 
     $( 'body' ).on( 'click', '#TB_ajaxContent .nifty-icon-selector', function(e) {
-       var $selected_icon = $(this).attr('value');
-       var $selected_icon_id = $(this).attr('data-id');
+	   var data_icon_name               = $( this ).attr('data-icon-name');
+	   var data_icon_library            = $( this ).attr('data-icon-library');
+	   var data_icon_category           = $( this ).attr('data-icon-category');
+	   var data_menu_item_id            = $( this ).attr('data-menu-item-id');
+	   var input_icon_field_id          = '#nifty-menu-options-icon-'+ data_menu_item_id;
+	   var input_icon_library_field_id  = '#nifty-menu-options-icon-library-'+ data_menu_item_id;
+	   var input_icon_category_field_id = '#nifty-menu-options-icon-category-'+ data_menu_item_id;
 
-       $( '.thickbox-link-text-' + $selected_icon_id ).text( nifty_menu_options_admin_object.change_icon );
+	   $( input_icon_field_id ).attr( 'value', data_icon_name );
+	   $( input_icon_library_field_id ).attr( 'value', data_icon_library );
+	   $( input_icon_category_field_id ).attr( 'value', data_icon_category );
+
+       $( '.thickbox-link-text-' + data_menu_item_id ).text( nifty_menu_options_admin_object.change_icon );
 
        $( '.nifty-icon-label' ).removeClass( 'selected' );
        $( this ).parent().addClass( 'selected' );
-       $( '.nifty-icon-selected-' + $selected_icon_id ).text( $selected_icon );
+       $( '.nifty-icon-selected-' + data_menu_item_id ).text( data_icon_name );
 
         $( '#TB_window' ).fadeOut( 'fast', function() {
            $( '#TB_window, #TB_overlay, #TB_HideSelect' ).trigger( 'tb_unload' ).unbind().remove();
@@ -107,7 +116,10 @@ jQuery(document).ready( function($) {
         $( this ).siblings('.nifty-icon-picker').find('.nifty-icon-selected').text( '' );
         $( this ).siblings('.nifty-thickbox-container').find('.nifty-icon-label.selected .nifty-icon-selector').val('');
         $( this ).siblings('.nifty-thickbox-container').find('.nifty-icon-label.selected').removeClass('selected');
-        $( this ).siblings('.nifty-menu-settings').find('.nifty-remove-icon-field').attr( 'value', 'true' );
+		$( this ).siblings('.nifty-menu-settings').find('.nifty-remove-icon-field').attr( 'value', 'true' );
+		$( this ).siblings('.nifty-menu-settings').find('.nifty-menu-options-icon-field').attr( 'value', '' );
+		$( this ).siblings('.nifty-menu-settings').find('.nifty-menu-options-icon-library-field').attr( 'value', '' );
+		$( this ).siblings('.nifty-menu-settings').find('.nifty-menu-options-icon-category-field').attr( 'value', '' );
     });
 
     $('.nifty-icon-picker').on( 'click', function(e) {
@@ -156,6 +168,7 @@ jQuery(document).ready( function($) {
                     new_selected_icon = $( '#TB_ajaxContent .nifty-thickbox-content' ).find( '.nifty-icon-label.selected .nifty-displayed-icon' ).text();
 
                     $( this ).siblings('.nifty-icon-picker').find('.nifty-icon-selected').text(new_selected_icon);
+                    $( this ).siblings('.nifty-menu-settings').find('.nifty-menu-options-icon-field').text(new_selected_icon);
                 }
             }
 

@@ -39,23 +39,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class IconLibrary {
 
 	/**
-	 * Fetch the list of icons
+	 * Fetch the list of icons.
 	 *
 	 * @since  1.0.0
-	 * @uses   add_filter() Calls 'nifty_menu_options_add_icon_library_filter' hook
 	 * @uses   add_filter() Calls 'nifty_menu_options_get_icon_library_filter' hook
 	 * @return array $get_icons List of icons.
 	 */
 	public static function GetIcons( $set_icon_library = '' ) {
 		$get_icons         = '';
-		$default_libraries = array(
-			'material_icons' => self::getMateriIcons(),
-		);
 
-		$icon_libraries = apply_filters(
-			'nifty_menu_options_add_icon_library_filter',
-			$default_libraries
-		);
+		$icon_libraries = self::getLibraries();
 
 		foreach ( $icon_libraries as $icon_library => $icons ) {
 			if ( ! empty( $set_icon_library ) ) {
@@ -68,6 +61,65 @@ final class IconLibrary {
 		}
 
 		return apply_filters( 'nifty_menu_options_get_icon_library_filter', $get_icons );
+	}
+
+	/**
+	 * Fetch the list of Libraries.
+	 *
+	 * @since  1.0.0
+	 * @uses   add_filter() Calls 'nifty_menu_options_add_icon_library_filter' hook
+	 * @return array $icon_libraries List of icons and libraries.
+	 */
+	public static function getLibraries() {
+		$default_libraries = array(
+			'material_icons' => self::getMateriIcons(),
+		);
+
+		$icon_libraries = apply_filters(
+			'nifty_menu_options_add_icon_library_filter',
+			$default_libraries
+		);
+
+		return $icon_libraries;
+	}
+
+	/**
+	 * Fetch the list of Libraries and their names.
+	 *
+	 * @since  1.0.0
+	 * @return array $icon_libraries List of icons and libraries.
+	 */
+	public static function getLibrariesNames( $default_library ) {
+		$libraries = self::getLibraries();
+		$filtered_library = array();
+		$library_name = '';
+		$is_default = 'not_default';
+		$new_default_library = array();
+
+		foreach ( $libraries as $library => $library_icons ) {
+			$library_name = str_replace( '_', ' ', $library );
+
+			if ( $default_library === $library ) {
+				$is_default = 'is_default';
+				$new_default_library = array(
+					'name'    => $library_name,
+					'value'   => $library,
+					'default' => $is_default,
+				);
+			} else {
+				$filtered_library[$library] = array(
+					'name'    => $library_name,
+					'value'   => $library,
+					'default' => $is_default,
+				);
+			}
+		}
+
+		sort( $filtered_library );
+
+		array_unshift( $filtered_library, $new_default_library );
+
+		return $filtered_library;
 	}
 
 	/**

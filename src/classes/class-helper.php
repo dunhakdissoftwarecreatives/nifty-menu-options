@@ -264,9 +264,9 @@ final class Helper {
 	/**
 	 * Filters the icon library and exclude defined icons.
 	 *
-	 *	@param array  $default_libraries 	The default icon libraries.
-	 *	@param string $target_icon_library	The target icon library to filter.
-	 *	@param array  $icons_to_remove		The icons to remove on the target library.
+	 * @param array  $default_libraries 	The default icon libraries.
+	 * @param string $target_icon_library	The target icon library to filter.
+	 * @param array  $icons_to_remove		The icons to remove on the target library.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -290,6 +290,64 @@ final class Helper {
 					if ( ! empty( $default_libraries[ $target_icon_library ] ) ) {
 						// Remove the defined icon from the icon library.
 						unset( $default_libraries[ $target_icon_library ][ $remove_icon ] );
+					}
+				}
+			}
+		}
+
+		return $default_libraries;
+	}
+
+	/**
+	 * Filters the icon library and exclude defined icons category.
+	 *
+	 * @param array  $default_libraries 	The default icon libraries.
+	 * @param string $target_icon_library	The target icon library to filter.
+	 * @param string $target_icon_category The target category to remove on the target library.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return array $default_libraries Return the filtered icon library.
+	 */
+	public function remove_icon_by_category_from_library( $default_libraries, $target_icon_library, $target_icon_category ) {
+		$remove_icons = array();
+
+		// Checks if $default_libraries is empty.
+		if ( ! empty( $default_libraries ) ) {
+			if ( ! empty( $target_icon_library ) && ! empty( $target_icon_category ) ) {
+				foreach ( $default_libraries[$target_icon_library] as $icon => $value ) {
+					if ( $target_icon_category === $value ) {
+						unset( $default_libraries[ $target_icon_library ][ $icon ] );
+					}
+				}
+			}
+		}
+
+		return $default_libraries;
+	}
+
+	/**
+	 * Filters the icon library and exclude defined icons categories.
+	 *
+	 * @param array  $default_libraries 	The default icon libraries.
+	 * @param string $target_icon_library	The target icon library to filter.
+	 * @param array  $target_icon_categories The target categories to remove on the target library.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return array $default_libraries Return the filtered icon library.
+	 */
+	public function remove_icon_by_categories_from_library( $default_libraries, $target_icon_library, $target_icon_categories ) {
+		$remove_icons = array();
+
+		// Checks if $default_libraries is empty.
+		if ( ! empty( $default_libraries ) ) {
+			if ( ! empty( $target_icon_library ) && ! empty( $target_icon_categories ) ) {
+				foreach ( $target_icon_categories as $target_icon_category ) {
+					foreach ( $default_libraries[$target_icon_library] as $icon => $value ) {
+						if ( $target_icon_category === $value ) {
+							unset( $default_libraries[ $target_icon_library ][ $icon ] );
+						}
 					}
 				}
 			}
