@@ -101,6 +101,20 @@
     .nifty-inner-wrap {
         display:  inline-block;
         width: 50%;
+		&.wrapper-center,
+		&.wrapper-right {
+		    width:  25%;
+		}
+		&.wrapper-center {
+			select {
+				width: 95%;
+			}
+		}
+		&.wrapper-right {
+			select {
+				width: 100%;
+			}
+		}
     }
     .nifty-icon-search {
         width: 95%;
@@ -183,4 +197,8 @@ input[type=number].nifty-number-field {
     .wp-color-result.button {
         margin: 0;
     }
+}
+
+.nifty-dump {
+	margin-left: 200px;
 }

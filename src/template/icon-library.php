@@ -39,23 +39,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class IconLibrary {
 
 	/**
-	 * Fetch the list of icons
+	 * Fetch the list of icons.
 	 *
 	 * @since  1.0.0
-	 * @uses   add_filter() Calls 'nifty_menu_options_add_icon_library_filter' hook
 	 * @uses   add_filter() Calls 'nifty_menu_options_get_icon_library_filter' hook
 	 * @return array $get_icons List of icons.
 	 */
 	public static function GetIcons( $set_icon_library = '' ) {
 		$get_icons         = '';
-		$default_libraries = array(
-			'material_icons' => self::getMateriIcons(),
-		);
 
-		$icon_libraries = apply_filters(
-			'nifty_menu_options_add_icon_library_filter',
-			$default_libraries
-		);
+		$icon_libraries = self::getLibraries();
 
 		foreach ( $icon_libraries as $icon_library => $icons ) {
 			if ( ! empty( $set_icon_library ) ) {
@@ -68,6 +61,65 @@ final class IconLibrary {
 		}
 
 		return apply_filters( 'nifty_menu_options_get_icon_library_filter', $get_icons );
+	}
+
+	/**
+	 * Fetch the list of Libraries.
+	 *
+	 * @since  1.0.0
+	 * @uses   add_filter() Calls 'nifty_menu_options_add_icon_library_filter' hook
+	 * @return array $icon_libraries List of icons and libraries.
+	 */
+	public static function getLibraries() {
+		$default_libraries = array(
+			'material_icons' => self::getMateriIcons(),
+		);
+
+		$icon_libraries = apply_filters(
+			'nifty_menu_options_add_icon_library_filter',
+			$default_libraries
+		);
+
+		return $icon_libraries;
+	}
+
+	/**
+	 * Fetch the list of Libraries and their names.
+	 *
+	 * @since  1.0.0
+	 * @return array $icon_libraries List of icons and libraries.
+	 */
+	public static function getLibrariesNames( $default_library ) {
+		$libraries = self::getLibraries();
+		$filtered_library = array();
+		$library_name = '';
+		$is_default = 'not_default';
+		$new_default_library = array();
+
+		foreach ( $libraries as $library => $library_icons ) {
+			$library_name = str_replace( '_', ' ', $library );
+
+			if ( $default_library === $library ) {
+				$is_default = 'is_default';
+				$new_default_library = array(
+					'name'    => $library_name,
+					'value'   => $library,
+					'default' => $is_default,
+				);
+			} else {
+				$filtered_library[$library] = array(
+					'name'    => $library_name,
+					'value'   => $library,
+					'default' => $is_default,
+				);
+			}
+		}
+
+		sort( $filtered_library );
+
+		array_unshift( $filtered_library, $new_default_library );
+
+		return $filtered_library;
 	}
 
 	/**
@@ -93,7 +145,7 @@ final class IconLibrary {
 			'alarm_add'                                   => 'action',
 			'alarm_off'                                   => 'action',
 			'alarm_on'                                    => 'action',
-			// 'all_inbox' => 'action',
+			'all_inbox'                                   => 'action',
 			'all_out'                                     => 'action',
 			'android'                                     => 'action',
 			'announcement'                                => 'action',
@@ -533,19 +585,19 @@ final class IconLibrary {
 			'add_to_home_screen'                          => 'device',
 			'airplanemode_active'                         => 'device',
 			'airplanemode_inactive'                       => 'device',
-			// 'battery_20' => 'device',
-			// 'battery_30' => 'device',
-			// 'battery_50' => 'device',
-			// 'battery_60' => 'device',
-			// 'battery_80' => 'device',
-			// 'battery_90' => 'device',
+			'battery_20'                                  => 'device',
+			'battery_30'                                  => 'device',
+			'battery_50'                                  => 'device',
+			'battery_60'                                  => 'device',
+			'battery_80'                                  => 'device',
+			'battery_90'                                  => 'device',
 			'battery_alert'                               => 'device',
-			// 'battery_charging_20' => 'device',
-			// 'battery_charging_30' => 'device',
-			// 'battery_charging_50' => 'device',
-			// 'battery_charging_60' => 'device',
-			// 'battery_charging_80' => 'device',
-			// 'battery_charging_90' => 'device',
+			'battery_charging_20'                         => 'device',
+			'battery_charging_30'                         => 'device',
+			'battery_charging_50'                         => 'device',
+			'battery_charging_60'                         => 'device',
+			'battery_charging_80'                         => 'device',
+			'battery_charging_90'                         => 'device',
 			'battery_charging_full'                       => 'device',
 			'battery_full'                                => 'device',
 			'battery_std'                                 => 'device',
@@ -579,29 +631,29 @@ final class IconLibrary {
 			'screen_rotation'                             => 'device',
 			'sd_storage'                                  => 'device',
 			'settings_system_daydream'                    => 'device',
-			// 'signal_cellular_0_bar' => 'device',
-			// 'signal_cellular_1_bar' => 'device',
-			// 'signal_cellular_2_bar' => 'device',
-			// 'signal_cellular_3_bar' => 'device',
+			'signal_cellular_0_bar'                       => 'device',
+			'signal_cellular_1_bar'                       => 'device',
+			'signal_cellular_2_bar'                       => 'device',
+			'signal_cellular_3_bar'                       => 'device',
 			'signal_cellular_4_bar'                       => 'device',
 			'signal_cellular_alt'                         => 'device',
-			// 'signal_cellular_connected_no_internet_0_bar' => 'device',
-			// 'signal_cellular_connected_no_internet_1_bar' => 'device',
-			// 'signal_cellular_connected_no_internet_2_bar' => 'device',
-			// 'signal_cellular_connected_no_internet_3_bar' => 'device',
+			'signal_cellular_connected_no_internet_0_bar' => 'device',
+			'signal_cellular_connected_no_internet_1_bar' => 'device',
+			'signal_cellular_connected_no_internet_2_bar' => 'device',
+			'signal_cellular_connected_no_internet_3_bar' => 'device',
 			'signal_cellular_connected_no_internet_4_bar' => 'device',
 			'signal_cellular_no_sim'                      => 'device',
 			'signal_cellular_null'                        => 'device',
 			'signal_cellular_off'                         => 'device',
-			// 'signal_wifi_0_bar' => 'device',
-			// 'signal_wifi_1_bar' => 'device',
-			// 'signal_wifi_1_bar_lock' => 'device',
-			// 'signal_wifi_2_bar' => 'device',
-			// 'signal_wifi_2_bar_lock' => 'device',
-			// 'signal_wifi_3_bar' => 'device',
-			// 'signal_wifi_3_bar_lock' => 'device',
-			// 'signal_wifi_4_bar' => 'device',
-			// 'signal_wifi_4_bar_lock' => 'device',
+			'signal_wifi_0_bar' => 'device',
+			'signal_wifi_1_bar' => 'device',
+			'signal_wifi_1_bar_lock' => 'device',
+			'signal_wifi_2_bar' => 'device',
+			'signal_wifi_2_bar_lock' => 'device',
+			'signal_wifi_3_bar' => 'device',
+			'signal_wifi_3_bar_lock' => 'device',
+			'signal_wifi_4_bar' => 'device',
+			'signal_wifi_4_bar_lock' => 'device',
 			'signal_wifi_off'                             => 'device',
 			'storage'                                     => 'device',
 			'usb'                                         => 'device',
@@ -1136,8 +1188,8 @@ final class IconLibrary {
 			'star'                                        => 'toggle',
 			'star_border'                                 => 'toggle',
 			'star_half'                                   => 'toggle',
-			// 'toggle_off' => 'toggle',
-			// 'toggle_on' => 'toggle',
+			'toggle_off'                                  => 'toggle',
+			'toggle_on'                                   => 'toggle',
 		);
 		return $icons;
 	}
