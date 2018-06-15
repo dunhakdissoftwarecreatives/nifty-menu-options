@@ -167,7 +167,7 @@ final class Helper {
 	 * @access public
 	 * @return array $menu_collection Array that contains list of assigned menu on Theme Location.
 	 */
-    public static function get_nav_menu_locations_object() {
+    public static function get_nav_menu_locations_object( $get_theme_location_name = false ) {
         $theme_locations = get_nav_menu_locations();
         $menu_collection = array();
 		$term = '';
@@ -177,7 +177,11 @@ final class Helper {
 
 			if  ( ! is_wp_error( $term ) ) {
 				if ( ! empty(  $term ) ) {
-					$menu_collection[] = $term;
+					if ( false === $get_theme_location_name ) {
+						$menu_collection[] = $term;
+					} else {
+						$menu_collection[$theme_location] = $term;
+					}
 				}
 			}
 
@@ -230,6 +234,68 @@ final class Helper {
     }
 
 	/**
+	 * Get id of menu ids.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return array $menu_items Array that contains list of id for each menu.
+	 */
+    public static function get_menu_ids() {
+		$menus = self::get_nav_menu_locations_object();
+        $menu_items = array();
+
+		if ( ! empty ( $menus ) ) {
+			foreach ( $menus as $menu ) {
+				if  ( ! is_wp_error( $menu ) && ! empty($menu) ) {
+					$menu_items[$menu->term_id] = $menu->term_id;
+				}
+			}
+		}
+        return $menu_items;
+    }
+
+	/**
+	 * Maps id for the menu and menu items.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return array $filtered_menu_items_id_map Array that contains list of id for each menu and menu items.
+	 */
+    public static function get_menu_items_id_map() {
+        $menu_ids                   = self::get_menu_ids();
+        $menu_items                 = self::get_menu_items_object();
+        $filtered_menu_items_id_map = array();
+
+		if ( ! empty ( $menu_items ) ) {
+
+	        foreach ( $menu_ids as $menu_id => $id ) {
+		        foreach ( $menu_items as $menu_item => $menu_item_value ) {
+		            foreach ( $menu_item_value as $value ) {
+		                if ( $menu_item ) {
+		                    $filtered_menu_items_id_map[$id][$value->ID] = $value->ID;
+		                }
+		            }
+		        }
+	        }
+        }
+        return $filtered_menu_items_id_map;
+    }
+
+	public static function get_menu_id( $set_theme_location ) {
+		$theme_locations = self::get_nav_menu_locations_object( true );
+
+		if ( ! empty ( $theme_locations ) ) {
+			foreach ( $theme_locations as $theme_location => $theme_locations_object ) {
+				if  ( ! is_wp_error( $theme_locations_object ) && ! empty( $theme_locations_object ) ) {
+					if ( $theme_location === $set_theme_location ) {
+						return $theme_locations_object->term_id;
+					}
+				}
+			}
+		}
+    }
+
+	/**
 	 * Checks if menu item has icons.
 	 *
 	 * @since  1.0.0
@@ -237,21 +303,22 @@ final class Helper {
 	 * @return boolean $has_menu_icon Returns true if menu icon has icon otherwise, false.
 	 */
     public static function menu_has_icon() {
-        $menus = self::get_menu_items_id();
+        $menus = self::get_menu_items_id_map();
         $menu_icon = array();
         $has_menu_icon = array();
 
-        foreach ( $menus as $menu => $menu_items ) {
-            foreach ( $menu_items as $menu_item_id) {
+		if ( !empty( $menus ) ) {
+			foreach ( $menus as $menu_id => $menu_items ) {
+				foreach ( $menu_items as $menu_item_id ) {
 
-				// Get the unserialize menu icon value.
-				$menu_icon = self::get_unserialize_nifty_menu_icons( $menu_item_id );
+					$menu_icon = self::get_unserialize_nifty_menu_icons( $menu_id );
 
-                if ( !empty ( $menu_icon['icon_name'] ) ) {
-                   $has_menu_icon[$menu] = true;
-                }
-            }
-        }
+					if ( !empty ( $menu_icon[$menu_item_id]['nifty-menu-options-icon'] ) ) {
+						$has_menu_icon[$menu_id] = true;
+					}
+				}
+			}
+		}
 
         $has_menu_icon = array_unique($has_menu_icon);
 

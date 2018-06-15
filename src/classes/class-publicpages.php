@@ -220,40 +220,53 @@ final class PublicPages {
 	 * @return string $title  Menu item title.
 	 */
 	public static function display_menu_icons( $title, $item, $args, $depth ) {
+		$item_id       = $item->ID;
+		$menu_id       = Helper::get_menu_id( $args->theme_location );
+		$icon_array    = array('');
+		$icon_data     = array('');
+		$icon          = '';
+		$icon_color    = '';
+		$icon_position = array();
+		$icon_size     = '';
+		$css = array(
+			'icon_color' => '',
+			'icon_position' => '',
+			'icon_size' => '',
+		);
 
-		$icon = Helper::get_unserialize_nifty_menu_icons($item->ID);
+		$icon_array    = Helper::get_unserialize_nifty_menu_icons($menu_id);
+		$icon_data     = $icon_array[$item_id];
 
-		if ( ! empty( $icon ) ) {
-
-			$css = array(
-				'icon_color' => '',
-				'icon_position' => '',
-				'icon_size' => '',
-			);
+		if ( ! empty( $icon_data ) ) {
+			$icon          = $icon_data['nifty-menu-options-icon'];
+			$icon_color    = $icon_data['nifty-menu-options-icon-color'];
+			$icon_position = $icon_data['nifty-menu-options-icon-gutter'];
+			$icon_size     = $icon_data['nifty-menu-options-icon-size'];
 
 			// Icon color.
-			if ( ! empty( $icon['icon_color'] ) ) {
-				$css['icon_color'] = 'color:' . esc_attr( $icon['icon_color'] ) . '; ';
+			if ( ! empty( $icon_color ) ) {
+				$css['icon_color'] = 'color:' . esc_attr( $icon_color ) . '; ';
 			}
 			// Icon position.
-			if ( ! empty( $icon['icon_position'] ) ) {
-				$css['icon_position'] = Helper::get_icon_css_position( $icon['icon_position'] );
+			if ( ! empty( $icon_position ) ) {
+				$css['icon_position'] = Helper::get_icon_css_position( $icon_position );
 			}
 			// Icon size.
-			if ( is_numeric( $icon['icon_size'] ) ) {
-				$css['icon_size'] = 'font-size:' . esc_attr( $icon['icon_size'] ) . 'px; ';
+			if ( is_numeric( $icon_size ) ) {
+				$css['icon_size'] = 'font-size:' . esc_attr( $icon_size ) . 'px; ';
 			}
 
 			// Construct inline style.
 			$style = 'style="' . esc_attr( $css['icon_color'] . $css['icon_position'] . $css['icon_size'] ) . '"';
 
-			$args->link_before = '<i '. trim( $style ) .' class="material-icons nifty-displayed-icon">'.esc_html( $icon['icon_name'] ).'</i>';
-
-		} else {
-
-			$args->link_before = '';
+			if ( !empty( $icon ) ) {
+				$args->link_before = '<i '. trim( $style ) .' class="material-icons nifty-displayed-icon">'.esc_html( $icon ).'</i>';
+			} else {
+				$args->link_before = '';
+			}
 
 		}
+
 
 		return $title;
 	}
