@@ -182,6 +182,7 @@ function nifty_menu_options_remove_broken_material_icons( $default_libraries ) {
 
 	$icons_to_remove = array(
 		'all_inbox',
+		'desktop_access_disabled',
 		'battery_20',
 		'battery_30',
 		'battery_50',

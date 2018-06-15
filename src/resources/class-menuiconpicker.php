@@ -152,13 +152,13 @@ final class MenuIconPicker {
 				</div>
 				<div class="nifty-icon-gutters-wrap label_vcenter nifty-section">
 					<label for="nifty-icon-gutter-top-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Top:', 'nifty-menu-options' ); ?></label>
-					<input type="number" value="<?php echo esc_attr( $icon_position['top'] ); ?>" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-top-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-gutter[top][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $gutter_placeholder ); ?>"/>
+					<input type="number" value="<?php echo esc_attr( $icon_position['top'] ); ?>" step="any" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-top-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-gutter[top][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $gutter_placeholder ); ?>"/>
 					<label for="nifty-icon-gutter-right-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Right:', 'nifty-menu-options' ); ?></label>
-					<input type="number" value="<?php echo esc_attr( $icon_position['right'] ); ?>" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-right-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-gutter[right][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $gutter_placeholder ); ?>"/>
+					<input type="number" value="<?php echo esc_attr( $icon_position['right'] ); ?>" step="any" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-right-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-gutter[right][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $gutter_placeholder ); ?>"/>
 					<label for="nifty-icon-gutter-bottom-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Bottom:', 'nifty-menu-options' ); ?></label>
-					<input type="number" value="<?php echo esc_attr( $icon_position['bottom'] ); ?>" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-bottom-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-gutter[bottom][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $gutter_placeholder ); ?>"/>
+					<input type="number" value="<?php echo esc_attr( $icon_position['bottom'] ); ?>" step="any" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-bottom-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-gutter[bottom][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $gutter_placeholder ); ?>"/>
 					<label for="nifty-icon-gutter-left-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Left:', 'nifty-menu-options' ); ?></label>
-					<input type="number" value="<?php echo esc_attr( $icon_position['left'] ); ?>" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-left-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-gutter[left][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $gutter_placeholder ); ?>"/>
+					<input type="number" value="<?php echo esc_attr( $icon_position['left'] ); ?>" step="any" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-left-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-gutter[left][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $gutter_placeholder ); ?>"/>
 				</div>
 				<div class="nifty-icon-size-wrap label_vcenter nifty-section">
 					<label for="nifty-icon-size-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Icon Size:', 'nifty-menu-options' ); ?></label>
@@ -241,10 +241,16 @@ final class MenuIconPicker {
 					$is_selected = '';
 				}
 
-				$content         .= '<li class="nifty-icon-item nifty-menu-item-icon-selector nifty-tooltip" data-icon-name="' . esc_attr( $icon_value ) . '">';
+				$content         .= '<li class="nifty-icon-item nifty-menu-item-icon-selector nifty-tooltip" data-icon-name="' . esc_attr( $icon_value ) . '" data-icon-category="' . esc_attr( $icon_category ) . '" data-icon-library="' . esc_attr( $get_icon_library ) . '">';
 					$content     .= '<label class="nifty-icon-label ' . esc_attr( $is_selected ) . '">';
 						$content .= '<input type="radio" class="nifty-icon-selector" ' . checked( $icon_value, $get_menu_icon, false ) . ' value="' . esc_attr( $icon_value ) . '" name="nifty-menu-options-icon-picker[' . esc_attr( $id ) . ']" data-menu-item-id="' . esc_attr( $id ) . '" data-icon-name="' . esc_attr( $icon_value ) . '" data-icon-category="' . esc_attr( $icon_category ) . '" data-icon-library="' . esc_attr( $get_icon_library ) . '" />';
-						$content .= '<i class="material-icons nifty-displayed-icon" data-id="' . esc_attr( $id ) . '">' . esc_html( $icon_value ) . '</i>';
+
+						if ( 'material_icons' === $get_icon_library ) {
+							$content .= '<i class="material-icons nifty-displayed-icon" data-id="' . esc_attr( $id ) . '">' . esc_html( $icon_value ) . '</i>';
+						} else {
+							$content .= '<i class="' . esc_attr( $icon_value ) . ' nifty-displayed-icon" data-id="' . esc_attr( $id ) . '"></i>';
+						}
+
 					$content     .= '</label>';
 				$content         .= '</li>';
 			}
@@ -272,29 +278,30 @@ final class MenuIconPicker {
 	public static function save_menu_icon( $menu_id, $menu_item_db_id, $menu_item_args ) {
 
 		$nifty_menu_options_db_item = array();
-		$nifty_icon_save_meta = array();
+		$filtered_data              = array();
 
-		$base_id                  = 'menu-item-db-id';
-		$menu_icon                = '';
-		$menu_icon_name           = 'nifty-menu-options-icon';
-		$menu_icon_library        = '';
-		$menu_icon_library_name   = 'nifty-menu-options-icon-library';
-		$menu_icon_category       = '';
-		$menu_icon_category_name  = 'nifty-menu-options-icon-category';
-		$menu_icon_color          = '';
-		$menu_icon_color_name     = 'nifty-menu-options-icon-color';
-		$menu_icon_gutter         = '';
-		$menu_icon_gutter_array   = array(
+		$base_id_value              = '';
+		$base_id                    = 'menu-item-db-id';
+		$menu_icon                  = '';
+		$menu_icon_name             = 'nifty-menu-options-icon';
+		$menu_icon_library          = '';
+		$menu_icon_library_name     = 'nifty-menu-options-icon-library';
+		$menu_icon_category         = '';
+		$menu_icon_category_name    = 'nifty-menu-options-icon-category';
+		$menu_icon_color            = '';
+		$menu_icon_color_name       = 'nifty-menu-options-icon-color';
+		$menu_icon_gutter           = '';
+		$menu_icon_gutter_array     = array(
 			'top'    => '',
 			'right'  => '',
 			'bottom' => '',
 			'left'   => '',
 		);
-		$menu_icon_gutter_name    = 'nifty-menu-options-icon-gutter';
-		$menu_icon_size           = '';
-		$menu_icon_size_name      = 'nifty-menu-options-icon-size';
-		$remove_icon              = '';
-		$remove_icon_name         = 'nifty-menu-options-remove-icon';
+		$menu_icon_gutter_name      = 'nifty-menu-options-icon-gutter';
+		$menu_icon_size             = '';
+		$menu_icon_size_name        = 'nifty-menu-options-icon-size';
+		$remove_icon                = '';
+		$remove_icon_name           = 'nifty-menu-options-remove-icon';
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			return;
@@ -307,7 +314,11 @@ final class MenuIconPicker {
 
 		check_admin_referer( 'update-nav_menu', 'update-nav-menu-nonce' );
 
-		$filters                  = [
+		$filters                    = [
+			$base_id                 => [
+				'filter' => FILTER_SANITIZE_NUMBER_INT,
+				'flags'  => FILTER_FORCE_ARRAY,
+			],
 			$menu_icon_name          => [
 				'filter' => FILTER_SANITIZE_STRING,
 				'flags'  => FILTER_FORCE_ARRAY,
@@ -338,71 +349,65 @@ final class MenuIconPicker {
 			],
 		];
 
+		$filtered_data = filter_input_array( INPUT_POST, $filters );
+
 		$nifty_menu_options_item_ids = isset ( $_POST[$base_id] ) ? $_POST[$base_id]: '';
 
 		foreach( $nifty_menu_options_item_ids as $key )  {
-			$item_id              =  isset ( $_POST[$base_id][$key] ) ? $_POST[$base_id][$key]: '';
-			$item_icon            =  isset ( $_POST[$menu_icon_name][$key] ) ? $_POST[$menu_icon_name][$key]: '';
-			$item_library         =  isset ( $_POST[$menu_icon_library_name][$key] ) ? $_POST[$menu_icon_library_name][$key]: '';
-			$item_category        =  isset ( $_POST[$menu_icon_category_name][$key] ) ? $_POST[$menu_icon_category_name][$key]: '';
-			$item_color           =  isset ( $_POST[$menu_icon_color_name][$key] ) ? $_POST[$menu_icon_color_name][$key]: '';
 
-			$item_position_top    =  isset ( $_POST[$menu_icon_gutter_name]['top'][$key] ) ? $_POST[$menu_icon_gutter_name]['top'][$key]: '';
-			$item_position_right  =  isset ( $_POST[$menu_icon_gutter_name]['right'][$key] ) ? $_POST[$menu_icon_gutter_name]['right'][$key]: '';
-			$item_position_bottom =  isset ( $_POST[$menu_icon_gutter_name]['bottom'][$key] ) ? $_POST[$menu_icon_gutter_name]['bottom'][$key]: '';
-			$item_position_left   =  isset ( $_POST[$menu_icon_gutter_name]['left'][$key] ) ? $_POST[$menu_icon_gutter_name]['left'][$key]: '';
-
-			$item_size            =  isset ( $_POST[$menu_icon_size_name][$key] ) ? $_POST[$menu_icon_size_name][$key]: '';
-			$item_display         =  isset ( $_POST[$remove_icon_name][$key] ) ? $_POST[$remove_icon_name][$key]: '';
-
-			if ( ! empty( $item_icon ) ) {
-				$menu_icon = filter_input_array( INPUT_POST, $filters );
-				$menu_icon = $menu_icon[ $menu_icon_name ][ $key ];
+			$base_id_value = $filtered_data[ $base_id ][ $key ];
+			if ( is_numeric( $base_id_value ) ) {
+				$base_id_value = $base_id_value;
 			}
 
-			if ( ! empty( $item_library ) ) {
-				$menu_icon_library = filter_input_array( INPUT_POST, $filters );
-				$menu_icon_library = $menu_icon_library[ $menu_icon_library_name ][ $key ];
+			$menu_icon = $filtered_data[ $menu_icon_name ][ $key ];
+			if ( ! empty( $menu_icon ) ) {
+				$menu_icon = $menu_icon;
 			}
 
-			if ( ! empty( $item_category ) ) {
-				$menu_icon_category = filter_input_array( INPUT_POST, $filters );
-				$menu_icon_category = $menu_icon_category[ $menu_icon_category_name ][ $key ];
+			$menu_icon_library = $filtered_data[ $menu_icon_library_name ][ $key ];
+			if ( ! empty( $menu_icon_library ) ) {
+				$menu_icon_library = $menu_icon_library;
 			}
 
+			$menu_icon_category = $filtered_data[ $menu_icon_category_name ][ $key ];
+			if ( ! empty( $menu_icon_category ) ) {
+				$menu_icon_category = $menu_icon_category;
+			}
+
+			$menu_icon_color = $filtered_data[ $menu_icon_color_name ][ $key ];
 			if ( ! empty( $item_color ) ) {
-				$menu_icon_color = filter_input_array( INPUT_POST, $filters );
-				$menu_icon_color = $menu_icon_color[ $menu_icon_color_name ][ $key ];
+				$menu_icon_color = $menu_icon_color;
 			}
 
-			if ( is_numeric( $item_position_top ) ) {
-				$menu_icon_gutter              = filter_input_array( INPUT_POST, $filters );
-				$menu_icon_gutter_array['top'] = $menu_icon_gutter[ $menu_icon_gutter_name ]['top'][ $key ];
+			$menu_icon_gutter_array['top'] = $filtered_data[ $menu_icon_gutter_name ]['top'][ $key ];
+			if ( is_numeric( $menu_icon_gutter_array['top'] ) ) {
+				$menu_icon_gutter_array['top'] = $menu_icon_gutter_array['top'];
 			}
 
-			if ( is_numeric( $item_position_right ) ) {
-				$menu_icon_gutter                = filter_input_array( INPUT_POST, $filters );
-				$menu_icon_gutter_array['right'] = $menu_icon_gutter[ $menu_icon_gutter_name ]['right'][ $key ];
+			$menu_icon_gutter_array['right'] = $filtered_data[ $menu_icon_gutter_name ]['right'][ $key ];
+			if ( is_numeric( $menu_icon_gutter_array['right'] ) ) {
+				$menu_icon_gutter_array['right'] = $menu_icon_gutter_array['right'];
 			}
 
-			if ( is_numeric( $item_position_bottom ) ) {
-				$menu_icon_gutter                 = filter_input_array( INPUT_POST, $filters );
-				$menu_icon_gutter_array['bottom'] = $menu_icon_gutter[ $menu_icon_gutter_name ]['bottom'][ $key ];
+			$menu_icon_gutter_array['bottom'] = $filtered_data[ $menu_icon_gutter_name ]['bottom'][ $key ];
+			if ( is_numeric( $menu_icon_gutter_array['bottom'] ) ) {
+				$menu_icon_gutter_array['bottom'] = $menu_icon_gutter_array['bottom'];
 			}
 
-			if ( is_numeric( $item_position_left ) ) {
-				$menu_icon_gutter               = filter_input_array( INPUT_POST, $filters );
-				$menu_icon_gutter_array['left'] = $menu_icon_gutter[ $menu_icon_gutter_name ]['left'][ $key ];
+			$menu_icon_gutter_array['left'] = $filtered_data[ $menu_icon_gutter_name ]['left'][ $key ];
+			if ( is_numeric( $menu_icon_gutter_array['left'] ) ) {
+				$menu_icon_gutter_array['left'] = $menu_icon_gutter_array['left'];
 			}
 
-			if ( is_numeric( $item_size ) ) {
-				$menu_icon_size = filter_input_array( INPUT_POST, $filters );
-				$menu_icon_size = $menu_icon_size[ $menu_icon_size_name ][ $key ];
+			$menu_icon_size = $filtered_data[ $menu_icon_size_name ][ $key ];
+			if ( is_numeric( $menu_icon_size ) ) {
+				$menu_icon_size = $menu_icon_size;
 			}
 
-			if ( ! empty( $item_display ) ) {
-				$remove_icon = filter_input_array( INPUT_POST, $filters );
-				$remove_icon = $remove_icon[ $remove_icon_name ][ $key ];
+			$remove_icon = $filtered_data[ $remove_icon_name ][ $key ];
+			if ( ! empty( $remove_icon ) ) {
+				$remove_icon = $remove_icon;
 			}
 
 			if ( 'true' === $remove_icon ) {
@@ -410,7 +415,7 @@ final class MenuIconPicker {
 			}
 
 			$nifty_menu_options_db_item[$key] = array(
-				$base_id                 => $item_id,
+				$base_id                 => $base_id_value,
 				$menu_icon_name          => $menu_icon,
 				$menu_icon_library_name  => $menu_icon_library,
 				$menu_icon_category_name => $menu_icon_category,
@@ -425,7 +430,6 @@ final class MenuIconPicker {
 				$remove_icon_name => $remove_icon,
 			);
 		}
-		$get_menu_icon_meta = get_post_meta( $menu_id, 'nifty-menu-options-meta-key', true );
 
 		Metabox::update_menu_icon( $menu_id, $nifty_menu_options_db_item );
 	}
