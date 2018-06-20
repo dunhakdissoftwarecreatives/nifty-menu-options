@@ -151,15 +151,30 @@ final class MenuIconPicker {
 					<input type="text" value="<?php echo esc_attr( $get_menu_icon_color ); ?>" class="nifty-icon-color-picker" data-default-color="<?php echo esc_attr( $default_color ); ?>" id="nifty-menu-color-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-color[<?php echo esc_attr( $id ); ?>]" />
 				</div>
 				<div class="nifty-icon-gutters-wrap label_vcenter nifty-section">
+
 					<label for="nifty-icon-gutter-top-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Top:', 'nifty-menu-options' ); ?></label>
-					<input type="number" value="<?php echo esc_attr( $icon_position['top'] ); ?>" step="any" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-top-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-gutter[top][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $gutter_placeholder ); ?>"/>
+
+					<?php $top = isset( $icon_position['top'] ) ? $icon_position['top']: ''; ?>
+
+					<input type="number" value="<?php echo esc_attr( $top ); ?>" step="any" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-top-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-gutter[top][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $gutter_placeholder ); ?>"/>
+
+					<?php $right = isset( $icon_position['right'] ) ? $icon_position['right']: ''; ?>
+					
 					<label for="nifty-icon-gutter-right-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Right:', 'nifty-menu-options' ); ?></label>
-					<input type="number" value="<?php echo esc_attr( $icon_position['right'] ); ?>" step="any" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-right-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-gutter[right][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $gutter_placeholder ); ?>"/>
+					<input type="number" value="<?php echo esc_attr( $right ); ?>" step="any" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-right-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-gutter[right][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $gutter_placeholder ); ?>"/>
 					<label for="nifty-icon-gutter-bottom-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Bottom:', 'nifty-menu-options' ); ?></label>
-					<input type="number" value="<?php echo esc_attr( $icon_position['bottom'] ); ?>" step="any" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-bottom-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-gutter[bottom][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $gutter_placeholder ); ?>"/>
-					<label for="nifty-icon-gutter-left-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Left:', 'nifty-menu-options' ); ?></label>
-					<input type="number" value="<?php echo esc_attr( $icon_position['left'] ); ?>" step="any" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-left-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-gutter[left][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $gutter_placeholder ); ?>"/>
+
+					<?php $bottom = isset( $icon_position['bottom'] ) ? $icon_position['bottom']: ''; ?>
+
+					<input type="number" value="<?php echo esc_attr( $bottom ); ?>" step="any" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-bottom-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-gutter[bottom][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $gutter_placeholder ); ?>"/>
+					<label for="nifty-icon-gutter-left-<?php echo esc_attr( $id ); ?>">
+
+					<?php $left = isset( $icon_position['left'] ) ? $icon_position['left']: ''; ?>	
+					<?php echo esc_html__( 'Left:', 'nifty-menu-options' ); ?></label>
+					<input type="number" value="<?php echo esc_attr( $left ); ?>" step="any" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-left-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-gutter[left][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $gutter_placeholder ); ?>"/>
 				</div>
+
+
 				<div class="nifty-icon-size-wrap label_vcenter nifty-section">
 					<label for="nifty-icon-size-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Icon Size:', 'nifty-menu-options' ); ?></label>
 					<input type="number" value="<?php echo esc_attr( $icon_size ); ?>" min="0" class="nifty-icon-size nifty-number-field small-text" id="nifty-icon-size-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-size[<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $size_placeholder ); ?>"/>
