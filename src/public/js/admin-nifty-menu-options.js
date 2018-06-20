@@ -110,7 +110,7 @@ jQuery(document).ready( function($) {
         }); //show matched search value
     });
 
-    $('.nifty-remove-icon').on( 'click', function(e) {
+	$( 'body' ).on( 'click', '#menu-to-edit .nifty-remove-icon', function(e) {
         e.preventDefault();
         $( this ).siblings('.nifty-icon-picker').find('.thickbox-link-text').text( nifty_menu_options_admin_object.add_icon );
         $( this ).siblings('.nifty-icon-picker').find('.nifty-icon-selected').text( '' );
@@ -122,7 +122,7 @@ jQuery(document).ready( function($) {
 		$( this ).siblings('.nifty-menu-settings').find('.nifty-menu-options-icon-category-field').attr( 'value', '' );
     });
 
-    $('.nifty-icon-picker').on( 'click', function(e) {
+    $( 'body' ).on( 'click', '#menu-to-edit .nifty-icon-picker', function(e) {
         e.preventDefault();
         var new_selected_icon = '';
         var $menu_id = $( this ).siblings('.nifty-menu-settings').find('.nifty-menu-id').attr('value');
@@ -182,6 +182,28 @@ jQuery(document).ready( function($) {
             var hexcolor = $( this ).wpColorPicker( 'color' );
             $( this ).parents( '.nifty-icon-color-picker-wrap' ).siblings('.nifty-icon-selector-wrap').find('.nifty-icon-selected').css( 'color', hexcolor );
         }
+	});
+
+	$('#submit-posttype-page').on('click', function(){
+		var fixColorPicker__Cron = setInterval(function(){
+			$.each( $('.nifty-icon-color-picker'), function(){
+				if ( !$(this).hasClass('wp-color-picker') ) {
+					$(this).wpColorPicker({
+				        defaultColor: true,
+				        // a callback to fire whenever the color changes to a valid color
+				        change: function(event, ui) {
+				            var hexcolor = $( this ).wpColorPicker( 'color' );
+				            $( this ).parents( '.nifty-icon-color-picker-wrap' ).siblings('.nifty-icon-selector-wrap').find('.nifty-icon-selected').css( 'color', hexcolor );
+				        }
+					});
+				}
+			});
+		}, 500);
+
+		var idle_time = 5000; // 5 Seconds.
+		setTimeout(function(){
+			window.clearTimeout( fixColorPicker__Cron );
+		}, idle_time);
 	});
 
     function nifty_alpha_numeric( txt ) {
