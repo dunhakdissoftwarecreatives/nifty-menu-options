@@ -355,59 +355,80 @@ final class MenuIconPicker {
 
 		foreach( $nifty_menu_options_item_ids as $key )  {
 
-			$base_id_value = $filtered_data[ $base_id ][ $key ];
-			if ( is_numeric( $base_id_value ) ) {
-				$base_id_value = $base_id_value;
+			if ( isset( $filtered_data[ $base_id ][ $key ] ) ) {
+				$base_id_value = $filtered_data[ $base_id ][ $key ];
+				if ( is_numeric( $base_id_value ) ) {
+					$base_id_value = $base_id_value;
+				}
 			}
 
-			$menu_icon = $filtered_data[ $menu_icon_name ][ $key ];
-			if ( ! empty( $menu_icon ) ) {
-				$menu_icon = $menu_icon;
+			if ( isset( $filtered_data[ $menu_icon_name ][ $key ] ) ) {
+				$menu_icon = $filtered_data[ $menu_icon_name ][ $key ];
+				if ( ! empty( $menu_icon ) ) {
+					$menu_icon = $menu_icon;
+				}
+			}
+			if ( isset( $filtered_data[ $menu_icon_library_name ][ $key ] ) ) {
+				$menu_icon_library = $filtered_data[ $menu_icon_library_name ][ $key ];
+				if ( ! empty( $menu_icon_library ) ) {
+					$menu_icon_library = $menu_icon_library;
+				}
 			}
 
-			$menu_icon_library = $filtered_data[ $menu_icon_library_name ][ $key ];
-			if ( ! empty( $menu_icon_library ) ) {
-				$menu_icon_library = $menu_icon_library;
+			if ( isset( $filtered_data[ $menu_icon_category_name ][ $key ] ) ) {
+				$menu_icon_category = $filtered_data[ $menu_icon_category_name ][ $key ];
+				if ( ! empty( $menu_icon_category ) ) {
+					$menu_icon_category = $menu_icon_category;
+				}
 			}
 
-			$menu_icon_category = $filtered_data[ $menu_icon_category_name ][ $key ];
-			if ( ! empty( $menu_icon_category ) ) {
-				$menu_icon_category = $menu_icon_category;
+			if ( isset( $filtered_data[ $menu_icon_color_name ][ $key ] ) ) {
+				$menu_icon_color = $filtered_data[ $menu_icon_color_name ][ $key ];
+				if ( ! empty( $item_color ) ) {
+					$menu_icon_color = $menu_icon_color;
+				}
 			}
 
-			$menu_icon_color = $filtered_data[ $menu_icon_color_name ][ $key ];
-			if ( ! empty( $item_color ) ) {
-				$menu_icon_color = $menu_icon_color;
+			if ( isset( $filtered_data[ $menu_icon_gutter_name ]['top'][ $key ] ) ) {
+				$menu_icon_gutter_array['top'] = $filtered_data[ $menu_icon_gutter_name ]['top'][ $key ];
+				if ( is_numeric( $menu_icon_gutter_array['top'] ) ) {
+					$menu_icon_gutter_array['top'] = $menu_icon_gutter_array['top'];
+				}
 			}
 
-			$menu_icon_gutter_array['top'] = $filtered_data[ $menu_icon_gutter_name ]['top'][ $key ];
-			if ( is_numeric( $menu_icon_gutter_array['top'] ) ) {
-				$menu_icon_gutter_array['top'] = $menu_icon_gutter_array['top'];
+			if ( isset( $filtered_data[ $menu_icon_gutter_name ]['right'][ $key ] ) ) {
+				$menu_icon_gutter_array['right'] = $filtered_data[ $menu_icon_gutter_name ]['right'][ $key ];
+				if ( is_numeric( $menu_icon_gutter_array['right'] ) ) {
+					$menu_icon_gutter_array['right'] = $menu_icon_gutter_array['right'];
+				}
 			}
 
-			$menu_icon_gutter_array['right'] = $filtered_data[ $menu_icon_gutter_name ]['right'][ $key ];
-			if ( is_numeric( $menu_icon_gutter_array['right'] ) ) {
-				$menu_icon_gutter_array['right'] = $menu_icon_gutter_array['right'];
+			if ( isset( $filtered_data[ $menu_icon_gutter_name ]['bottom'][ $key ] ) ) {
+				$menu_icon_gutter_array['bottom'] = $filtered_data[ $menu_icon_gutter_name ]['bottom'][ $key ];
+				if ( is_numeric( $menu_icon_gutter_array['bottom'] ) ) {
+					$menu_icon_gutter_array['bottom'] = $menu_icon_gutter_array['bottom'];
+				}
 			}
 
-			$menu_icon_gutter_array['bottom'] = $filtered_data[ $menu_icon_gutter_name ]['bottom'][ $key ];
-			if ( is_numeric( $menu_icon_gutter_array['bottom'] ) ) {
-				$menu_icon_gutter_array['bottom'] = $menu_icon_gutter_array['bottom'];
+			if ( isset( $filtered_data[ $menu_icon_gutter_name ]['left'][ $key ] ) ) {
+				$menu_icon_gutter_array['left'] = $filtered_data[ $menu_icon_gutter_name ]['left'][ $key ];
+				if ( is_numeric( $menu_icon_gutter_array['left'] ) ) {
+					$menu_icon_gutter_array['left'] = $menu_icon_gutter_array['left'];
+				}
 			}
 
-			$menu_icon_gutter_array['left'] = $filtered_data[ $menu_icon_gutter_name ]['left'][ $key ];
-			if ( is_numeric( $menu_icon_gutter_array['left'] ) ) {
-				$menu_icon_gutter_array['left'] = $menu_icon_gutter_array['left'];
+			if ( isset( $filtered_data[ $menu_icon_size_name ][ $key ] ) ) {
+				$menu_icon_size = $filtered_data[ $menu_icon_size_name ][ $key ];
+				if ( is_numeric( $menu_icon_size ) ) {
+					$menu_icon_size = $menu_icon_size;
+				}
 			}
 
-			$menu_icon_size = $filtered_data[ $menu_icon_size_name ][ $key ];
-			if ( is_numeric( $menu_icon_size ) ) {
-				$menu_icon_size = $menu_icon_size;
-			}
-
-			$remove_icon = $filtered_data[ $remove_icon_name ][ $key ];
-			if ( ! empty( $remove_icon ) ) {
-				$remove_icon = $remove_icon;
+			if ( isset( $filtered_data[ $remove_icon_name ][ $key ] ) ) {
+				$remove_icon = $filtered_data[ $remove_icon_name ][ $key ];
+				if ( ! empty( $remove_icon ) ) {
+					$remove_icon = $remove_icon;
+				}
 			}
 
 			if ( 'true' === $remove_icon ) {
