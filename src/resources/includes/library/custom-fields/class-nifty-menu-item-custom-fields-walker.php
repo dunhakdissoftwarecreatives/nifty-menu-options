@@ -101,7 +101,7 @@ class Nifty_Menu_Item_Custom_Fields_Walker extends \Walker_Nav_Menu_Edit {
 		 *
 		 * @return string Custom fields HTML.
 		 */
-		do_action( 'wp_nav_nifty_menu_item_custom_fields', $item->ID, $item, $depth, $args, $id );
+		do_action( 'wp_nav_menu_item_custom_fields', $item->ID, $item, $depth, $args, $id );
 
 		return ob_get_clean();
 	}
