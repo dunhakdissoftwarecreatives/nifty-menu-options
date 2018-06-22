@@ -184,7 +184,7 @@ jQuery(document).ready( function($) {
         }
 	});
 
-	$('#submit-posttype-page').on('click', function(){
+	$( '.submit-add-to-menu' ).on( 'click', function(){
 		var fixColorPicker__Cron = setInterval(function(){
 			$.each( $('.nifty-icon-color-picker'), function(){
 				if ( !$(this).hasClass('wp-color-picker') ) {
