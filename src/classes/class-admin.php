@@ -182,7 +182,7 @@ final class Admin {
 	 */
 	public function nifty_admin_ajax() {
 		header( 'Content-Type: application/json' );
-
+		$icon_picker = new MenuIconPicker();
 		$nifty_setting = filter_input(
 			INPUT_POST,
 			'nifty-setting',
@@ -206,7 +206,7 @@ final class Admin {
 				array(
 					'status'                 => 202,
 					'nifty_setting'          => $nifty_setting,
-					'nifty_icon_picker_list' => MenuIconPicker::set_menu_icon_picker_contents( $nifty_menu_id, $selected_icon ),
+					'nifty_icon_picker_list' => $icon_picker->set_menu_icon_picker_contents( $nifty_menu_id, $selected_icon ),
 					'selected_icon'          => $selected_icon,
 				)
 			);

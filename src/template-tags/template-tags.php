@@ -56,6 +56,24 @@ function nifty_menu_options_sanity_check( $mixed_data ) {
 }
 
 /**
+ * Sanitize and return number float value.
+ *
+ * @param mixed $value The data to Sanitize.
+ *
+ * @since  1.0.0
+ * @return float $sanitized_value Return the sanitized value.
+ */
+function nifty_menu_options_sanitize_float( $value ) {
+	$sanitized_value = '';
+
+	if ( ! empty ( $value ) ) {
+		$sanitized_value = filter_var( $value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION );
+	}
+
+	return $sanitized_value;
+}
+
+/**
  * This function that holds the default color for icon color picker.
  *
  * @since  1.0.0

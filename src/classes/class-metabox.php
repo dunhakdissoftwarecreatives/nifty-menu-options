@@ -304,24 +304,29 @@ final class Metabox {
 		$get_menu_icon_meta = array();
 		$menu_icon_size     = '';
 		$menu_icon_size_css = '';
+		$isset_size         = '';
 		$returned_values    = '';
 
 		if ( ! empty( $menu_id ) ) {
 			$get_menu_icon_meta = nifty_menu_options_get_data( $menu_id, $menu_item_id );
 		}
 
-		if ( is_numeric( $get_menu_icon_meta['nifty-menu-options-icon-size'] ) && 0 !== $get_menu_icon_meta['nifty-menu-options-icon-size'] ) {
-			$menu_icon_size = $get_menu_icon_meta['nifty-menu-options-icon-size'];
+		$isset_size = isset( $get_menu_icon_meta['nifty-menu-options-icon-size'] ) ? $get_menu_icon_meta['nifty-menu-options-icon-size']: '';
 
-			if ( is_numeric( $menu_icon_size ) ) {
-				$menu_icon_size_css = $menu_icon_size . 'px';
+		if ( $isset_size ) {
+			if ( is_numeric( $get_menu_icon_meta['nifty-menu-options-icon-size'] ) && 0 !== $get_menu_icon_meta['nifty-menu-options-icon-size'] ) {
+				$menu_icon_size = $get_menu_icon_meta['nifty-menu-options-icon-size'];
+
+				if ( is_numeric( $menu_icon_size ) ) {
+					$menu_icon_size_css = $menu_icon_size . 'px';
+				}
+
+				$returned_values = array(
+					'size' => $menu_icon_size,
+					'css'  => $menu_icon_size_css,
+				);
+				return $returned_values;
 			}
-
-			$returned_values = array(
-				'size' => $menu_icon_size,
-				'css'  => $menu_icon_size_css,
-			);
-			return $returned_values;
 		}
 	}
 
