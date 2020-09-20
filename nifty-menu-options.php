@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Setup plugin Constants.
 define( 'NIFTY_MENU_OPTION_NAME', 'nifty_menu_options' );
 
-define( 'NIFTY_MENU_OPTION_VERSION', '1.0.23kkkkk2' );
+define( 'NIFTY_MENU_OPTION_VERSION', '1.0.2' );
 
 define( 'NIFTY_MENU_OPTION_TRAIL_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 
