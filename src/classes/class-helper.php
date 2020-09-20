@@ -129,6 +129,9 @@ final class Helper {
 			$icon[] = unserialize( $icons[$id][0]->meta_value );
 			return $icon[0];
 		}
+
+        return $icon;
+
 	}
 
 	/**

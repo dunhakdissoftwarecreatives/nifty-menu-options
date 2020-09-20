@@ -289,6 +289,11 @@ final class Metabox {
 
 			return $returned_values;
 		}
+
+		return array(
+		    'position' => '',
+            'css' => ''
+        );
 	}
 
 	/**
@@ -328,6 +333,11 @@ final class Metabox {
 				return $returned_values;
 			}
 		}
+
+		return array(
+		    'size' => '',
+            'css' => ''
+        );
 	}
 
 	/**
