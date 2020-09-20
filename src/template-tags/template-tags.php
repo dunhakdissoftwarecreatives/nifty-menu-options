@@ -188,8 +188,12 @@ function nifty_menu_options_get_data( $menu_id, $menu_item_id ) {
 	if ( ! empty( $menu_id ) && ! empty( $menu_item_id ) ) {
 		$helper = new DSC\NiftyMenuOptions\Helper();
 		$get_menu_icon_data = $helper->get_unserialize_nifty_menu_icons( $menu_id );
-		return $get_menu_icon_data[$menu_item_id];
+        if ( ! empty( $get_menu_icon_data[$menu_item_id] ) ) {
+		    return $get_menu_icon_data[$menu_item_id];
+        }
 	}
+
+	return $get_menu_icon_data;
 }
 
 

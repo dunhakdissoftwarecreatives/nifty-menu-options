@@ -49,7 +49,7 @@ final class MenuIconPicker {
 	 */
 	public static function init_menu_icon_picker() {
 		add_filter( 'wp_edit_nav_menu_walker', array( __CLASS__, 'filter_wp__edit_nav_menu_walker_class' ), 100 );
-		add_filter( 'wp_nav_menu_item_custom_fields', array( __CLASS__, 'menu_icon_picker_option' ), 1, 4 );
+		add_action( 'wp_nav_menu_item_custom_fields', array( __CLASS__, 'menu_icon_picker_option' ), 10, 5 );
 		add_action( 'wp_update_nav_menu_item', array( __CLASS__, 'save_menu_icon' ), 10, 3 );
 	}
 
@@ -87,10 +87,11 @@ final class MenuIconPicker {
 	 * @uses    add_action() Calls 'nifty_menu_options_before_fields' hook
 	 * @uses    add_action() Calls 'nifty_menu_options_after_fields' hook
 	 * @wp_hook action       wp_nav_nifty_menu_item_custom_fields
-	 *
+	 * wp_nav_menu_item_custom_fields
 	 * @return void
 	 */
-	public static function menu_icon_picker_option( $id, $item, $depth, $args ) {
+	public static function menu_icon_picker_option( $id, $item, $depth, $args, $nav_menu_id ) {
+
 		$get_current_menu_id    = Helper::global_nav_menu_selected_id();
 		$get_menu_icon          = Metabox::get_menu_icon( $get_current_menu_id, $id );
 		$get_menu_icon_library  = Metabox::get_menu_icon_library( $get_current_menu_id, $id );
@@ -134,6 +135,7 @@ final class MenuIconPicker {
 				<label><?php echo esc_html__( 'Nifty Menu Options', 'nifty-menu-options' ); ?></label>
 			</p>
 			<div class="nifty-menu-options-settings-inner">
+
 				<div class="nifty-icon-selector-wrap nifty-section">
 					<?php $thickbox_class->get_thickbox(); ?>
 
@@ -172,7 +174,6 @@ final class MenuIconPicker {
 					<label for="nifty-icon-gutter-left-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Left:', 'nifty-menu-options' ); ?></label>
 					<input type="number" value="<?php echo esc_attr( $left ); ?>" step="any" min="<?php echo esc_attr( $min ); ?>" class="nifty-icon-gutter nifty-number-field small-text" id="nifty-icon-gutter-left-<?php echo esc_attr( $id ); ?>" name="nifty-menu-options-icon-gutter[left][<?php echo esc_attr( $id ); ?>]" placeholder="<?php echo esc_attr( $gutter_placeholder ); ?>"/>
 				</div>
-
 
 				<div class="nifty-icon-size-wrap label_vcenter nifty-section">
 					<label for="nifty-icon-size-<?php echo esc_attr( $id ); ?>"><?php echo esc_html__( 'Icon Size:', 'nifty-menu-options' ); ?></label>
@@ -362,6 +363,7 @@ final class MenuIconPicker {
 				'flags'  => FILTER_FORCE_ARRAY,
 			],
 		];
+
 
 		$filtered_data = filter_input_array( INPUT_POST, $filters );
 

@@ -75,6 +75,7 @@ final class Loader {
 	 * @return void
 	 */
 	public function __construct() {
+
 		$this->plugin_name = NIFTY_MENU_OPTION_NAME;
 		$this->version     = NIFTY_MENU_OPTION_VERSION;
 
@@ -92,6 +93,7 @@ final class Loader {
 	 * @return void
 	 */
 	private function load_dependencies() {
+
 		/**
 		 * Includes the class that handles the actions and filters of the plugin.
 		 */
@@ -123,11 +125,11 @@ final class Loader {
 		 */
 		include_once NIFTY_MENU_OPTION_TRAIL_PATH . 'src/classes/class-publicpages.php';
 
-		$this->loader = new \DSC\NiftyMenuOptions\Hooks();
+		$this->loader = new Hooks();
 
-		new \DSC\NiftyMenuOptions\Language();
+		new Language();
 
-		new \DSC\NiftyMenuOptions\Metabox();
+		new Metabox();
 	}
 
 	/**
@@ -149,17 +151,17 @@ final class Loader {
 	 * @return void
 	 */
 	private function set_admin_hooks() {
-		$plugin_admin            = new \DSC\NiftyMenuOptions\Admin(
+		$plugin_admin            = new Admin(
 			$this->get_name(),
 			$this->get_version(),
 			$this->get_loader()
 		);
-		$plugin_metabox          = new \DSC\NiftyMenuOptions\Metabox(
+		$plugin_metabox          = new Metabox(
 			$this->get_name(),
 			$this->get_version(),
 			$this->get_loader()
 		);
-		$plugin_menu_icon_picker = new \DSC\NiftyMenuOptions\MenuIconPicker(
+		$plugin_menu_icon_picker = new MenuIconPicker(
 			$this->get_name(),
 			$this->get_version(),
 			$this->get_loader()
@@ -203,7 +205,7 @@ final class Loader {
 	 * @return void
 	 */
 	private function set_public_hooks() {
-		$plugin_public = new \DSC\NiftyMenuOptions\PublicPages(
+		$plugin_public = new PublicPages(
 			$this->get_name(),
 			$this->get_version(),
 			$this->get_loader()

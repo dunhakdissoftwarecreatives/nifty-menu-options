@@ -3,7 +3,7 @@
  * Plugin Name:  Nifty Menu Options
  * Plugin URI:   https://wordpress.org/plugins/nifty-menu-options/
  * Description:  Adds beautiful icons to your WordPress menu items. More menu item options are coming soon!
- * Version:      1.0.1
+ * Version:      1.0.2
  * Author:       Dunhakdis
  * Contributors: dunhakdis, wpjasper
  * Author URI:   https://profiles.wordpress.org/dunhakdis/
@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Setup plugin Constants.
 define( 'NIFTY_MENU_OPTION_NAME', 'nifty_menu_options' );
 
-define( 'NIFTY_MENU_OPTION_VERSION', '1.0.0' );
+define( 'NIFTY_MENU_OPTION_VERSION', '1.0.23kkkkk2' );
 
 define( 'NIFTY_MENU_OPTION_TRAIL_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 
@@ -67,11 +67,14 @@ register_activation_hook( __FILE__, 'nifty_menu_options_activate' );
  *
  * @return void
  */
+
 function nifty_menu_options_activate() {
 	$plugin = new \DSC\NiftyMenuOptions\Activator();
 	$plugin->activate();
 }
 
 // Bootstrap the plugin.
+
 $plugin = new \DSC\NiftyMenuOptions\Loader();
+
 $plugin->runner();

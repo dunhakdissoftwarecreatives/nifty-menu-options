@@ -222,8 +222,13 @@ final class PublicPages {
 	public static function display_menu_icons( $title, $item, $args, $depth ) {
 		$item_id       = $item->ID;
 		$menu_id       = Helper::get_menu_id( $args->theme_location );
-		$icon_array    = array('');
-		$icon_data     = array('');
+        $icon_data     = array();
+        $icon_data    = array(
+            'nifty-menu-options-icon' => '',
+            'nifty-menu-options-icon-color' => '',
+            'nifty-menu-options-icon-gutter' => '',
+            'nifty-menu-options-icon-size' => '',
+        );
 		$icon          = '';
 		$icon_color    = '';
 		$icon_position = array();
@@ -235,7 +240,9 @@ final class PublicPages {
 		);
 
 		$icon_array    = Helper::get_unserialize_nifty_menu_icons($menu_id);
-		$icon_data     = $icon_array[$item_id];
+		if ( ! empty( $icon_array ) ){
+		    $icon_data     = $icon_array[$item_id];
+        };
 
 		if ( ! empty( $icon_data ) ) {
 			$icon          = $icon_data['nifty-menu-options-icon'];
